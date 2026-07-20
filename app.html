@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="学工信箱 —— 倾听学生声音，畅通诉求渠道，接诉即办，件件有回音">
+  <title>学工信箱 · 学生诉求服务平台</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">工</div>
+        <div class="brand-text">
+          <h1>学工信箱</h1>
+          <p>接诉即办 · 件件有回音</p>
+        </div>
+      </div>
+      <nav class="nav-group" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <div class="role-badge" id="role-badge">学生视角</div>
+        <div class="user-card">
+          <div class="user-avatar" id="user-avatar">李</div>
+          <div class="user-info">
+            <strong id="user-name">李诚</strong>
+            <span id="user-sub">计算机学院</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="展开菜单">☰</button>
+          <div class="topbar-title">
+            <h2 id="page-title">工作台</h2>
+            <div class="breadcrumb" id="breadcrumb">首页</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <div class="mailbox-switch" id="mailbox-switch" title="切换信箱"></div>
+          <div class="role-switch" id="role-switch"></div>
+          <button class="btn btn-primary" id="btn-write-quick">＋ 我要写信</button>
+        </div>
+      </header>
+      <main class="content" id="app-content"></main>
+    </div>
+  </div>
+
+  <div class="mask" id="sidebar-mask"></div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">详情</h3>
+        <button class="modal-close" id="modal-close" aria-label="关闭">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <output class="toast" id="toast" aria-live="polite"></output>
+
+  <script src="assets/vendor/echarts.min.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 常见问题</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回" onclick="location.href='home.html'">‹</button>
+        <div class="m-appbar-title" id="m-title">常见问题</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+      </header>
+      <main class="m-main" id="m-content">
+<div class="m-card"><details class="m-faq"><summary>写信后多久能收到回复？</summary><div class="a">信件提交后由归口科室受理办理。系统按统一的超期天数判定是否超期：超过设定天数仍未办结的信件会自动标记为「超期」，并纳入管理员督办；具体天数以管理员在「超期时限配置」中的设定为准。</div></details><details class="m-faq"><summary>我的信件会由谁办理？</summary><div class="a">系统会按事务类型自动匹配并分派至对应归口科室，由该科室负责人受理、核实办理并答复；管理员（系统管理）仅对特殊信件进行转办，并负责督办催办。</div></details><details class="m-faq"><summary>如何查看我的信件办理进度？</summary><div class="a">登录后进入「我的信件」，或在「信件查询」中输入信件编号，即可查看受理、办理、答复的完整流程时间轴。</div></details><details class="m-faq"><summary>对办理结果不满意怎么办？</summary><div class="a">在信件详情中对答复进行满意度评价；若不满意可点击「申请二次办理」，信件将重新进入办理流程。</div></details><details class="m-faq"><summary>信件长时间没有回复怎么办？</summary><div class="a">可在信件详情点击「催办」，系统会向归口科室推送催办提醒；超过时限未办结的信件也会自动触发管理员督办。</div></details><details class="m-faq"><summary>哪些事项不予受理？</summary><div class="a">非学工部职责范围（如教务、后勤、网络等）、涉及紧急救助（110/119/120）、涉及国家机密或个人隐私、应通过法定程序解决，以及重复无理诉求等事项不予受理。</div></details></div>
+      </main>
+      <button class="m-fab" id="m-fab" aria-label="我要写信" onclick="location.href='write-notice.html'">＋</button>
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>首页</span></button>
+        <button class="m-tab" onclick="location.href='public.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开</span></button>
+        <div class="m-tab spacer"></div>
+        <button class="m-tab" onclick="location.href='my.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的 (3)</span></button>
+        <button class="m-tab" onclick="location.href='more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

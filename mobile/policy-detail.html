@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 文件详情</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回" onclick="location.href='policy.html'">‹</button>
+        <div class="m-appbar-title" id="m-title">文件详情</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+      </header>
+      <main class="m-main" id="m-content">
+        <div class="m-card">
+
+    <div class="m-detail-title">关于印发《学生诉求接诉即办工作实施办法》的通知</div>
+    <div class="m-detail-meta"><span class="mono">学工〔2026〕7号</span> · 2026-06-18 <span class="m-badge" style="background:#1BB9751a;color:#1BB975">现行有效</span></div>
+    <div class="m-detail-tags"><span class="m-tag">综合管理</span> <span class="m-tag">文号：学工〔2026〕7号</span></div>
+    <div class="m-sec"><div class="m-sec-t">文件信息</div>
+      <div class="m-content-box">
+        <p>类别：综合管理</p>
+        <p>效力状态：现行有效</p>
+        <p>发布日期：2026-06-18</p>
+      </div>
+    </div>
+    <div class="m-sec"><div class="m-sec-t">文件正文</div>
+      <div class="m-content-box"><p>各学院、学工部各科室：</p><p>为深入推进学生诉求「接诉即办」工作，切实提升为学生服务的质量与效率，经研究，现将《学生诉求接诉即办工作实施办法》印发给你们，请结合实际认真贯彻执行。</p><p><strong>一、总体要求</strong></p><p>坚持以学生为中心，健全「受理—分派—办理—反馈—回访」闭环机制，做到诉求件件有着落、事事有回音。</p><p><strong>二、办理时限</strong></p><p>来信自提交之日起，超过规定天数仍未办结的，系统自动标记为「超期」，并纳入管理员督办范围。具体超期天数由管理员在「超期时限配置」中统一设定。</p><p><strong>三、工作要求</strong></p><p>各归口科室要落实首问负责制，加强跟踪督办与满意度回访，确保学生诉求及时、规范、妥善处理。本办法自印发之日起施行。</p></div>
+    </div>
+    <div class="m-sec"><div class="m-sec-t">相关附件</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px"><span class="m-tag att-chip" data-att-name="《学生诉求接诉即办工作实施办法》全文.pdf" data-att-size="1887436" data-att-type="application/pdf" style="cursor:pointer"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 2.5h7l5 5V21.5H6z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 16.5h6"/></svg> 《学生诉求接诉即办工作实施办法》全文.pdf · 1.8 MB</span><span class="m-tag att-chip" data-att-name="接诉即办工作流程图.png" data-att-size="430080" data-att-type="image/png" style="cursor:pointer"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.7"/><path d="m4 17.5 4.5-4.5 3.5 3.5L16 12l4 4"/></svg> 接诉即办工作流程图.png · 420 KB</span></div>
+      <p class="m-hint" style="color:var(--text-muted)">点击附件可预览</p>
+    </div>
+        </div>
+      </main>
+      <button class="m-fab" id="m-fab" aria-label="我要写信" onclick="location.href='write-notice.html'">＋</button>
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>首页</span></button>
+        <button class="m-tab" onclick="location.href='public.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开</span></button>
+        <div class="m-tab spacer"></div>
+        <button class="m-tab" onclick="location.href='my.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的 (3)</span></button>
+        <button class="m-tab" onclick="location.href='more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

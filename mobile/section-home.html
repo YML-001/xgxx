@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 科室工作台</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back hidden" id="m-back" aria-label="返回">‹</button>
+        <div class="m-appbar-title" id="m-title">科室工作台</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-work-hero">
+      <h2>学生日常管理科 · 工作台</h2>
+      <p>负责人 张伟 ｜ 仅可办理归口本科室的信件</p>
+    </div>
+    <div class="m-stat-grid">
+      <div class="m-stat" style="--acc:#006DAD"><div class="m-stat-label">本科室累计</div><div class="m-stat-val" style="color:#006DAD">4</div><div class="m-stat-sub">承接总量</div></div>
+      <div class="m-stat" style="--acc:#3087CC"><div class="m-stat-label">办理中</div><div class="m-stat-val" style="color:#3087CC">2</div><div class="m-stat-sub">正在处理</div></div>
+      <div class="m-stat" style="--acc:#1BB975"><div class="m-stat-label">已办结</div><div class="m-stat-val" style="color:#1BB975">2</div><div class="m-stat-sub">本科室累计</div></div>
+      <div class="m-stat" style="--acc:#DF2027"><div class="m-stat-label">超期</div><div class="m-stat-val" style="color:#DF2027">2</div><div class="m-stat-sub">需尽快办结</div></div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">本科室待办</div>
+      <div class="m-list-item" data-handle="XG20260311182">
+      <div class="m-li-top"><div class="m-li-title">关于考勤违纪认定的申诉</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">对本次考勤违纪认定有异议，已附情况说明，恳请日常管理科复核处理。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#DF20271a;color:#DF2027">投诉类</span> <span class="mono">XG20260311182</span> <span class="m-dept">学生日常管理科</span> · 2026-03-11
+        <span class="m-tag warn">催办</span><span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" data-handle="XG20260630120">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍晚归违纪处理结果的申诉</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">本人因参加学校批准的社团活动晚归被记违纪，认为处理有误，已附活动审批材料，恳请学生日常管理科复核撤销，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#DF20271a;color:#DF2027">投诉类</span> <span class="mono">XG20260630120</span> <span class="m-dept">学生日常管理科</span> · 2026-06-30
+        <span class="m-tag warn">催办</span><span class="m-tag overdue">超期</span></div>
+    </div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">本科室办理情况</div>
+      <div class="m-chart-wrap"><div class="chart-slot" style="width:150px;height:150px;max-width:100%"><span>图表区域</span><small>Canvas 运行时绘制</small></div></div>
+      <div class="m-chart-legend">
+      <div class="m-lg"><span class="d" style="background:#3087CC"></span>办理中<span class="v">2</span></div>
+      <div class="m-lg"><span class="d" style="background:#1BB975"></span>已办结<span class="v">2</span></div>
+    </div>
+    </div>
+      </main>
+      
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab active" onclick="location.href='section-home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>工作台</span></button>
+        <button class="m-tab" onclick="location.href='section-inbox.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>收件箱 (2)</span></button>
+        <button class="m-tab" onclick="location.href='section-more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

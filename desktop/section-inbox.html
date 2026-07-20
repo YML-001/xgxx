@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 · 科室收件箱（科室负责人视角）</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">工</div>
+        <div class="brand-text"><h1>学工信箱</h1><p>接诉即办 · 件件有回音</p></div>
+      </div>
+      <nav class="nav-group" id="sidebar-nav">
+        <div class="nav-section-title">本科室办理</div>
+        <button class="nav-item" onclick="location.href='section-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>科室工作台</span></button>
+        <button class="nav-item active" onclick="location.href='section-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>科室收件箱</span><span class="nav-badge">2</span></button>
+        <div class="nav-section-title">信息公开</div>
+        <button class="nav-item" onclick="location.href='section-public.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开信件</span></button>
+        <button class="nav-item" onclick="location.href='section-policy.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 2.5h7l5 5V21.5H6z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 16.5h6"/></svg></span><span>制度文件</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="role-badge" id="role-badge">科室负责人视角</div>
+        <div class="user-card">
+          <div class="user-avatar" id="user-avatar">张</div>
+          <div class="user-info"><strong id="user-name">张伟</strong><span id="user-sub">学生日常管理科 · 负责人</span></div>
+        </div>
+      </div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="展开菜单">☰</button>
+          <div class="topbar-title">
+            <h2 id="page-title">科室收件箱</h2>
+            <div class="breadcrumb" id="breadcrumb">本科室 / 收件箱</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <div class="mailbox-switch" id="mailbox-switch"><span class="switch-label">科室</span><button class="" title="切换科室（设计稿示意）">综合办公室</button><button class="" title="切换科室（设计稿示意）">思想政治教育科</button><button class="active" title="切换科室（设计稿示意）">学生日常管理科</button><button class="" title="切换科室（设计稿示意）">学生资助管理科</button><button class="" title="切换科室（设计稿示意）">心理健康教育中心</button><button class="" title="切换科室（设计稿示意）">学生公寓管理科</button><button class="" title="切换科室（设计稿示意）">就业创业指导中心</button><button class="" title="切换科室（设计稿示意）">征兵与国防教育办公室</button></div>
+          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='section-home.html'">科室负责人</button><button class="" onclick="location.href='admin-home.html'">管理员</button></div>
+          <button class="btn btn-primary" id="btn-write-quick" style="display:none">＋ 我要写信</button>
+        </div>
+      </header>
+      <main class="content" id="app-content">
+
+    <p class="section-title">学生日常管理科 · 归口本科室的信件（仅本科室可办理）</p>
+    <div class="filter-bar" data-ns="sec">
+      <div class="filter-item"><label>信件标题</label>
+          <input data-f="title" value="" placeholder="输入关键字"></div><div class="filter-item"><label>信件分类</label>
+            <select data-f="category"><option value="">全部</option>
+            <option >建议类</option><option >问题类</option><option >咨询类</option><option >感谢类</option><option >投诉类</option></select></div><div class="filter-item"><label>事务分类</label>
+            <select data-f="affair"><option value="">全部</option>
+            <option >学籍异动</option><option >请假考勤</option><option >违纪申诉</option></select></div>
+      <div class="filter-actions">
+        <button class="btn btn-primary btn-sm" data-act="search">搜索</button>
+        <button class="btn btn-outline btn-sm" data-act="reset">重置</button>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="全部">全部 <span class="cnt">4</span></button><button class="tab " data-tab="办理中">办理中 <span class="cnt">2</span></button><button class="tab " data-tab="已办结">已办结 <span class="cnt">2</span></button>
+    </div>
+    <div class="card"><div class="card-body" style="padding:0">
+      <table><thead><tr>
+        <th style="width:140px">编号</th><th>标题</th><th style="width:80px">分类</th>
+        <th style="width:88px">事务</th><th style="width:66px">来信人</th><th style="width:90px">来信时间</th><th style="width:88px">状态</th><th style="width:70px">操作</th>
+      </tr></thead><tbody>
+        <tr>
+          <td class="mono">XG20260630120</td>
+          <td>关于宿舍晚归违纪处理结果的申诉 <span class="tag warn">催办</span> <span class="tag overdue">超期</span> <div class="cell-excerpt">本人因参加学校批准的社团活动晚归被记违纪，认为处理有误，已附活动审批材料，恳请学生日常管理科复核撤销，谢谢。</div></td>
+          <td><span class="badge" style="background:#DF20271a;color:#DF2027">投诉类</span></td>
+          <td><span class="tag">违纪申诉</span></td>
+          <td>孙*</td>
+          <td>2026-06-30</td>
+          <td><span class="badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></td>
+          <td><button class="btn btn-primary btn-sm" data-handle="XG20260630120">办理</button></td>
+        </tr><tr>
+          <td class="mono">XG20260628140</td>
+          <td>关于优化线上请假审批流程的建议   <div class="cell-excerpt">目前线上请假需层层审批、耗时较长，建议增加审批进度提醒与超时自动催办，并支持一键撤回，提升同学请假体验。</div></td>
+          <td><span class="badge" style="background:#3087CC1a;color:#3087CC">建议类</span></td>
+          <td><span class="tag">请假考勤</span></td>
+          <td>王*</td>
+          <td>2026-06-28</td>
+          <td><span class="badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></td>
+          <td><button class="btn btn-primary btn-sm" data-handle="XG20260628140">办理</button></td>
+        </tr><tr>
+          <td class="mono">XG20260311182</td>
+          <td>关于考勤违纪认定的申诉 <span class="tag warn">催办</span> <span class="tag overdue">超期</span> <div class="cell-excerpt">对本次考勤违纪认定有异议，已附情况说明，恳请日常管理科复核处理。</div></td>
+          <td><span class="badge" style="background:#DF20271a;color:#DF2027">投诉类</span></td>
+          <td><span class="tag">违纪申诉</span></td>
+          <td>潘*</td>
+          <td>2026-03-11</td>
+          <td><span class="badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></td>
+          <td><button class="btn btn-primary btn-sm" data-handle="XG20260311182">办理</button></td>
+        </tr><tr>
+          <td class="mono">XG20250218102</td>
+          <td>关于请假销假环节增加到期提醒的建议   <div class="cell-excerpt">建议在请假销假环节增加到期提醒，避免同学忘记销假影响考勤。</div></td>
+          <td><span class="badge" style="background:#3087CC1a;color:#3087CC">建议类</span></td>
+          <td><span class="tag">请假考勤</span></td>
+          <td>邓*</td>
+          <td>2025-02-18</td>
+          <td><span class="badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></td>
+          <td><button class="btn btn-primary btn-sm" data-handle="XG20250218102">办理</button></td>
+        </tr>
+      </tbody></table>
+    </div></div>
+    
+      </main>
+    </div>
+  </div>
+  <div class="mask" id="sidebar-mask"></div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header"><h3 id="modal-title">详情</h3><button class="modal-close" id="modal-close" aria-label="关闭">&times;</button></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+  <output class="toast" id="toast" aria-live="polite"></output>
+  <div class="page-stub-note">静态设计稿 · 顶栏/侧栏可点击跳转</div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

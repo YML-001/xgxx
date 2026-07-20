@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 · 常见问题（学生视角）</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">工</div>
+        <div class="brand-text"><h1>学工信箱</h1><p>接诉即办 · 件件有回音</p></div>
+      </div>
+      <nav class="nav-group" id="sidebar-nav">
+        <div class="nav-section-title">常用</div>
+        <button class="nav-item" onclick="location.href='student-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>工作台</span></button>
+        <button class="nav-item" onclick="location.href='student-write.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M12.5 20H20"/><path d="M15.5 4.5a2 2 0 0 1 3 3L8 18l-4 1 1-4z"/></svg></span><span>我要写信</span></button>
+        <button class="nav-item" onclick="location.href='student-my.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的信件</span><span class="nav-badge">3</span></button>
+        <button class="nav-item" onclick="location.href='student-query.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></span><span>信件查询</span></button>
+        <div class="nav-section-title">信息公开</div>
+        <button class="nav-item" onclick="location.href='student-public.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开信件</span></button>
+        <button class="nav-item" onclick="location.href='student-policy.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 2.5h7l5 5V21.5H6z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 16.5h6"/></svg></span><span>制度文件</span></button>
+        <button class="nav-item" onclick="location.href='student-stats.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M3.5 20h17"/><rect x="5" y="11" width="3.2" height="6" rx=".6"/><rect x="10.4" y="6.5" width="3.2" height="10.5" rx=".6"/><rect x="15.8" y="13.5" width="3.2" height="3.5" rx=".6"/></svg></span><span>数据统计</span></button>
+        <div class="nav-section-title">帮助</div>
+        <button class="nav-item" onclick="location.href='student-dept.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M5 4h3l1.6 4.2-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2L18 16v3a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 3 6.2 2 2 0 0 1 5 4z"/></svg></span><span>科室联系方式</span></button>
+        <button class="nav-item active" onclick="location.href='student-faq.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.2a2.4 2.4 0 1 1 3.3 2.2c-.8.4-1.1.9-1.1 1.8"/><path d="M12 16.6h.01"/></svg></span><span>常见问题</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="role-badge" id="role-badge">学生视角</div>
+        <div class="user-card">
+          <div class="user-avatar" id="user-avatar">李</div>
+          <div class="user-info"><strong id="user-name">李诚</strong><span id="user-sub">计算机学院</span></div>
+        </div>
+      </div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="展开菜单">☰</button>
+          <div class="topbar-title">
+            <h2 id="page-title">常见问题</h2>
+            <div class="breadcrumb" id="breadcrumb">帮助 / 常见问题</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
+          <div class="role-switch" id="role-switch"><button class="active" onclick="location.href='student-home.html'">学生</button><button class="" onclick="location.href='section-home.html'">科室负责人</button><button class="" onclick="location.href='admin-home.html'">管理员</button></div>
+          <button class="btn btn-primary" id="btn-write-quick" onclick="location.href='student-write-notice.html'">＋ 我要写信</button>
+        </div>
+      </header>
+      <main class="content" id="app-content">
+
+    <div class="card"><div class="card-header"><h3>常见问题</h3></div>
+      <div class="card-body">
+        <details class="faq-item"><summary>写信后多久能收到回复？</summary>
+          <div class="faq-a">信件提交后由归口科室受理办理。系统按统一的超期天数判定是否超期：超过设定天数仍未办结的信件会自动标记为「超期」，并纳入管理员督办；具体天数以管理员在「超期时限配置」中的设定为准。</div></details><details class="faq-item"><summary>我的信件会由谁办理？</summary>
+          <div class="faq-a">系统会按事务类型自动匹配并分派至对应归口科室，由该科室负责人受理、核实办理并答复；管理员（系统管理）仅对特殊信件进行转办，并负责督办催办。</div></details><details class="faq-item"><summary>如何查看我的信件办理进度？</summary>
+          <div class="faq-a">登录后进入「我的信件」，或在「信件查询」中输入信件编号，即可查看受理、办理、答复的完整流程时间轴。</div></details><details class="faq-item"><summary>对办理结果不满意怎么办？</summary>
+          <div class="faq-a">在信件详情中对答复进行满意度评价；若不满意可点击「申请二次办理」，信件将重新进入办理流程。</div></details><details class="faq-item"><summary>信件长时间没有回复怎么办？</summary>
+          <div class="faq-a">可在信件详情点击「催办」，系统会向归口科室推送催办提醒；超过时限未办结的信件也会自动触发管理员督办。</div></details><details class="faq-item"><summary>哪些事项不予受理？</summary>
+          <div class="faq-a">非学工部职责范围（如教务、后勤、网络等）、涉及紧急救助（110/119/120）、涉及国家机密或个人隐私、应通过法定程序解决，以及重复无理诉求等事项不予受理。</div></details>
+      </div>
+    </div>
+      </main>
+    </div>
+  </div>
+  <div class="mask" id="sidebar-mask"></div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header"><h3 id="modal-title">详情</h3><button class="modal-close" id="modal-close" aria-label="关闭">&times;</button></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+  <output class="toast" id="toast" aria-live="polite"></output>
+  <div class="page-stub-note">静态设计稿 · 顶栏/侧栏可点击跳转</div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="学工信箱 移动端 —— 倾听学生声音，接诉即办，件件有回音">
+  <title>学工信箱 · 移动端</title>
+  <link rel="stylesheet" href="assets/css/mobile.css">
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回">‹</button>
+        <div class="m-appbar-title" id="m-title">学工信箱</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱">&#9662;</button>
+      </header>
+
+      <main class="m-main" id="m-content"></main>
+
+      <button class="m-fab" id="m-fab" aria-label="我要写信">＋</button>
+
+      <nav class="m-tabbar" id="m-tabbar"></nav>
+    </div>
+  </div>
+
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head">
+        <h3 id="m-sheet-title">详情</h3>
+        <button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button>
+      </div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/mobile.js"></script>
+</body>
+</html>

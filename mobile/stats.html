@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 数据统计</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回" onclick="location.href='home.html'">‹</button>
+        <div class="m-appbar-title" id="m-title">数据统计</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-stat-grid">
+      <div class="m-stat" style="--acc:#3087CC"><div class="m-stat-label">累计来信</div><div class="m-stat-val" style="color:#3087CC">24</div><div class="m-stat-sub">学工信箱</div></div>
+      <div class="m-stat" style="--acc:#1BB975"><div class="m-stat-label">已办结</div><div class="m-stat-val" style="color:#1BB975">16</div><div class="m-stat-sub">办结率 67%</div></div>
+      <div class="m-stat" style="--acc:#3087CC"><div class="m-stat-label">平均时长</div><div class="m-stat-val" style="color:#3087CC">3.6</div><div class="m-stat-sub">工作日</div></div>
+      <div class="m-stat" style="--acc:#F29100"><div class="m-stat-label">满意度</div><div class="m-stat-val" style="color:#F29100">94%</div><div class="m-stat-sub">好评占比</div></div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">来信分类分布</div>
+      <div class="m-chart-wrap"><div class="chart-slot" style="width:150px;height:150px;max-width:100%"><span>图表区域</span><small>Canvas 运行时绘制</small></div></div>
+      <div class="m-chart-legend"><div class="m-lg"><span class="d" style="background:#3087CC"></span>建议类<span class="v">8</span></div><div class="m-lg"><span class="d" style="background:#F29100"></span>问题类<span class="v">5</span></div><div class="m-lg"><span class="d" style="background:#006DAD"></span>咨询类<span class="v">6</span></div><div class="m-lg"><span class="d" style="background:#1BB975"></span>感谢类<span class="v">3</span></div><div class="m-lg"><span class="d" style="background:#DF2027"></span>投诉类<span class="v">2</span></div></div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-title">各科室来信量 Top6</div>
+      <div class="m-bar-row"><span class="lbl">学生资助管理科</span><span class="m-bar-track"><span class="m-bar-fill" style="width:100%"></span></span><span class="val">6</span></div><div class="m-bar-row"><span class="lbl">学生日常管理科</span><span class="m-bar-track"><span class="m-bar-fill" style="width:66.66666666666666%"></span></span><span class="val">4</span></div><div class="m-bar-row"><span class="lbl">学生公寓管理科</span><span class="m-bar-track"><span class="m-bar-fill" style="width:50%"></span></span><span class="val">3</span></div><div class="m-bar-row"><span class="lbl">心理健康教育中心</span><span class="m-bar-track"><span class="m-bar-fill" style="width:50%"></span></span><span class="val">3</span></div><div class="m-bar-row"><span class="lbl">就业创业指导中心</span><span class="m-bar-track"><span class="m-bar-fill" style="width:50%"></span></span><span class="val">3</span></div><div class="m-bar-row"><span class="lbl">思想政治教育科</span><span class="m-bar-track"><span class="m-bar-fill" style="width:33.33333333333333%"></span></span><span class="val">2</span></div>
+    </div>
+      </main>
+      <button class="m-fab" id="m-fab" aria-label="我要写信" onclick="location.href='write-notice.html'">＋</button>
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>首页</span></button>
+        <button class="m-tab" onclick="location.href='public.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开</span></button>
+        <div class="m-tab spacer"></div>
+        <button class="m-tab" onclick="location.href='my.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的 (3)</span></button>
+        <button class="m-tab" onclick="location.href='more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

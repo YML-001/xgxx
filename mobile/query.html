@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 信件查询</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回" onclick="location.href='home.html'">‹</button>
+        <div class="m-appbar-title" id="m-title">信件查询</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-search"><input id="m-q-input" placeholder="输入信件编号，如 XG20260612118"><button class="m-btn m-btn-primary m-btn-sm" id="m-q-btn">查询</button></div>
+    <div style="margin-bottom:14px"><span class="m-chip" data-fill="XG20260612118" style="display:inline-block;margin:0 6px 6px 0">XG20260612118</span><span class="m-chip" data-fill="XG20260701203" style="display:inline-block;margin:0 6px 6px 0">XG20260701203</span><span class="m-chip" data-fill="XG20260714077" style="display:inline-block;margin:0 6px 6px 0">XG20260714077</span><span class="m-chip" data-fill="XG20260610091" style="display:inline-block;margin:0 6px 6px 0">XG20260610091</span></div>
+    <div id="m-q-result"><div class="m-no-reply">输入编号后查询办理进度与答复</div></div>
+
+    <div class="m-section-title" style="margin-top:18px">多条件查询</div>
+    <div class="m-field"><label>信件标题</label><input id="m-q-title" value="" placeholder="输入标题关键字"></div>
+    <div class="m-field-2">
+      <div class="m-field"><label>信件分类</label>
+        <select id="m-q-cat"><option value="">全部</option><option >建议类</option><option >问题类</option><option >咨询类</option><option >感谢类</option><option >投诉类</option></select></div>
+      <div class="m-field"><label>办理状态</label>
+        <select id="m-q-status"><option value="">全部</option><option >办理中</option><option >已办结</option></select></div>
+    </div>
+    <div class="m-btn-row" style="margin-bottom:16px">
+      <button class="m-btn m-btn-outline" id="m-q-reset">重置</button>
+      <button class="m-btn m-btn-primary" id="m-q-search">搜索</button>
+    </div>
+    <div class="m-section-title">查询结果 · 最近来信</div>
+    <div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于预约心理咨询服务的咨询</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">老师您好，近期学业压力较大、睡眠不佳，想预约一次心理咨询，请问预约方式、地点、时间安排以及是否保密？谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260714077</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于增加校园招聘专场与生涯规划讲座的建议</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">临近秋招，建议就业中心增加行业招聘专场与简历、面试等生涯规划讲座，并提前公布日程，帮助同学更好准备。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20260709188</span>
+        <span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于勤工助学岗位工资发放延迟的问题反映</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">本人担任图书馆勤工助学岗位，上月工资至今未发放，影响生活开支，希望资助管理科核实处理，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20260706166</span>
+        <span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于加强大学生征兵入伍政策宣传的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议在征兵季通过讲座、学长分享、政策解读等形式加强宣传，并对退役复学、学费补偿等政策做集中答疑，鼓励更多同学应征入伍。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20260703155</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于学工信箱办理流程的咨询</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">请问在学工信箱提交诉求后，一般由哪个科室办理、如何查询进度？是否可以匿名提交？谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260702101</span>
+        <span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于申请调整宿舍床位的进度咨询</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">本人两周前提交了宿舍床位调整申请（因作息差异影响休息），至今未收到结果，恳请公寓管理科告知办理进度，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20260701203</span>
+        <span class="m-tag warn">已催办</span><span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍晚归违纪处理结果的申诉</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">本人因参加学校批准的社团活动晚归被记违纪，认为处理有误，已附活动审批材料，恳请学生日常管理科复核撤销，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#DF20271a;color:#DF2027">投诉类</span> <span class="mono">XG20260630120</span>
+        <span class="m-tag warn">已催办</span><span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于优化线上请假审批流程的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">目前线上请假需层层审批、耗时较长，建议增加审批进度提醒与超时自动催办，并支持一键撤回，提升同学请假体验。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20260628140</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于家庭经济困难认定材料的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">老师您好，想咨询本年度家庭经济困难学生认定需要提交哪些材料、如何线上申报以及认定档次的划分标准，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260620133</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于国家励志奖学金评定名额分配的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议在国家励志奖学金评定中，进一步向家庭经济困难且学业进步明显的同学倾斜，并提前公示各学院名额分配方案，让评定更公开透明。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20260612118</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">感谢辅导员在主题教育活动中的悉心指导</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">在本次「青春心向党」主题教育活动中，辅导员老师全程耐心指导，让我对理想信念有了更深理解，特此感谢学工部的用心组织！</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#1BB9751a;color:#1BB975">感谢类</span> <span class="mono">XG20260610091</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于考勤违纪认定的申诉</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">对本次考勤违纪认定有异议，已附情况说明，恳请日常管理科复核处理。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#DF20271a;color:#DF2027">投诉类</span> <span class="mono">XG20260311182</span>
+        <span class="m-tag warn">已催办</span><span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于开学季开展团体心理辅导的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议开学季多开展一些团体心理辅导和减压活动，帮助同学适应新学期。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20260220175</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于国家奖学金评审结果公示的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">想咨询本学年国家奖学金评审结果的公示时间与异议反馈渠道。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260115167</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">感谢就业中心老师的悉心指导</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">在就业中心老师帮助下顺利拿到心仪 offer，特此感谢一路以来的指导！</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#1BB9751a;color:#1BB975">感谢类</span> <span class="mono">XG20251130158</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍调换审批进度的咨询</div><span class="m-badge" style="background:#3087CC1a;color:#3087CC"><span class="dot" style="background:#3087CC"></span>办理中</span></div>
+      <div class="m-li-excerpt">因作息差异申请调换宿舍，提交申请后想了解当前审批进度。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20250922147</span>
+        <span class="m-tag overdue">超期</span></div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于增加实践类主题教育项目的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议增加实践类主题教育项目，让思政教育更生动、更贴近同学。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20250709139</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于勤工助学工资发放时间的问题反映</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">上月勤工助学工资发放较晚，希望能明确固定的发放时间。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20250514128</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于上半年征兵报名与复学政策的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">想咨询今年上半年征兵报名时间、退役复学及学费补偿的相关政策，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20250325116</span>
+        </div>
+    </div><div class="m-list-item" onclick="location.href='public-detail.html'">
+      <div class="m-li-top"><div class="m-li-title">关于请假销假环节增加到期提醒的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议在请假销假环节增加到期提醒，避免同学忘记销假影响考勤。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#3087CC1a;color:#3087CC">建议类</span> <span class="mono">XG20250218102</span>
+        </div>
+    </div>
+      </main>
+      <button class="m-fab" id="m-fab" aria-label="我要写信" onclick="location.href='write-notice.html'">＋</button>
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>首页</span></button>
+        <button class="m-tab" onclick="location.href='public.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开</span></button>
+        <div class="m-tab spacer"></div>
+        <button class="m-tab" onclick="location.href='my.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的 (3)</span></button>
+        <button class="m-tab" onclick="location.href='more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

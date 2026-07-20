@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 写信须知</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回" onclick="location.href='home.html'">‹</button>
+        <div class="m-appbar-title" id="m-title">写信须知</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-card m-notice">
+      <p style="font-size:13.5px">为使来信得到及时办理与明确答复，请先阅读以下须知：</p>
+      <ol>
+        <li>遵守法律法规与公德，如实反映、文明表达。</li>
+        <li>遵循「一事一信」，标题简明、内容实事求是。</li>
+        <li>建议使用真实信息以便核实回访；不愿公开可选「不公开」。</li>
+        <li>同一事项办结后请勿以相同理由重复提交。</li>
+      </ol>
+      <div class="m-scope accept"><h5>✓ 受理范围</h5><ul><li>对学工部教育、管理、服务等方面的意见与建议</li><li>学习、生活中遇到的困难与合理求助（资助、住宿、心理等）</li><li>学工部各科室职责、政策、办事流程的咨询</li><li>对学工部职责范围内事项的投诉与反映</li></ul></div>
+      <div class="m-scope reject"><h5>✕ 不予受理</h5><ul><li>非学工部职责范围内的事项（如教务、后勤、网络等）</li><li>涉及 110、119、120 等紧急救助的事项</li><li>涉及国家机密、个人隐私及违反公序良俗的事项</li><li>应通过诉讼、仲裁、纪检监察等法定程序解决的事项</li><li>已依法依规办结，仍以同一事实重复提出的事项</li></ul></div>
+    </div>
+    <button class="m-btn m-btn-primary" id="m-notice-btn">请阅读须知</button>
+      </main>
+      <button class="m-fab" id="m-fab" aria-label="我要写信" onclick="location.href='write-notice.html'">＋</button>
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>首页</span></button>
+        <button class="m-tab" onclick="location.href='public.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开</span></button>
+        <div class="m-tab spacer"></div>
+        <button class="m-tab" onclick="location.href='my.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的 (3)</span></button>
+        <button class="m-tab" onclick="location.href='more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>
