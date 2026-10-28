@@ -763,6 +763,7 @@ Object.assign(MApp, {
       { k: "stats", ico: "chart", t: "数据统计" }, { k: "dept", ico: "phone", t: "科室联系" },
       { k: "faq", ico: "help", t: "常见问题" }
     ] : (this.role === "college" ? common.filter(i => i.k !== "public") : common);
+    const moreCard = (i) => `<div class="m-more-item" data-more="${i.k}"><div class="ic">${svgIcon(i.ico)}</div><span>${i.t}</span></div>`;
     let user;
     if (this.role === "admin") user = { avatar: MOCK.admin.avatar, nm: MOCK.admin.name, sb: MOCK.admin.role };
     else if (this.role === "leader") {
@@ -829,13 +830,13 @@ Object.assign(MApp, {
     ${this.role !== "student" ? `<button class="m-btn m-btn-primary" data-home style="margin:6px 0 4px">进入${escapeHtml(ROLE_LABELS[this.role])}工作台</button>` : ""}
     ${this.role === "admin" ? `
     <div class="m-section-title">运营</div>
-    <div class="m-role-secs">
-      <button class="m-chip" data-more="admin-stats">统计分析</button>
+    <div class="m-more-grid">
+      ${moreCard({ k: "admin-stats", ico: "chart", t: "统计分析" })}
     </div>
     <p class="m-hint">批量催办、科室与人员、时限与模板等配置请在桌面端操作。学院副书记由学工系统维护，信箱直接使用。</p>` : ""}
     <div class="m-section-title">更多功能</div>
     <div class="m-more-grid">
-      ${moreItems.map(i => `<div class="m-more-item" data-more="${i.k}"><div class="ic">${svgIcon(i.ico)}</div><span>${i.t}</span></div>`).join("")}
+      ${moreItems.map(moreCard).join("")}
     </div>
     <p class="m-topnote" style="color:var(--text-muted)">学工信箱移动端原型 · <a href="app.html" style="color:var(--primary)">前往桌面端</a></p>`;
   },

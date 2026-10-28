@@ -11,8 +11,10 @@
       --primary-alt: #3087CC;
       --primary-dark: #006DAD;
       --primary-soft: #E3F1F9;
-      --primary-header: #D6EAF9;
+      --primary-header: #E3F1F9;
       --primary-form: #C7E1F0;
+      --header-top: #1B7DBF;
+      --header-bot: #4A92DB;
       --text: #1E323F;
       --text-title: #3C444F;
       --text-soft: #627079;
@@ -24,9 +26,9 @@
 
     body {
       min-height: 100vh;
-      font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", -apple-system, sans-serif;
+      font-family: OPPOSans, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", -apple-system, sans-serif;
       background:
-        linear-gradient(180deg, #d6eaf9 0, #d6eaf9 148px, var(--primary-soft) 148px);
+        linear-gradient(180deg, var(--header-top) 0, var(--header-bot) 168px, var(--primary-soft) 168px);
       color: var(--text-title);
       font-size: 15px;
       line-height: 1.6;
@@ -44,7 +46,7 @@
       align-items: flex-start;
       gap: 16px;
       margin-bottom: 28px;
-      color: var(--text);
+      color: #fff;
     }
 
     .seal {
@@ -52,8 +54,8 @@
       width: 52px;
       height: 52px;
       border-radius: 10px;
-      background: var(--primary);
-      color: #fff;
+      background: #fff;
+      color: var(--header-top);
       font-size: 26px;
       font-weight: 700;
       line-height: 52px;
@@ -64,7 +66,7 @@
     .kicker {
       font-size: 13px;
       letter-spacing: .08em;
-      color: var(--primary-dark);
+      color: #E3F1F9;
       font-weight: 600;
     }
 
@@ -73,13 +75,13 @@
       font-size: 32px;
       line-height: 1.25;
       font-weight: 700;
-      color: var(--text);
+      color: #fff;
     }
 
     .lead {
       margin-top: 8px;
       max-width: 36em;
-      color: var(--text-soft);
+      color: rgba(255, 255, 255, .88);
       font-size: 15px;
     }
 

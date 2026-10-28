@@ -12,7 +12,7 @@ const STORE_KEYS = {
   mailbox: "xg_mailbox",
   letters: "xg_letters",       // 本地新增/修改的信件
   msgs: "xg_msgs",             // 消息通知（M-01 ~ M-24）
-  seedFlag: "xg_seeded_v8",
+  seedFlag: "xg_seeded_v9",
   config: "xg_config_v9",      // 分类/事务/科室+成员/学院/制度/时限/模板 配置
   faq: "xg_faq_v3"            // 常见问题配置（管理员维护）
 };
@@ -1541,6 +1541,84 @@ function seedInFlow() {
   });
 }
 
+/* 各科室领导工作台的待指定 / 待审批。
+   待指定回复人只分到科室领导、尚未指定回复人；待审批由回复人提交后仍由科室领导审批。
+   学生资助管理科已在 seedInFlow 覆盖，这里不重复生成。 */
+function seedLeaderQueues() {
+  const mk = (daysAgo, hour) => {
+    const d = new Date();
+    d.setDate(d.getDate() - daysAgo);
+    d.setHours(hour, 25, 0, 0);
+    return d;
+  };
+  const base = [
+    { n: "611", dept: "学生公寓管理科", daysAgo: 1, hour: 9, title: "关于宿舍空调外机夜间噪音影响休息的问题反映", category: "问题类", affair: "宿舍管理", name: "何*", unit: "计算机学院", level: "重要",
+      content: "老师您好，我所在宿舍楼的空调外机正对窗户，夜间持续运转，噪音很大，已经影响入睡。希望公寓管理科核实情况，并协调调整安装位置或做隔音处理，谢谢。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "612", dept: "学生公寓管理科", daysAgo: 2, hour: 11, title: "关于申请调至同楼层空余床位的咨询", category: "咨询类", affair: "住宿调整", name: "马*", unit: "电信学院", level: "一般",
+      content: "本人与室友作息差异较大，了解到同楼层目前有空余床位。想咨询本学期能否申请调换，需要提交哪些材料，以及由谁审批。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "613", dept: "学生公寓管理科", daysAgo: 2, hour: 15, title: "关于延长宿舍楼洗衣房开放时间的建议", category: "建议类", affair: "宿舍管理", name: "林*", unit: "机械学院", level: "一般",
+      content: "宿舍洗衣房目前晚上九点就关闭，晚自习回来经常赶不上。建议工作日延长至十一点，方便同学洗衣。",
+      spec: { stage: STAGE.approving, replier: "M602", draft: "同学您好，已核实洗衣房开放时间。考虑到晚自习返回后的实际需要，工作日开放时间拟调整为 7:00 至 23:00，周末保持现有安排。具体执行时间将在楼栋公告栏和公寓群通知。" } },
+    { n: "614", dept: "学生公寓管理科", daysAgo: 3, hour: 10, title: "关于毕业离校宿舍退宿手续的咨询", category: "咨询类", affair: "住宿调整", name: "吴*", unit: "商学院", level: "一般",
+      content: "今年六月毕业，想了解退宿的时间安排、钥匙和门禁卡的归还地点，以及个人物品未及时搬离时会如何处理。",
+      spec: { stage: STAGE.approving, replier: "M602", draft: "同学您好，毕业生退宿安排在离校手续周内完成。请携带钥匙和门禁卡到楼栋值班室办理，房间物品须当日清空。逾期未搬离的物品由公寓统一登记保管，具体日程见离校通知。" } },
+
+    { n: "621", dept: "综合办公室", daysAgo: 1, hour: 14, title: "关于学工信箱公开答复如何查阅的咨询", category: "咨询类", affair: "其他事务", name: "郑*", unit: "法学院", level: "一般",
+      content: "老师您好，想了解已经办结并选择公开的来信，学生在哪里可以查阅正式答复，是否可以按学院筛选。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "622", dept: "综合办公室", daysAgo: 3, hour: 16, title: "关于来信办理进度增加短信提醒的建议", category: "建议类", affair: "其他事务", name: "钱*", unit: "外国语学院", level: "一般",
+      content: "建议学工信箱在信件分派、指定回复人和发出正式答复时，给来信人发送短信提醒，避免只能登录系统才能看到进度。",
+      spec: { stage: STAGE.approving, replier: "M103", draft: "同学您好，目前办理进度可在「我的信件」和系统消息中查看，分派、指定回复人和正式答复等节点都会发送站内消息。短信提醒涉及统一身份认证和短信网关，已列入后续优化，现阶段先保证站内每一步可查。" } },
+
+    { n: "631", dept: "思想政治教育科", daysAgo: 1, hour: 10, title: "关于增加红色教育实践名额的建议", category: "建议类", affair: "思想教育", name: "高*", unit: "材料学院", level: "一般",
+      content: "学院红色教育实践的名额比较少，不少同学报名后没能参加。建议适当增加名额，或分批次安排，让更多同学有机会参加。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "632", dept: "思想政治教育科", daysAgo: 2, hour: 15, title: "关于入党积极分子培训开班时间的咨询", category: "咨询类", affair: "党团组织", name: "丁*", unit: "计算机学院", level: "一般",
+      content: "老师您好，想咨询本学期入党积极分子培训的开班时间、上课地点和报名方式。错过学院通知的同学应当如何补报？",
+      spec: { stage: STAGE.approving, replier: "M202", draft: "同学您好，本学期入党积极分子培训拟定于第 6 教学周周末开班，地点在大学生活动中心报告厅。请通过学院团委报名；已错过学院通知的同学，可在开班前三个工作日内向学院团委补报。" } },
+
+    { n: "641", dept: "学生日常管理科", daysAgo: 2, hour: 9, title: "关于休学复学后学生证换发时间的咨询", category: "咨询类", affair: "学籍异动", name: "蔡*", unit: "自动化学院", level: "一般",
+      content: "我已办完复学手续，学生证上的信息还没有更新。想咨询换发学生证的办理时间和需要携带的材料。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "642", dept: "学生日常管理科", daysAgo: 1, hour: 16, title: "关于请假系统无法上传医院证明的问题反映", category: "问题类", affair: "请假考勤", name: "任*", unit: "生命科学学院", level: "重要",
+      content: "申请病假时上传医院证明一直失败，提示格式不支持。jpg 和 pdf 都试过了。希望尽快修复，否则无法按时完成请假。",
+      spec: { stage: STAGE.approving, replier: "M302", draft: "同学您好，经核实，请假系统对超过 10MB 的证明材料会上传失败。请先将图片压缩后重新提交。我们已请信息化部门放宽大小限制，预计本周内完成。在此期间，可将证明交学院辅导员登记，不作为缺勤处理。" } },
+
+    { n: "651", dept: "心理健康教育中心", daysAgo: 2, hour: 14, title: "关于心理咨询预约后改期规则的咨询", category: "咨询类", affair: "心理咨询", name: "方*", unit: "外国语学院", level: "一般",
+      content: "我已预约本周三的心理咨询，临时和课程冲突。想了解能否改期、最晚什么时候申请，以及改期会不会影响以后的预约。",
+      spec: { stage: STAGE.approving, replier: "M502", draft: "同学您好，已预约的咨询如需改期，请至少提前一个工作日在预约系统中操作，或电话联系心理中心前台。本学期每位同学可改期一次，不影响后续正常预约。您这次可改至本周五下午，具体时段请在系统中选择。" } },
+
+    { n: "661", dept: "就业创业指导中心", daysAgo: 1, hour: 11, title: "关于未就业毕业生档案转递去向的咨询", category: "咨询类", affair: "就业指导", name: "姚*", unit: "商学院", level: "重要",
+      content: "毕业时还没有签订三方协议，想咨询档案和户口是转回生源地还是可以暂留学校，以及办理的截止时间。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "662", dept: "就业创业指导中心", daysAgo: 3, hour: 15, title: "关于创业园区入驻需要哪些材料的咨询", category: "咨询类", affair: "创业服务", name: "秦*", unit: "机械学院", level: "一般",
+      content: "我们团队想申请入驻学校创业园区，想了解需要准备哪些材料、评审安排在什么时间，以及场地使用是否收费。",
+      spec: { stage: STAGE.approving, replier: "M702", draft: "同学您好，入驻创业园区需提交项目计划书、团队成员名单和指导教师意见。本学期评审安排在每月第一周，通过后免场地租金，水电按园区标准结算。材料请发送至就业创业指导中心邮箱，或于工作日到中心窗口提交。" } },
+
+    { n: "671", dept: "征兵与国防教育办公室", daysAgo: 1, hour: 8, title: "关于在校生应征体检复查安排的咨询", category: "咨询类", affair: "征兵入伍", name: "侯*", unit: "电信学院", level: "重要",
+      content: "初检有一项没有通过，通知可以复查。想咨询复查的时间、地点，以及复查前需要注意什么。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "672", dept: "征兵与国防教育办公室", daysAgo: 4, hour: 10, title: "关于退役复学学费补偿何时发放的咨询", category: "咨询类", affair: "国防教育", name: "孟*", unit: "计算机学院", level: "一般",
+      content: "我已办完退役复学，学费补偿材料也交齐了。想确认补偿款什么时候发放，是打到银行卡，还是直接冲抵学费。",
+      spec: { stage: STAGE.approving, replier: "M802", draft: "同学您好，退役复学学费补偿在材料审核通过后，一般于复学学期的第二个月发放至您登记的银行卡，不直接冲抵学费。您的材料已审核通过，预计下月 15 日前到账，请留意短信通知。" } }
+  ];
+  return base.map(b => {
+    const d = mk(b.daysAgo, b.hour);
+    const id = "XG" + formatDate(d).replace(/-/g, "") + b.n;
+    return {
+      id, mailbox: MOCK.mailbox, owner: "other",
+      title: b.title, category: b.category, affair: b.affair,
+      name: b.name, idInfo: "保密", phone: "13*****" + b.n, email: "",
+      unit: b.unit, address: "", content: b.content, level: b.level,
+      status: STATUS.doing, dept: b.dept,
+      createdAt: d.toISOString(), date: formatDate(d),
+      reply: null, rating: null, attachments: [], _spec: b.spec
+    };
+  });
+}
+
 /* 待分派演示来信：日期相对「今天」生成，保证任何时候打开原型都有新鲜的待办 */
 function seedPending() {
   const mk = (daysAgo, hour) => {
@@ -2000,7 +2078,7 @@ function seedLetters() {
 
   _msgBuffer = [];
   const rot = {};
-  const built = seedPending().concat(seedInFlow()).concat(seed).concat(seedWithdrawn())
+  const built = seedPending().concat(seedInFlow()).concat(seedLeaderQueues()).concat(seed).concat(seedWithdrawn())
     .sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""))
     .map(r => seedFlow(r, rot));
   built.push(seedDraft());

@@ -329,16 +329,16 @@ ${transformMobileContent(contentHtml, route, role)}
       <nav class="m-tabbar${(M_TABS[role] || []).length === 3 ? " cols-3" : ""}" id="m-tabbar">
 ${mobileTabbar(role, tab)}
       </nav>
+      <div class="m-sheet-overlay" id="m-sheet">
+        <div class="m-sheet">
+          <div class="m-sheet-handle"></div>
+          <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+          <div class="m-sheet-body" id="m-sheet-body"></div>
+        </div>
+      </div>
+      <div class="m-toast" id="m-toast" aria-live="polite"></div>
     </div>
   </div>
-  <div class="m-sheet-overlay" id="m-sheet">
-    <div class="m-sheet">
-      <div class="m-sheet-handle"></div>
-      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
-      <div class="m-sheet-body" id="m-sheet-body"></div>
-    </div>
-  </div>
-  <div class="m-toast" id="m-toast" aria-live="polite"></div>
   ${STUB}
 </body>
 </html>`;
