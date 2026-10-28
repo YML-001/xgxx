@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 信件收件箱</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back hidden" id="m-back" aria-label="返回">‹</button>
+        <div class="m-appbar-title" id="m-title">信件收件箱</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="m-bell-dot">16</span></button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-search"><input id="m-inbox-search" placeholder="搜索标题 / 来信人 / 科室 / 回复人 / 编号" value=""></div>
+    <div class="m-segtabs m-seg-scroll"><button class="m-seg active" data-seg="全部">全部 37</button><button class="m-seg " data-seg="待分派">待分派 5</button><button class="m-seg " data-seg="办理中">办理中 14</button><button class="m-seg " data-seg="已办结">已办结 17</button><button class="m-seg " data-seg="已撤回">已撤回 1</button></div>
+    <div class="m-list-item" data-handle="XG20261028301">
+      <div class="m-li-top"><div class="m-li-title">关于开设考研自习室延时开放的建议</div><span class="m-badge" style="background:#F291001a;color:#F29100"><span class="dot" style="background:#F29100"></span>待分派</span></div>
+      <div class="m-li-excerpt">临近考研，图书馆与教学楼自习区座位紧张且关闭较早，建议学工部协调开设考研专用自习室并延时开放至 23:00，帮助备考同学安心复习。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20261028301</span> <span class="m-tag warn">待分派</span> · 时限 2026-11-04
+        </div>
+      <div style="margin-top:8px"><button class="m-btn m-btn-primary m-btn-sm" data-dispatch="XG20261028301">分给科室领导</button></div>
+    </div><div class="m-list-item" data-handle="XG20261027302">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍热水供应时间调整的问题反映</div><span class="m-badge" style="background:#F291001a;color:#F29100"><span class="dot" style="background:#F29100"></span>待分派</span></div>
+      <div class="m-li-excerpt">近期宿舍楼热水供应时间提前结束，晚自习返回后经常没有热水，影响日常生活，希望能核实并适当延长供应时段。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20261027302</span> <span class="m-tag warn">待分派</span> · 时限 2026-11-03
+        </div>
+      <div style="margin-top:8px"><button class="m-btn m-btn-primary m-btn-sm" data-dispatch="XG20261027302">分给科室领导</button></div>
+    </div><div class="m-list-item" data-handle="XG20261027303">
+      <div class="m-li-top"><div class="m-li-title">关于家庭突发变故申请临时困难补助的求助</div><span class="m-badge" style="background:#F291001a;color:#F29100"><span class="dot" style="background:#F29100"></span>待分派</span></div>
+      <div class="m-li-excerpt">本人家中近期突发变故，家庭经济状况骤然困难，恳请学校核实情况后给予临时困难补助，并告知需要补充哪些材料，谢谢老师。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20261027303</span> <span class="m-tag warn">待分派</span> · 时限 2026-11-03
+        </div>
+      <div style="margin-top:8px"><button class="m-btn m-btn-primary m-btn-sm" data-dispatch="XG20261027303">分给科室领导</button></div>
+    </div><div class="m-list-item" data-handle="XG20261027401">
+      <div class="m-li-top"><div class="m-li-title">关于国家助学金第二批发放时间的咨询</div><span class="m-badge" style="background:#E07B001a;color:#E07B00"><span class="dot" style="background:#E07B00"></span>待指定回复人</span></div>
+      <div class="m-li-excerpt">老师您好，想咨询本学期国家助学金第二批的发放时间，以及是否需要重新确认银行卡信息，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261027401</span> <span class="m-dept">学生资助管理科 · 未指定回复人</span> · 时限 2026-11-03
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261026406">
+      <div class="m-li-top"><div class="m-li-title">关于新生绿色通道办理流程的咨询</div><span class="m-badge" style="background:#006DAD1a;color:#006DAD"><span class="dot" style="background:#006DAD"></span>待审批</span></div>
+      <div class="m-li-excerpt">想了解新生入学时绿色通道的办理流程，以及缓缴学费后的后续手续。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261026406</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-11-02
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261026304">
+      <div class="m-li-top"><div class="m-li-title">关于秋季征兵体检安排的咨询</div><span class="m-badge" style="background:#F291001a;color:#F29100"><span class="dot" style="background:#F29100"></span>待分派</span></div>
+      <div class="m-li-excerpt">老师您好，想咨询本次秋季征兵的体检时间、地点与需要携带的材料，以及在校生报名的具体流程，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261026304</span> <span class="m-tag warn">待分派</span> · 时限 2026-11-02
+        </div>
+      <div style="margin-top:8px"><button class="m-btn m-btn-primary m-btn-sm" data-dispatch="XG20261026304">分给科室领导</button></div>
+    </div><div class="m-list-item" data-handle="XG20261026402">
+      <div class="m-li-top"><div class="m-li-title">关于家庭经济困难认定档次复核的申请</div><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7"><span class="dot" style="background:#2A8DC7"></span>回复中</span></div>
+      <div class="m-li-excerpt">本人对本年度困难认定档次有异议，家庭近期情况有较大变化，申请复核认定档次，并想了解需要补充哪些证明材料。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20261026402</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-11-02
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261025403">
+      <div class="m-li-top"><div class="m-li-title">关于学院励志奖学金推荐名单公示不清的反映</div><span class="m-badge" style="background:#7A5CC21a;color:#7A5CC2"><span class="dot" style="background:#7A5CC2"></span>学院协同中</span></div>
+      <div class="m-li-excerpt">学院励志奖学金推荐名单只在班级群里简单通知，未看到正式公示和公示期，希望核实推荐流程是否规范。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20261025403</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-11-01
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261025404">
+      <div class="m-li-top"><div class="m-li-title">关于勤工助学岗位申请条件的咨询</div><span class="m-badge" style="background:#DF20271a;color:#DF2027"><span class="dot" style="background:#DF2027"></span>已打回</span></div>
+      <div class="m-li-excerpt">想了解本学期校内勤工助学岗位的申请条件、开放时间和报名入口，非困难生是否可以申请？</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261025404</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-11-01
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261024405">
+      <div class="m-li-top"><div class="m-li-title">关于临时困难补助申请材料的咨询</div><span class="m-badge" style="background:#0F9D8A1a;color:#0F9D8A"><span class="dot" style="background:#0F9D8A"></span>待确认发送</span></div>
+      <div class="m-li-excerpt">家里近期遇到突发情况，想申请临时困难补助，请问需要准备哪些材料，学院和学工部分别负责哪些环节？</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261024405</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-10-31
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261023510">
+      <div class="m-li-top"><div class="m-li-title">关于国家助学贷款回执确认时间的咨询</div><span class="m-badge" style="background:#C8CAD11a;color:#C8CAD1"><span class="dot" style="background:#C8CAD1"></span>已撤回</span></div>
+      <div class="m-li-excerpt">老师您好，国家助学贷款回执我已在银行办理，想确认学校这边的提交截止时间。后来已在资助通知里查到说明，这封来信不再需要办理。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261023510</span> <span class="m-tag warn">待分派</span> · 时限 2026-10-30
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261022407">
+      <div class="m-li-top"><div class="m-li-title">关于学院奖学金评定细则的疑问</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">学院奖学金评定细则中关于竞赛加分的计算方式不太清楚，希望能解释一下。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20261022407</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-10-29
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20261019305">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍楼夜间门禁登记排队过长的问题反映</div><span class="m-badge" style="background:#F291001a;color:#F29100"><span class="dot" style="background:#F29100"></span>待分派</span></div>
+      <div class="m-li-excerpt">近期宿舍楼夜间返寝需要在门岗逐一登记，排队经常超过二十分钟，影响休息。希望能优化登记方式，减少同学等候时间。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20261019305</span> <span class="m-tag warn">待分派</span> · 时限 2026-10-26
+        <span class="m-tag overdue">超期</span></div>
+      <div style="margin-top:8px"><button class="m-btn m-btn-primary m-btn-sm" data-dispatch="XG20261019305">分给科室领导</button></div>
+    </div><div class="m-list-item" data-handle="XG20260714077">
+      <div class="m-li-top"><div class="m-li-title">关于预约心理咨询服务的咨询</div><span class="m-badge" style="background:#E07B001a;color:#E07B00"><span class="dot" style="background:#E07B00"></span>待指定回复人</span></div>
+      <div class="m-li-excerpt">老师您好，近期学业压力较大、睡眠不佳，想预约一次心理咨询，请问预约方式、地点、时间安排以及是否保密？谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260714077</span> <span class="m-dept">心理健康教育中心 · 未指定回复人</span> · 时限 2026-07-21
+        <span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260709188">
+      <div class="m-li-top"><div class="m-li-title">关于增加校园招聘专场与生涯规划讲座的建议</div><span class="m-badge" style="background:#7A5CC21a;color:#7A5CC2"><span class="dot" style="background:#7A5CC2"></span>学院协同中</span></div>
+      <div class="m-li-excerpt">临近秋招，建议就业中心增加行业招聘专场与简历、面试等生涯规划讲座，并提前公布日程，帮助同学更好准备。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20260709188</span> <span class="m-dept">就业创业指导中心 · 谢婷</span> · 时限 2026-07-16
+        <span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260706166">
+      <div class="m-li-top"><div class="m-li-title">关于勤工助学岗位工资发放延迟的问题反映</div><span class="m-badge" style="background:#006DAD1a;color:#006DAD"><span class="dot" style="background:#006DAD"></span>待审批</span></div>
+      <div class="m-li-excerpt">本人担任图书馆勤工助学岗位，上月工资至今未发放，影响生活开支，希望资助管理科核实处理，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20260706166</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-07-13
+        <span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260703155">
+      <div class="m-li-top"><div class="m-li-title">关于加强大学生征兵入伍政策宣传的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议在征兵季通过讲座、学长分享、政策解读等形式加强宣传，并对退役复学、学费补偿等政策做集中答疑，鼓励更多同学应征入伍。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20260703155</span> <span class="m-dept">征兵与国防教育办公室 · 曹阳</span> · 时限 2026-07-10
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20260702101">
+      <div class="m-li-top"><div class="m-li-title">关于学工信箱办理流程的咨询</div><span class="m-badge" style="background:#0F9D8A1a;color:#0F9D8A"><span class="dot" style="background:#0F9D8A"></span>待确认发送</span></div>
+      <div class="m-li-excerpt">请问在学工信箱提交诉求后，一般由哪个科室办理、如何查询进度？是否可以匿名提交？谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260702101</span> <span class="m-dept">综合办公室 · 王敏</span> · 时限 2026-07-09
+        <span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260701203">
+      <div class="m-li-top"><div class="m-li-title">关于申请调整宿舍床位的进度咨询</div><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7"><span class="dot" style="background:#2A8DC7"></span>回复中</span></div>
+      <div class="m-li-excerpt">本人两周前提交了宿舍床位调整申请（因作息差异影响休息），至今未收到结果，恳请公寓管理科告知办理进度，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20260701203</span> <span class="m-dept">学生公寓管理科 · 蒋磊</span> · 时限 2026-07-08
+        <span class="m-tag warn">催办</span><span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260630120">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍晚归违纪处理结果的申诉</div><span class="m-badge" style="background:#DF20271a;color:#DF2027"><span class="dot" style="background:#DF2027"></span>已打回</span></div>
+      <div class="m-li-excerpt">本人因参加学校批准的社团活动晚归被记违纪，认为处理有误，已附活动审批材料，恳请学生日常管理科复核撤销，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#DF20271a;color:#DF2027">投诉类</span> <span class="mono">XG20260630120</span> <span class="m-dept">学生日常管理科 · 郭鹏</span> · 时限 2026-07-07
+        <span class="m-tag warn">催办</span><span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260628140">
+      <div class="m-li-top"><div class="m-li-title">关于优化线上请假审批流程的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">目前线上请假需层层审批、耗时较长，建议增加审批进度提醒与超时自动催办，并支持一键撤回，提升同学请假体验。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20260628140</span> <span class="m-dept">学生日常管理科 · 何静</span> · 时限 2026-07-05
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20260620133">
+      <div class="m-li-top"><div class="m-li-title">关于家庭经济困难认定材料的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">老师您好，想咨询本年度家庭经济困难学生认定需要提交哪些材料、如何线上申报以及认定档次的划分标准，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260620133</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-06-27
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20260612118">
+      <div class="m-li-top"><div class="m-li-title">关于国家励志奖学金评定名额分配的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议在国家励志奖学金评定中，进一步向家庭经济困难且学业进步明显的同学倾斜，并提前公示各学院名额分配方案，让评定更公开透明。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20260612118</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-06-19
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20260610091">
+      <div class="m-li-top"><div class="m-li-title">感谢辅导员在主题教育活动中的悉心指导</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">在本次「青春心向党」主题教育活动中，辅导员老师全程耐心指导，让我对理想信念有了更深理解，特此感谢学工部的用心组织！</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#1BB9751a;color:#1BB975">感谢类</span> <span class="mono">XG20260610091</span> <span class="m-dept">思想政治教育科 · 唐蕊</span> · 时限 2026-06-17
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20260311182">
+      <div class="m-li-top"><div class="m-li-title">关于考勤违纪认定的申诉</div><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7"><span class="dot" style="background:#2A8DC7"></span>回复中</span></div>
+      <div class="m-li-excerpt">对本次考勤违纪认定有异议，已附情况说明，恳请日常管理科复核处理。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#DF20271a;color:#DF2027">投诉类</span> <span class="mono">XG20260311182</span> <span class="m-dept">学生日常管理科 · 郭鹏</span> · 时限 2026-03-18
+        <span class="m-tag warn">催办</span><span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20260220175">
+      <div class="m-li-top"><div class="m-li-title">关于开学季开展团体心理辅导的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议开学季多开展一些团体心理辅导和减压活动，帮助同学适应新学期。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20260220175</span> <span class="m-dept">心理健康教育中心 · 罗晨</span> · 时限 2026-02-27
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20260115167">
+      <div class="m-li-top"><div class="m-li-title">关于国家奖学金评审结果公示的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">想咨询本学年国家奖学金评审结果的公示时间与异议反馈渠道。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20260115167</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2026-01-22
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20251130158">
+      <div class="m-li-top"><div class="m-li-title">感谢就业中心老师的悉心指导</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">在就业中心老师帮助下顺利拿到心仪 offer，特此感谢一路以来的指导！</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#1BB9751a;color:#1BB975">感谢类</span> <span class="mono">XG20251130158</span> <span class="m-dept">就业创业指导中心 · 韩宇</span> · 时限 2025-12-07
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20250922147">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍调换审批进度的咨询</div><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7"><span class="dot" style="background:#2A8DC7"></span>回复中</span></div>
+      <div class="m-li-excerpt">因作息差异申请调换宿舍，提交申请后想了解当前审批进度。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20250922147</span> <span class="m-dept">学生公寓管理科 · 蒋磊</span> · 时限 2025-09-29
+        <span class="m-tag overdue">超期</span></div>
+      
+    </div><div class="m-list-item" data-handle="XG20250709139">
+      <div class="m-li-top"><div class="m-li-title">关于增加实践类主题教育项目的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议增加实践类主题教育项目，让思政教育更生动、更贴近同学。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20250709139</span> <span class="m-dept">思想政治教育科 · 陈昊</span> · 时限 2025-07-16
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20250514128">
+      <div class="m-li-top"><div class="m-li-title">关于勤工助学工资发放时间的问题反映</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">上月勤工助学工资发放较晚，希望能明确固定的发放时间。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20250514128</span> <span class="m-dept">学生资助管理科 · 冯磊</span> · 时限 2025-05-21
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20250325116">
+      <div class="m-li-top"><div class="m-li-title">关于上半年征兵报名与复学政策的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">想咨询今年上半年征兵报名时间、退役复学及学费补偿的相关政策，谢谢。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20250325116</span> <span class="m-dept">征兵与国防教育办公室 · 曹阳</span> · 时限 2025-04-01
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20250218102">
+      <div class="m-li-top"><div class="m-li-title">关于请假销假环节增加到期提醒的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">建议在请假销假环节增加到期提醒，避免同学忘记销假影响考勤。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20250218102</span> <span class="m-dept">学生日常管理科 · 何静</span> · 时限 2025-02-25
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20241108095">
+      <div class="m-li-top"><div class="m-li-title">感谢心理中心老师的耐心疏导</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">感谢心理中心老师的耐心疏导，让我走出了一段情绪低谷，非常感激。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#1BB9751a;color:#1BB975">感谢类</span> <span class="mono">XG20241108095</span> <span class="m-dept">心理健康教育中心 · 沈悦</span> · 时限 2024-11-15
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20241012088">
+      <div class="m-li-top"><div class="m-li-title">关于宿舍楼公共区域照明损坏的问题反映</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">宿舍楼公共区域照明损坏多日，晚间出行不便，恳请公寓管理科尽快维修。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#F291001a;color:#F29100">问题类</span> <span class="mono">XG20241012088</span> <span class="m-dept">学生公寓管理科 · 蒋磊</span> · 时限 2024-10-19
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20240520074">
+      <div class="m-li-top"><div class="m-li-title">关于家庭经济困难认定材料的咨询</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">想咨询家庭经济困难认定的申报材料与流程，谢谢老师。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#006DAD1a;color:#006DAD">咨询类</span> <span class="mono">XG20240520074</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 时限 2024-05-27
+        </div>
+      
+    </div><div class="m-list-item" data-handle="XG20240415061">
+      <div class="m-li-top"><div class="m-li-title">关于增设春季线上双选会的建议</div><span class="m-badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></div>
+      <div class="m-li-excerpt">临近春招，建议就业中心增设线上双选会与行业招聘专场，方便同学求职。</div>
+      <div class="m-li-meta"><span class="m-badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span> <span class="mono">XG20240415061</span> <span class="m-dept">就业创业指导中心 · 谢婷</span> · 时限 2024-04-22
+        </div>
+      
+    </div>
+      </main>
+      
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='admin-home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>工作台</span></button>
+        <button class="m-tab" onclick="location.href='admin-dispatch.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="6" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="m7.8 10.9 8.4-3.8M7.8 13.1l8.4 3.8"/></svg></span><span>待分派 (5)</span></button>
+        <button class="m-tab active" onclick="location.href='admin-inbox.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>收件箱 (14)</span></button>
+        <button class="m-tab" onclick="location.href='admin-supervise.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span><span>督办 (9)</span></button>
+        <button class="m-tab" onclick="location.href='admin-more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

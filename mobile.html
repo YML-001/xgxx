@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="学工信箱 移动端 —— 倾听学生声音，接诉即办，件件有回音">
   <title>学工信箱 · 移动端</title>
-  <link rel="stylesheet" href="assets/css/mobile.css">
+  <link rel="stylesheet" href="css/mobile.css">
 </head>
 <body>
   <div class="device">
@@ -19,6 +19,10 @@
         <button class="m-back" id="m-back" aria-label="返回">‹</button>
         <div class="m-appbar-title" id="m-title">学工信箱</div>
         <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱">&#9662;</button>
+        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>
+          <span class="m-bell-dot" id="m-bell-dot" style="display:none"></span>
+        </button>
       </header>
 
       <main class="m-main" id="m-content"></main>
@@ -42,7 +46,7 @@
 
   <div class="m-toast" id="m-toast" aria-live="polite"></div>
 
-  <script src="assets/js/data.js"></script>
-  <script src="assets/js/mobile.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/mobile.js"></script>
 </body>
 </html>

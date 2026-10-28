@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 协同待办</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back hidden" id="m-back" aria-label="返回">‹</button>
+        <div class="m-appbar-title" id="m-title">协同待办</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="m-bell-dot">1</span></button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-work-hero">
+      <h2>计算机学院 · 协同待办</h2>
+      <p>黄志远（党委副书记） ｜ 指定人员线下承办后写处理意见，发回科室回复人。副书记由学工系统维护，信箱直接使用。</p>
+    </div>
+    <div class="m-segtabs">
+      <button class="m-seg active" data-seg="open">待写意见 1</button>
+      <button class="m-seg " data-seg="done">已发回 1</button>
+    </div>
+    <div class="m-list-item" data-collab="XG20261025403">
+        <div class="m-li-top"><div class="m-li-title">关于学院励志奖学金推荐名单公示不清的反映</div><span class="m-badge" style="background:#7A5CC21a;color:#7A5CC2"><span class="dot" style="background:#7A5CC2"></span>学院协同中</span></div>
+        <div class="m-li-excerpt">协同说明：请学院核实本院推荐名单的公示时间、范围与公示期。</div>
+        <div class="m-li-meta"><span class="mono">XG20261025403</span> <span class="m-dept">学生资助管理科 · 邱敏</span> · 2026-10-26 08:40</div>
+        <div style="margin-top:8px"><button class="m-btn m-btn-primary m-btn-sm">写处理意见</button></div>
+      </div>
+      </main>
+      
+      <nav class="m-tabbar cols-3" id="m-tabbar">
+        <button class="m-tab active" onclick="location.href='college-home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.3a3.2 3.2 0 0 1 0 6"/><path d="M17.5 19.5a5.5 5.5 0 0 0-3-5"/></svg></span><span>协同待办 (1)</span></button>
+        <button class="m-tab" onclick="location.href='college-visible.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/><circle cx="12" cy="12" r="2.7"/></svg></span><span>学院可见</span></button>
+        <button class="m-tab" onclick="location.href='college-more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

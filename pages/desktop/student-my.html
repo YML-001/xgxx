@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 · 我的信件（学生视角）</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">工</div>
+        <div class="brand-text"><h1>学工信箱</h1><p>接诉即办 · 件件有回音</p></div>
+      </div>
+      <nav class="nav-group" id="sidebar-nav">
+        <div class="nav-section-title">常用</div>
+        <button class="nav-item" onclick="location.href='student-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>工作台</span></button>
+        <button class="nav-item" onclick="location.href='student-write.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M12.5 20H20"/><path d="M15.5 4.5a2 2 0 0 1 3 3L8 18l-4 1 1-4z"/></svg></span><span>我要写信</span></button>
+        <button class="nav-item active" onclick="location.href='student-my.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的信件</span><span class="nav-badge">5</span></button>
+        <button class="nav-item" onclick="location.href='student-query.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg></span><span>信件查询</span></button>
+        <div class="nav-section-title">信息公开</div>
+        <button class="nav-item" onclick="location.href='student-public.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开信件</span></button>
+        <button class="nav-item" onclick="location.href='student-policy.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 2.5h7l5 5V21.5H6z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 16.5h6"/></svg></span><span>制度文件</span></button>
+        <button class="nav-item" onclick="location.href='student-stats.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M3.5 20h17"/><rect x="5" y="11" width="3.2" height="6" rx=".6"/><rect x="10.4" y="6.5" width="3.2" height="10.5" rx=".6"/><rect x="15.8" y="13.5" width="3.2" height="3.5" rx=".6"/></svg></span><span>数据统计</span></button>
+        <div class="nav-section-title">帮助</div>
+        <button class="nav-item" onclick="location.href='student-dept.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M5 4h3l1.6 4.2-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2L18 16v3a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 3 6.2 2 2 0 0 1 5 4z"/></svg></span><span>科室联系方式</span></button>
+        <button class="nav-item" onclick="location.href='student-faq.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.2a2.4 2.4 0 1 1 3.3 2.2c-.8.4-1.1.9-1.1 1.8"/><path d="M12 16.6h.01"/></svg></span><span>常见问题</span></button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="role-badge" id="role-badge">学生视角</div>
+        <div class="user-card">
+          <div class="user-avatar" id="user-avatar">李</div>
+          <div class="user-info"><strong id="user-name">李诚</strong><span id="user-sub">计算机学院</span></div>
+        </div>
+      </div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-btn" aria-label="展开菜单">☰</button>
+          <div class="topbar-title">
+            <h2 id="page-title">我的信件</h2>
+            <div class="breadcrumb" id="breadcrumb">首页 / 我的信件</div>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
+          <div class="role-switch" id="role-switch"><button class="active" onclick="location.href='student-home.html'">学生</button><button class="" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室领导</button><button class="" onclick="location.href='replier-home.html'">科室回复人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 1）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">1</span></button>
+          <button class="btn btn-primary" id="btn-write-quick" onclick="location.href='student-write-notice.html'">＋ 我要写信</button>
+        </div>
+      </header>
+      <main class="content" id="app-content">
+
+    <div class="filter-bar" data-ns="my">
+      <div class="filter-item"><label>信件标题</label>
+          <input data-f="title" value="" placeholder="输入关键字"></div><div class="filter-item"><label>信件内容</label>
+          <input data-f="content" value="" placeholder="输入关键字"></div><div class="filter-item"><label>承办科室</label>
+          <input data-f="dept" value="" placeholder="输入关键字"></div>
+      <div class="filter-actions">
+        <button class="btn btn-primary btn-sm" data-act="search">搜索</button>
+        <button class="btn btn-outline btn-sm" data-act="reset">重置</button>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="全部">全部 <span class="cnt">5</span></button><button class="tab " data-tab="待分派">待分派 <span class="cnt">1</span></button><button class="tab " data-tab="办理中">办理中 <span class="cnt">2</span></button><button class="tab " data-tab="已办结">已办结 <span class="cnt">1</span></button><button class="tab " data-tab="草稿">草稿 <span class="cnt">1</span></button>
+    </div>
+    <div class="card"><div class="card-body" style="padding:0">
+      <table><thead><tr>
+        <th style="width:140px">信件编号</th><th>标题</th><th style="width:80px">分类</th>
+        <th style="width:150px">承办科室 / 回复人</th><th style="width:95px">来信时间</th><th style="width:90px">状态</th>
+        <th style="width:200px">操作</th>
+      </tr></thead><tbody>
+        <tr class="clickable" onclick="location.href='student-my-detail.html'">
+          <td class="mono">XG20261028301</td>
+          <td>关于开设考研自习室延时开放的建议   <div class="cell-excerpt">临近考研，图书馆与教学楼自习区座位紧张且关闭较早，建议学工部协调开设考研专用自习室并延时开放至 23:00，帮助…</div></td>
+          <td><span class="badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span></td>
+          <td><span class="tag warn">待综合办分派</span></td>
+          <td>2026-10-28</td>
+          <td><span class="badge" style="background:#F291001a;color:#F29100"><span class="dot" style="background:#F29100"></span>待分派</span></td>
+          <td><div class="table-actions" data-stop>
+        <button class="btn btn-outline btn-sm" data-act="supplement" data-id="XG20261028301">补充</button>
+        <button class="btn btn-outline btn-sm" data-act="urge" data-id="XG20261028301" >催办</button>
+        <button class="btn btn-danger btn-sm" data-act="withdraw" data-id="XG20261028301">撤回</button>
+      </div></td>
+        </tr><tr class="clickable" onclick="location.href='student-my-detail.html'">
+          <td class="mono">XG20261023510</td>
+          <td>关于国家助学贷款回执确认时间的咨询   <div class="cell-excerpt">老师您好，国家助学贷款回执我已在银行办理，想确认学校这边的提交截止时间。后来已在资助通知里查到说明，这封来信不再…</div></td>
+          <td><span class="badge" style="background:#006DAD1a;color:#006DAD">咨询类</span></td>
+          <td><span class="tag warn">待综合办分派</span></td>
+          <td>2026-10-23</td>
+          <td><span class="badge" style="background:#C8CAD11a;color:#C8CAD1"><span class="dot" style="background:#C8CAD1"></span>已撤回</span></td>
+          <td><span class="text-muted" style="font-size:12px;color:var(--text-muted)">—</span></td>
+        </tr><tr class="clickable" onclick="location.href='student-my-detail.html'">
+          <td class="mono">XG20260714077</td>
+          <td>关于预约心理咨询服务的咨询  <span class="tag overdue">超期</span> <div class="cell-excerpt">老师您好，近期学业压力较大、睡眠不佳，想预约一次心理咨询，请问预约方式、地点、时间安排以及是否保密？谢谢。</div></td>
+          <td><span class="badge" style="background:#006DAD1a;color:#006DAD">咨询类</span></td>
+          <td><div>心理健康教育中心</div></td>
+          <td>2026-07-14</td>
+          <td><span class="badge" style="background:#2A8DC71a;color:#2A8DC7"><span class="dot" style="background:#2A8DC7"></span>办理中</span></td>
+          <td><div class="table-actions" data-stop>
+        <button class="btn btn-outline btn-sm" data-act="supplement" data-id="XG20260714077">补充</button>
+        <button class="btn btn-outline btn-sm" data-act="urge" data-id="XG20260714077" >催办</button>
+        <button class="btn btn-danger btn-sm" data-act="withdraw" data-id="XG20260714077">撤回</button>
+      </div></td>
+        </tr><tr class="clickable" onclick="location.href='student-my-detail.html'">
+          <td class="mono">XG20260701203</td>
+          <td>关于申请调整宿舍床位的进度咨询 <span class="tag warn">已催办</span> <span class="tag overdue">超期</span> <div class="cell-excerpt">本人两周前提交了宿舍床位调整申请（因作息差异影响休息），至今未收到结果，恳请公寓管理科告知办理进度，谢谢。</div></td>
+          <td><span class="badge" style="background:#F291001a;color:#F29100">问题类</span></td>
+          <td><div>学生公寓管理科</div><div class="cell-sub"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="10" cy="8" r="3.4"/><path d="M4 19.5a6 6 0 0 1 10.4-4.1"/><path d="m15.5 17.8 1.9 1.9 3.4-3.9"/></svg> 蒋磊</div></td>
+          <td>2026-07-01</td>
+          <td><span class="badge" style="background:#2A8DC71a;color:#2A8DC7"><span class="dot" style="background:#2A8DC7"></span>办理中</span></td>
+          <td><div class="table-actions" data-stop>
+        <button class="btn btn-outline btn-sm" data-act="supplement" data-id="XG20260701203">补充</button>
+        <button class="btn btn-outline btn-sm" data-act="urge" data-id="XG20260701203" disabled>已催办</button>
+        <button class="btn btn-danger btn-sm" data-act="withdraw" data-id="XG20260701203">撤回</button>
+      </div></td>
+        </tr><tr class="clickable" onclick="location.href='student-my-detail.html'">
+          <td class="mono">XG20260612118</td>
+          <td>关于国家励志奖学金评定名额分配的建议   <div class="cell-excerpt">建议在国家励志奖学金评定中，进一步向家庭经济困难且学业进步明显的同学倾斜，并提前公示各学院名额分配方案，让评定更…</div></td>
+          <td><span class="badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span></td>
+          <td><div>学生资助管理科</div><div class="cell-sub"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="10" cy="8" r="3.4"/><path d="M4 19.5a6 6 0 0 1 10.4-4.1"/><path d="m15.5 17.8 1.9 1.9 3.4-3.9"/></svg> 邱敏</div></td>
+          <td>2026-06-12</td>
+          <td><span class="badge" style="background:#1BB9751a;color:#1BB975"><span class="dot" style="background:#1BB975"></span>已办结</span></td>
+          <td><div class="table-actions" data-stop>
+        <button class="btn btn-outline btn-sm" data-act="reopen" data-id="XG20260612118">二次办理</button>
+      </div></td>
+        </tr>
+      </tbody></table>
+    </div></div>
+    
+      </main>
+    </div>
+  </div>
+  <div class="mask" id="sidebar-mask"></div>
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header"><h3 id="modal-title">详情</h3><button class="modal-close" id="modal-close" aria-label="关闭">&times;</button></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+  <output class="toast" id="toast" aria-live="polite"></output>
+  <div class="page-stub-note">静态设计稿 · 顶栏/侧栏可点击跳转</div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+saved pc-login https://zhxg.csu.edu.cn/znzhxgpt_web/#/newlogin
+saved pc-system https://zhxg.csu.edu.cn/znzhxgpt_web/#/systemSelect
+saved pc-stu-home https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/home
+saved pc-stu-my https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/my
+saved pc-stu-write https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/write
+saved pc-stu-query https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/query
+saved pc-stu-stats https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/stats
+saved pc-stu-public https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/public
+saved pc-stu-policy https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/policy
+saved pc-stu-dept https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/dept
+saved pc-stu-faq https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/faq
+detail click 信件编号	标题	内容	分类	承办科室 / 承办人	来信时间	状态	操作
+
+XG20260903001
+	
+测试
+	
+测试测试测试测试测试测试
+	建议类	
+思想政
+saved pc-stu-detail https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/student/my
+saved pc-sec-home https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/section/index
+saved pc-sec-inbox https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/section/inbox
+sec open 办理
+saved pc-sec-reply https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/section/inbox
+switched role 综合办管理员 -> https://zhxg.csu.edu.cn/znzhxgpt_web/#/ls/home
+saved pc-adm-home https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/home
+saved pc-adm-dispatch https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/dispatch
+saved pc-adm-inbox https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/inbox
+saved pc-adm-supervise https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/supervise
+saved pc-adm-publish https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/publish
+saved pc-adm-analytics https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/analytics
+saved pc-adm-category https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/category-mgr
+saved pc-adm-section https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/section-mgr
+saved pc-adm-policy https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/policy-mgr
+saved pc-adm-sla https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/sla-mgr
+saved pc-adm-faq https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/faq-mgr
+dispatch click yes
+saved pc-adm-dispatch-modal https://zhxg.csu.edu.cn/znzhxgpt_web/#/xgxx/admin/dispatch

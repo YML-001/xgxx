@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 更多</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back hidden" id="m-back" aria-label="返回">‹</button>
+        <div class="m-appbar-title" id="m-title">更多</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="m-bell-dot">1</span></button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="m-more-user">
+      <div class="m-more-avatar">黄</div>
+      <div><div class="nm">黄志远</div><div class="sb">计算机学院 · 党委副书记</div></div>
+    </div>
+    <div class="m-section-title">切换身份（演示）</div>
+    <div class="m-role-switch m-role-5">
+      <button class="m-role-chip " data-role="student" onclick="location.href='home.html'">学生</button><button class="m-role-chip " data-role="admin" onclick="location.href='admin-more.html'">综合办</button><button class="m-role-chip " data-role="leader" onclick="location.href='leader-more.html'">科室领导</button><button class="m-role-chip " data-role="replier" onclick="location.href='replier-more.html'">科室回复人</button><button class="m-role-chip active" data-role="college" onclick="location.href='college-more.html'">学院副书记</button>
+    </div>
+    
+    
+    
+    
+    <div class="m-section-title">选择学院</div>
+    <div class="m-role-secs">
+      <button class="m-chip active" data-col="计算机学院">计算机学院 · 黄志远</button><button class="m-chip " data-col="机械学院">机械学院 · 钟立新</button><button class="m-chip " data-col="生命科学学院">生命科学学院 · 杜晓梅</button><button class="m-chip " data-col="自动化学院">自动化学院 · 雷鸣</button><button class="m-chip " data-col="材料学院">材料学院 · 宋佳</button><button class="m-chip " data-col="商学院">商学院 · 叶婧</button><button class="m-chip " data-col="电信学院">电信学院 · 程浩</button><button class="m-chip " data-col="外国语学院">外国语学院 · 林薇</button><button class="m-chip " data-col="法学院">法学院 · 高远</button>
+    </div>
+    <button class="m-btn m-btn-primary" data-home style="margin:6px 0 4px">进入学院副书记工作台</button>
+    
+    <div class="m-section-title">更多功能</div>
+    <div class="m-more-grid">
+      <div class="m-more-item" data-more="policy" onclick="location.href='policy.html'"><div class="ic"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 2.5h7l5 5V21.5H6z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 16.5h6"/></svg></div><span>制度文件</span></div><div class="m-more-item" data-more="dept" onclick="location.href='dept.html'"><div class="ic"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M5 4h3l1.6 4.2-2 1.4a11 11 0 0 0 4.8 4.8l1.4-2L18 16v3a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 3 6.2 2 2 0 0 1 5 4z"/></svg></div><span>科室联系</span></div><div class="m-more-item" data-more="faq" onclick="location.href='faq.html'"><div class="ic"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.2a2.4 2.4 0 1 1 3.3 2.2c-.8.4-1.1.9-1.1 1.8"/><path d="M12 16.6h.01"/></svg></div><span>常见问题</span></div>
+    </div>
+    <p class="m-topnote" style="color:var(--text-muted)">学工信箱移动端原型 · <a href="../app.html" style="color:var(--primary)">前往桌面端</a></p>
+      </main>
+      
+      <nav class="m-tabbar cols-3" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='college-home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.3a3.2 3.2 0 0 1 0 6"/><path d="M17.5 19.5a5.5 5.5 0 0 0-3-5"/></svg></span><span>协同待办 (1)</span></button>
+        <button class="m-tab" onclick="location.href='college-visible.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/><circle cx="12" cy="12" r="2.7"/></svg></span><span>学院可见</span></button>
+        <button class="m-tab active" onclick="location.href='college-more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学工信箱 移动端 · 消息通知</title>
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <style>
+  /* 设计稿占位：图表槽位 */
+  .chart-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1.5px dashed #cbd5e1;border-radius:14px;background:#f6f9fb;color:#94a3b8;
+    font-size:12px;gap:4px;text-align:center;margin:auto}
+  .chart-slot small{font-size:10px;opacity:.75}
+  .page-stub-note{position:fixed;right:14px;bottom:12px;z-index:60;background:rgba(15,23,42,.82);
+    color:#fff;font-size:11px;line-height:1.4;padding:7px 11px;border-radius:9px;
+    font-family:-apple-system,"PingFang SC",sans-serif;box-shadow:0 6px 18px -6px rgba(0,0,0,.4);pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="device">
+    <div class="phone">
+      <div class="statusbar">
+        <span class="sb-time" id="sb-time">9:41</span>
+        <span class="sb-icons">●●● &#128246; &#128267;</span>
+      </div>
+      <header class="m-appbar" id="m-appbar">
+        <button class="m-back" id="m-back" aria-label="返回" onclick="location.href='home.html'">‹</button>
+        <div class="m-appbar-title" id="m-title">消息通知</div>
+        <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
+        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="m-bell-dot">1</span></button>
+      </header>
+      <main class="m-main" id="m-content">
+
+    <div class="msg-toolbar"><span>学生 · 共 6 条，未读 <b>1</b> 条</span>
+      <button class="m-btn m-btn-outline m-btn-sm" id="m-msg-all">全部已读</button></div>
+    <div class="msg-list"><div class="msg-item unread" data-msg="MSmvrsp4kg35983" data-msg-letter="XG20261028301">
+      <div class="msg-head">
+        <span class="msg-code">M-01</span>
+        <span class="msg-name">提交回执</span>
+        
+        <span class="msg-ch">系统消息 + ITS</span>
+        <span class="msg-time">2026-10-28 09:20</span>
+      </div>
+      <div class="msg-text">尊敬的李诚同学：<br>您好！您于2026-10-28 09:20通过学工信箱提交的来信「关于开设考研自习室延时开放的建议」（编号XG20261028301）我们已经收到，感谢您的反馈。<br>综合办公室将进行受理，并流转至相关科室办理。我们将在7天内给予您正式回复，请留意「我的信件」中的办理进度。<br>本消息仅表示来信已收悉，正式办理结果将另行答复。<br>学工部综合办公室<br>2026-10-28 09:20</div>
+    </div><div class="msg-item " data-msg="MSmvrsp4kf76668" data-msg-letter="XG20261023510">
+      <div class="msg-head">
+        <span class="msg-code">M-01</span>
+        <span class="msg-name">提交回执</span>
+        
+        <span class="msg-ch">系统消息 + ITS</span>
+        <span class="msg-time">2026-10-23 11:05</span>
+      </div>
+      <div class="msg-text">尊敬的李诚同学：<br>您好！您于2026-10-23 11:05通过学工信箱提交的来信「关于国家助学贷款回执确认时间的咨询」（编号XG20261023510）我们已经收到，感谢您的反馈。<br>综合办公室将进行受理，并流转至相关科室办理。我们将在7天内给予您正式回复，请留意「我的信件」中的办理进度。<br>本消息仅表示来信已收悉，正式办理结果将另行答复。<br>学工部综合办公室<br>2026-10-23 11:05</div>
+    </div><div class="msg-item " data-msg="MSmvrsp4kf80628" data-msg-letter="XG20260714077">
+      <div class="msg-head">
+        <span class="msg-code">M-01</span>
+        <span class="msg-name">提交回执</span>
+        
+        <span class="msg-ch">系统消息 + ITS</span>
+        <span class="msg-time">2026-07-14 10:05</span>
+      </div>
+      <div class="msg-text">尊敬的李诚同学：<br>您好！您于2026-07-14 10:05通过学工信箱提交的来信「关于预约心理咨询服务的咨询」（编号XG20260714077）我们已经收到，感谢您的反馈。<br>综合办公室将进行受理，并流转至相关科室办理。我们将在7天内给予您正式回复，请留意「我的信件」中的办理进度。<br>本消息仅表示来信已收悉，正式办理结果将另行答复。<br>学工部综合办公室<br>2026-07-14 10:05</div>
+    </div><div class="msg-item " data-msg="MSmvrsp4ke33362" data-msg-letter="XG20260701203">
+      <div class="msg-head">
+        <span class="msg-code">M-01</span>
+        <span class="msg-name">提交回执</span>
+        
+        <span class="msg-ch">系统消息 + ITS</span>
+        <span class="msg-time">2026-07-01 20:30</span>
+      </div>
+      <div class="msg-text">尊敬的李诚同学：<br>您好！您于2026-07-01 20:30通过学工信箱提交的来信「关于申请调整宿舍床位的进度咨询」（编号XG20260701203）我们已经收到，感谢您的反馈。<br>综合办公室将进行受理，并流转至相关科室办理。我们将在7天内给予您正式回复，请留意「我的信件」中的办理进度。<br>本消息仅表示来信已收悉，正式办理结果将另行答复。<br>学工部综合办公室<br>2026-07-01 20:30</div>
+    </div><div class="msg-item " data-msg="MSmvrsp4ke78957" data-msg-letter="XG20260612118">
+      <div class="msg-head">
+        <span class="msg-code">M-02</span>
+        <span class="msg-name">正式答复提醒</span>
+        
+        <span class="msg-ch">系统消息 + ITS</span>
+        <span class="msg-time">2026-06-14 16:20</span>
+      </div>
+      <div class="msg-text">尊敬的李诚同学：<br>您提交的来信「关于国家励志奖学金评定名额分配的建议」（编号XG20260612118）已办理完成。请登录学工信箱，在「我的信件」中查看正式答复，并作出评价。<br>学工部综合办公室<br>2026-06-14 16:20</div>
+    </div><div class="msg-item " data-msg="MSmvrsp4kd23301" data-msg-letter="XG20260612118">
+      <div class="msg-head">
+        <span class="msg-code">M-01</span>
+        <span class="msg-name">提交回执</span>
+        
+        <span class="msg-ch">系统消息 + ITS</span>
+        <span class="msg-time">2026-06-12 09:10</span>
+      </div>
+      <div class="msg-text">尊敬的李诚同学：<br>您好！您于2026-06-12 09:10通过学工信箱提交的来信「关于国家励志奖学金评定名额分配的建议」（编号XG20260612118）我们已经收到，感谢您的反馈。<br>综合办公室将进行受理，并流转至相关科室办理。我们将在7天内给予您正式回复，请留意「我的信件」中的办理进度。<br>本消息仅表示来信已收悉，正式办理结果将另行答复。<br>学工部综合办公室<br>2026-06-12 09:10</div>
+    </div></div>
+      </main>
+      <button class="m-fab" id="m-fab" aria-label="我要写信" onclick="location.href='write-notice.html'">＋</button>
+      <nav class="m-tabbar" id="m-tabbar">
+        <button class="m-tab" onclick="location.href='home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.8V20h12V9.8"/></svg></span><span>首页</span></button>
+        <button class="m-tab" onclick="location.href='public.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开</span></button>
+        <div class="m-tab spacer"></div>
+        <button class="m-tab" onclick="location.href='my.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span><span>我的 (5)</span></button>
+        <button class="m-tab" onclick="location.href='more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>
+      </nav>
+    </div>
+  </div>
+  <div class="m-sheet-overlay" id="m-sheet">
+    <div class="m-sheet">
+      <div class="m-sheet-handle"></div>
+      <div class="m-sheet-head"><h3 id="m-sheet-title">详情</h3><button class="m-sheet-close" id="m-sheet-close" aria-label="关闭">&times;</button></div>
+      <div class="m-sheet-body" id="m-sheet-body"></div>
+    </div>
+  </div>
+  <div class="m-toast" id="m-toast" aria-live="polite"></div>
+  <script>/* 静态设计稿：仅屏蔽内联事件报错，不做任何渲染 */
+window.App={toast(){},navigate(){},showModal(){},hideModal(){}};
+window.MApp={toast(){},go(){}};</script>
+</body>
+</html>
