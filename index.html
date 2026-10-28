@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="学工信箱原型导航：PC 端与移动端入口，可按身份直达。">
+  <meta name="description" content="学工信箱原型导航：PC 端与移动端入口，可按身份直达，也可逐条查看消息通知模板。">
   <title>学工信箱原型</title>
   <style>
     :root {
@@ -90,6 +90,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
+
+    .port-wide { grid-column: 1 / -1; }
 
     .port {
       background: var(--surface);
@@ -216,11 +218,29 @@
       <div>
         <p class="kicker">接诉即办 · 件件有回音</p>
         <h1>学工信箱原型</h1>
-        <p class="lead">选择电脑或手机入口，再点身份即可进入对应视角。</p>
+        <p class="lead">选择电脑或手机入口，再点身份即可进入对应视角。消息通知模板在下方，可逐条演示本板块实际会发出的提醒。</p>
       </div>
     </header>
 
     <div class="ports">
+      <section class="port port-wide" aria-labelledby="msg-title">
+        <div class="port-hd">
+          <div class="port-name">
+            <div class="port-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+            </div>
+            <div>
+              <h2 id="msg-title">消息通知模板</h2>
+              <p>本板块实际发出的 22 条提醒，不含已取消的 M-12、M-14</p>
+            </div>
+          </div>
+          <a class="enter" href="messages.html">查看模板</a>
+        </div>
+        <ul class="roles">
+          <li><a href="messages.html"><strong>逐条演示</strong><span>编号、发给谁、何时发送、标题和正文</span><em>进入</em></a></li>
+        </ul>
+      </section>
+
       <section class="port" aria-labelledby="pc-title">
         <div class="port-hd">
           <div class="port-name">
