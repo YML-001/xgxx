@@ -557,8 +557,12 @@ body {
 .m-bell { position: relative; }
 .m-bell svg { display: block; }
 .m-bell-dot { position: absolute; top: 2px; right: 0; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--danger); color: #fff; font-size: 10px; line-height: 16px; text-align: center; font-weight: 700; }
-.m-role-switch.m-role-5 { flex-wrap: wrap; gap: 8px; }
-.m-role-5 .m-role-chip { flex: 0 0 calc(33.33% - 6px); }
+.m-role-switch { flex-wrap: wrap; }
+.m-role-switch.m-role-5, .m-role-switch.m-role-6 { flex-wrap: wrap; gap: 8px; }
+.m-role-5 .m-role-chip, .m-role-6 .m-role-chip { flex: 0 0 calc(33.33% - 6px); font-size: 12px; padding: 8px 4px; }
+.m-perf-row .mt { white-space: normal; text-align: right; }
+.form-check { display: flex; align-items: flex-start; gap: 8px; margin: 8px 0; font-size: 14px; }
+select, textarea, input { max-width: 100%; box-sizing: border-box; }
 .m-radio.m-radio-col { flex-direction: column; gap: 8px; }
 .m-seg-scroll { flex-wrap: nowrap; }
 .m-stage-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }

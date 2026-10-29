@@ -21,7 +21,6 @@ const NAV = {
   leader: [
     { section: "科室办理" },
     { key: "leader-home", label: "科室工作台", ico: "dashboard" },
-    { key: "leader-assign", label: "待指定科室负责人", ico: "share" },
     { key: "leader-approve", label: "待审批", ico: "userCheck" },
     { key: "sec-inbox", label: "科室收件箱", ico: "inbox" },
     { section: "信息公开" },
@@ -32,6 +31,15 @@ const NAV = {
     { section: "我的办理" },
     { key: "sec-home", label: "我的工作台", ico: "dashboard" },
     { key: "rep-todo", label: "我的待办", ico: "write" },
+    { key: "sec-inbox", label: "科室收件箱", ico: "inbox" },
+    { section: "信息公开" },
+    { key: "public", label: "公开信件", ico: "megaphone" },
+    { key: "policy", label: "制度文件", ico: "doc" }
+  ],
+  writer: [
+    { section: "我的撰写" },
+    { key: "writer-home", label: "我的工作台", ico: "dashboard" },
+    { key: "writer-todo", label: "待我起草", ico: "write" },
     { key: "sec-inbox", label: "科室收件箱", ico: "inbox" },
     { section: "信息公开" },
     { key: "public", label: "公开信件", ico: "megaphone" },
@@ -74,10 +82,11 @@ const ROUTE_TITLES = {
   "dept": ["科室联系方式", "帮助 / 科室联系方式"],
   "faq": ["常见问题", "帮助 / 常见问题"],
   "leader-home": ["科室工作台", "科室办理 / 工作台"],
-  "leader-assign": ["待指定科室负责人", "科室办理 / 待指定科室负责人"],
   "leader-approve": ["待审批", "科室办理 / 待审批"],
   "sec-home": ["我的工作台", "我的办理 / 工作台"],
   "rep-todo": ["我的待办", "我的办理 / 我的待办"],
+  "writer-home": ["我的工作台", "我的撰写 / 工作台"],
+  "writer-todo": ["待我起草", "我的撰写 / 待我起草"],
   "sec-inbox": ["科室收件箱", "科室办理 / 科室收件箱"],
   "col-todo": ["协同待办", "学院协同 / 协同待办"],
   "col-visible": ["学院可见信件", "学院协同 / 学院可见信件"],
@@ -94,12 +103,13 @@ const ROUTE_TITLES = {
   "faq-mgr": ["常见问题配置", "配置 / 常见问题配置"]
 };
 
-const HOME_ROUTES = { student: "home", admin: "admin-home", leader: "leader-home", replier: "sec-home", college: "col-todo" };
+const HOME_ROUTES = { student: "home", admin: "admin-home", leader: "leader-home", replier: "sec-home", writer: "writer-home", college: "col-todo" };
 
 const App = {
   role: "student",
   section: "",
   member: null,        // 科室负责人视角下的当前成员（演示身份）
+  writer: null,        // 科室回复人视角下的当前成员
   college: "",         // 副书记视角下的当前学院
   mailbox: "学工信箱",
   route: "home",
@@ -107,6 +117,7 @@ const App = {
 
   /* 当前科室负责人身份的成员 id（未取到时为空串） */
   memberId() { return (this.member && this.member.id) || ""; },
+  writerId() { return (this.writer && this.writer.id) || ""; },
 
   /* 当前科室分管领导 */
   leader() { return sectionLeader(this.section); },
@@ -118,6 +129,7 @@ const App = {
     if (this.role === "admin") return "admin";
     if (this.role === "leader") { const l = this.leader(); return l ? "member:" + l.id : ""; }
     if (this.role === "replier") return this.member ? "member:" + this.member.id : "";
+    if (this.role === "writer") return this.writer ? "member:" + this.writer.id : "";
     if (this.role === "college") return "college:" + this.college;
     return "student:me";
   },
@@ -136,12 +148,19 @@ const App = {
     if (qCol && findCollege(qCol)) saveCollege(qCol);
     /* 导航进入科室负责人且未指定 member 时，落到该科室第一位在用科室负责人，避免上次切换后演示待办对不上 */
     if (qRole === "replier" && qSec && MOCK.sections.some(s => s.name === qSec) && !params.get("member")) {
-      const first = replierCandidates(qSec)[0];
+      const first = sectionCharge(qSec) || replierCandidates(qSec)[0];
       if (first) saveMember(first.id);
+    }
+    if (qRole === "writer") {
+      const secName = (qSec && MOCK.sections.some(s => s.name === qSec)) ? qSec : getSection();
+      const list = writerCandidates(secName);
+      const picked = list.find(m => m.id === params.get("writer")) || list[0];
+      if (picked) saveWriter(picked.id);
     }
     this.role = getRole();
     this.section = getSection();
     this.member = getMember();
+    this.writer = getWriter();
     this.college = getCollege();
     this.mailbox = getMailbox();
     this.bindGlobal();
@@ -196,6 +215,7 @@ const App = {
 
   applyRole() {
     this.member = getMember();
+    this.writer = getWriter();
     this.college = getCollege();
     this.renderRoleSwitch();
     this.renderContextSwitch();
@@ -218,6 +238,10 @@ const App = {
       const m = this.member || getMember();
       if (m) set(m.name.charAt(0), m.name, `${this.section} · ${m.title || "科室负责人"}`);
       else set("—", "暂无科室负责人", this.section);
+    } else if (this.role === "writer") {
+      const m = this.writer || getWriter();
+      if (m) set(m.name.charAt(0), m.name, `${this.section} · ${m.title || "科室回复人"}`);
+      else set("—", "暂无科室回复人", this.section);
     } else if (this.role === "college") {
       const c = findCollege(this.college);
       if (c) set(c.secretary.charAt(0), c.secretary, `${c.name} · ${c.title || "副书记"}`);
@@ -268,10 +292,10 @@ const App = {
     else this.showHandle(id);
   },
 
-  /* 顶栏上下文切换（演示用）：科室分管领导选科室；科室负责人选科室 + 本人；副书记选学院 */
+  /* 顶栏上下文切换（演示用）：分管领导、负责人、回复人选科室；副书记选学院 */
   renderContextSwitch() {
     const el = document.getElementById("mailbox-switch");
-    if (!["leader", "replier", "college"].includes(this.role)) { el.innerHTML = ""; el.style.display = "none"; return; }
+    if (!["leader", "replier", "writer", "college"].includes(this.role)) { el.innerHTML = ""; el.style.display = "none"; return; }
     el.style.display = "";
     if (this.role === "college") {
       el.innerHTML = `<span class="switch-label">学院</span>`
@@ -284,29 +308,37 @@ const App = {
       });
       return;
     }
-    const members = replierCandidates(this.section);
     const leader = this.leader();
+    const charge = sectionCharge(this.section);
+    const writers = writerCandidates(this.section);
+    const person = this.role === "leader"
+      ? `<span class="switch-label">科室分管领导</span><span class="switch-fixed">${leader ? escapeHtml(leader.name + " · " + (leader.title || "科长")) : "未配置"}</span>`
+      : (this.role === "replier"
+        ? `<span class="switch-label">科室负责人</span><span class="switch-fixed">${charge ? escapeHtml(charge.name + (charge.title ? " · " + charge.title : "")) : "未配置"}</span>`
+        : `<span class="switch-label">科室回复人</span>` + (writers.length
+          ? `<select class="ctx-select" id="ctx-writer">${writers.map(m =>
+              `<option value="${escapeHtml(m.id)}" ${this.writerId() === m.id ? "selected" : ""}>${escapeHtml(m.name)}${m.title ? " · " + escapeHtml(m.title) : ""}</option>`).join("")}</select>`
+          : `<span class="switch-empty">该科室暂无科室回复人</span>`));
     el.innerHTML = `<span class="switch-label">科室</span>`
       + `<select class="ctx-select" id="ctx-sec">${MOCK.sections.map(s =>
         `<option value="${escapeHtml(s.name)}" ${this.section === s.name ? "selected" : ""}>${escapeHtml(s.name)}</option>`).join("")}</select>`
-      + (this.role === "leader"
-        ? `<span class="switch-label">科室分管领导</span><span class="switch-fixed">${leader ? escapeHtml(leader.name + " · " + (leader.title || "科长")) : "未配置"}</span>`
-        : `<span class="switch-label">本人</span>` + (members.length
-          ? `<select class="ctx-select" id="ctx-member">${members.map(m =>
-              `<option value="${escapeHtml(m.id)}" ${this.memberId() === m.id ? "selected" : ""}>${escapeHtml(m.name)}${m.title ? " · " + escapeHtml(m.title) : ""}</option>`).join("")}</select>`
-          : `<span class="switch-empty">该科室暂无科室负责人</span>`));
+      + person;
 
     const secSel = document.getElementById("ctx-sec");
     if (secSel) secSel.addEventListener("change", () => {
       this.section = secSel.value; saveSection(this.section);
-      this.member = replierCandidates(this.section)[0] || null;
-      if (this.member) saveMember(this.member.id);
+      const nextCharge = sectionCharge(this.section);
+      if (nextCharge) saveMember(nextCharge.id);
+      const nextWriter = writerCandidates(this.section)[0];
+      if (nextWriter) saveWriter(nextWriter.id);
+      this.member = getMember();
+      this.writer = getWriter();
       this.renderContextSwitch(); this.renderUser(); this.render();
     });
-    const memSel = document.getElementById("ctx-member");
-    if (memSel) memSel.addEventListener("change", () => {
-      saveMember(memSel.value);
-      this.member = getMember();
+    const wSel = document.getElementById("ctx-writer");
+    if (wSel) wSel.addEventListener("change", () => {
+      saveWriter(wSel.value);
+      this.writer = getWriter();
       this.renderUser(); this.render();
     });
   },
@@ -338,9 +370,9 @@ const App = {
     if (key === "dispatch") return all.filter(l => stageOf(l) === STAGE.pending).length || "";
     if (key === "inbox") return all.filter(l => l.status === STATUS.doing).length || "";
     if (key === "supervise") return all.filter(l => isOverdue(l)).length || "";
-    if (key === "leader-assign") return getSectionLetters(this.section).filter(l => stageOf(l) === STAGE.needReplier).length || "";
     if (key === "leader-approve") return getSectionLetters(this.section).filter(l => stageOf(l) === STAGE.approving).length || "";
     if (key === "rep-todo") return getMemberLetters(this.memberId()).filter(isReplierTurn).length || "";
+    if (key === "writer-todo") return getWriterLetters(this.writerId()).filter(isWriterTurn).length || "";
     if (key === "col-todo") return getCollabLetters(this.college).filter(l => (l.collabs || []).some(c => c.college === this.college && !c.opinion)).length || "";
     return "";
   },
@@ -380,10 +412,11 @@ const App = {
       "dept": () => this.renderDept(),
       "faq": () => this.renderFaq(),
       "leader-home": () => this.renderLeaderHome(),
-      "leader-assign": () => this.renderLeaderList("assign"),
       "leader-approve": () => this.renderLeaderList("approve"),
       "sec-home": () => this.renderSectionHome(),
       "rep-todo": () => this.renderReplierTodo(),
+      "writer-home": () => this.renderWriterHome(),
+      "writer-todo": () => this.renderWriterTodo(),
       "sec-inbox": () => this.renderSectionInbox(),
       "col-todo": () => this.renderCollegeTodo(),
       "col-visible": () => this.renderCollegeVisible(),
@@ -767,7 +800,7 @@ Object.assign(App, {
         <div class="receipt-text">${escapeHtml((l.ack && l.ack.text) || "").replace(/\n/g, "<br>")}</div>
         <div class="receipt-meta">已通过 系统消息 + ITS 发送 · ${escapeHtml((l.ack && l.ack.at) || "")}</div>
       </div>
-      <p class="form-hint" style="color:var(--text-muted)">收悉回执不是正式答复；正式答复经科室分管领导审批后发送，届时会再提醒您查看并评价。</p>
+      <p class="form-hint" style="color:var(--text-muted)">收悉回执不是正式答复，提交后状态仍是待分派。正式答复经科室分管领导审批后，由科室负责人确认发送，届时会再提醒您查看并评价。</p>
       <div class="modal-actions">
         <button class="btn btn-primary" id="rc-view">查看信件</button>
         <button class="btn btn-ghost" id="rc-close">知道了</button>
@@ -936,7 +969,7 @@ Object.assign(App, {
       : (ext
         ? `<div class="no-reply">${l.status === STATUS.pending
             ? `${MOCK.intakeSection}已收到来信，正在分给承办科室，请耐心等待`
-            : (l.status === STATUS.withdrawn ? "来信已撤回" : "承办科室正在办理中，正式答复经科室分管领导审批后发送给您")}</div>`
+            : (l.status === STATUS.withdrawn ? "来信已撤回" : "承办科室正在办理中。正式答复经科室分管领导审批后，由科室负责人确认发送给您。")}</div>`
         : (draft
           ? `<div class="reply-box draft"><div class="draft-flag">答复草稿 · 未发送</div><div class="pre-wrap" style="background:transparent;padding:0">${escapeHtml(draft)}</div>
               <div class="reply-time">—— ${escapeHtml(l.replyDraft.by || "")} · ${escapeHtml(l.replyDraft.at || "")}</div></div>`
@@ -1534,7 +1567,7 @@ Object.assign(App, {
     const doing = all.filter(l => l.status === STATUS.doing);
     const done = all.filter(l => l.status === STATUS.done);
     const overdue = all.filter(l => isOverdue(l));
-    const stageRows = [STAGE.needReplier, STAGE.replying, STAGE.collab, STAGE.approving, STAGE.rejected, STAGE.confirm]
+    const stageRows = [STAGE.replying, STAGE.writing, STAGE.collab, STAGE.approving, STAGE.rejected, STAGE.confirm]
       .map(st => ({ st, n: doing.filter(l => stageOf(l) === st).length }));
 
     this.afterRender = () => {
@@ -1552,7 +1585,7 @@ Object.assign(App, {
     return `
     <div class="hero hero-compact">
       <h2>${MOCK.intakeSection} · 办理工作台</h2>
-      <p>${escapeHtml(MOCK.admin.name)} ｜ 全部来信统一送达本科室受理。请把来信分派负责科室，由科室分管领导指定科室负责人并审批答复；您负责全程督办催办。</p>
+      <p>${escapeHtml(MOCK.admin.name)} ｜ 全部来信统一送达综合办。请指定负责科室，并分派给该科室的科室负责人。您不直接指定科室回复人，也不把信直接分给科室分管领导。</p>
     </div>
     <div class="stat-grid">
       ${this.statCard("待分派", pending.length, "需尽快分派负责科室", "#F29100")}
@@ -1618,7 +1651,7 @@ Object.assign(App, {
     };
 
     return `
-    <p class="section-title">学生来信统一送达${MOCK.intakeSection}，请在此分派负责科室，由科室分管领导指定科室负责人。系统不按问题类型推荐科室。</p>
+    <p class="section-title">学生来信统一送达${MOCK.intakeSection}。请指定负责科室，并分派给该科室的科室负责人。系统不按问题类型推荐科室。</p>
     <div class="stat-grid stat-grid-3">
       ${this.statCard("待分派总数", total, "等待分派", "#F29100")}
       ${this.statCard("其中超期", overdueCnt, "已超办结时限", "#DF2027")}
@@ -1695,7 +1728,7 @@ Object.assign(App, {
     sync();
   },
 
-  /* ---------- 分派弹窗：选择负责科室，系统带出该科室的科室分管领导 ---------- */
+  /* ---------- 分派弹窗：选择负责科室，并分给该科室的科室负责人 ---------- */
   showDispatch(idOrIds) {
     const ids = Array.isArray(idOrIds) ? idOrIds : [idOrIds];
     const letters = ids.map(getLetterById).filter(Boolean);
@@ -1710,7 +1743,7 @@ Object.assign(App, {
           <div class="dt-title">${escapeHtml(single.title)}</div>
           <div class="dt-meta"><span class="mono">${single.id}</span> · ${escapeHtml(single.name)} · ${escapeHtml(single.unit || "-")} · ${single.date}</div>
           <div class="dt-tags">${this.catBadge(single.category)} <span class="tag">${escapeHtml(single.affair)}</span>
-            ${isTransfer ? `<span class="tag warn">原科室：${escapeHtml(single.dept)}${single.leader ? " · 科室分管领导 " + escapeHtml(single.leader.name) : ""}</span>` : ""}</div>
+            ${isTransfer ? `<span class="tag warn">原科室：${escapeHtml(single.dept)}${single.assignee ? " · 科室负责人 " + escapeHtml(single.assignee.name) : ""}</span>` : ""}</div>
           <div class="dt-content">${escapeHtml(contentExcerpt(single.content, 160))}</div>
         </div>`
       : `<div class="dispatch-target">
@@ -1721,22 +1754,22 @@ Object.assign(App, {
 
     this.showModal(isTransfer ? "改派科室" : "分派负责科室", `
       ${targetInfo}
-      <div class="detail-section"><div class="sec-title">选择承办科室${isTransfer ? "（改派后原分派记录保留，科室负责人需由新科室分管领导重新指定）" : ""}</div>
+      <div class="detail-section"><div class="sec-title">选择承办科室${isTransfer ? "（改派后原分派记录保留，来信改由新科室的科室负责人办理）" : ""}</div>
         <div class="pick-grid" id="dp-sec-grid">
           ${MOCK.sections.map(s => {
-            const leader = sectionLeader(s.name);
+            const charge = sectionCharge(s.name);
             const load = getSectionLetters(s.name).filter(l => l.status === STATUS.doing).length;
             const cur = isTransfer && s.name === single.dept;
-            return `<button type="button" class="pick-item" data-sec="${escapeHtml(s.name)}" ${leader && !cur ? "" : "disabled"}>
+            return `<button type="button" class="pick-item" data-sec="${escapeHtml(s.name)}" ${charge && !cur ? "" : "disabled"}>
               <span class="pi-name">${escapeHtml(s.name)}${cur ? '<span class="pi-rec">当前</span>' : ""}</span>
-              <span class="pi-sub">${leader ? `科室分管领导 ${escapeHtml(leader.name)}（${escapeHtml(leader.title || "科长")}） · 在办 ${load} 封` : "未配置科室分管领导"}</span>
+              <span class="pi-sub">${charge ? `科室负责人 ${escapeHtml(charge.name)}（${escapeHtml(charge.title || "科室负责人")}） · 在办 ${load} 封` : "未配置科室负责人"}</span>
             </button>`;
           }).join("")}
         </div>
-        <p class="form-hint" style="color:var(--text-muted)" id="dp-hint">请选择承办科室；系统不按问题类型推荐科室。</p>
+        <p class="form-hint" style="color:var(--text-muted)" id="dp-hint">请选择承办科室。系统不按问题类型推荐科室，分派对象是该科室的科室负责人。</p>
       </div>
       <div class="form-group"><label>${isTransfer ? "改派说明" : "分派说明"}（可选）</label>
-        <textarea id="dp-note" rows="2" placeholder="如：请核实后指定科室负责人，按时答复"></textarea>
+        <textarea id="dp-note" rows="2" placeholder="如：请核实后答复，可指定科室回复人或发起学院协同"></textarea>
       </div>
       <div class="modal-actions">
         <button class="btn btn-primary" id="dp-confirm">${svgIcon("share")} ${isTransfer ? "确认改派" : "确认分派"}</button>
@@ -1746,9 +1779,9 @@ Object.assign(App, {
     document.querySelectorAll("#dp-sec-grid [data-sec]").forEach(b => b.addEventListener("click", () => {
       this.state.dpSec = b.dataset.sec;
       document.querySelectorAll("#dp-sec-grid [data-sec]").forEach(x => x.classList.toggle("on", x === b));
-      const leader = sectionLeader(b.dataset.sec);
+      const charge = sectionCharge(b.dataset.sec);
       const hint = document.getElementById("dp-hint");
-      if (hint && leader) hint.textContent = `将分派负责科室 ${b.dataset.sec}，科室分管领导 ${leader.name}（${leader.title || "科长"}）${leader.phone ? " · " + leader.phone : ""}，由其指定科室负责人`;
+      if (hint && charge) hint.textContent = `将指定负责科室 ${b.dataset.sec}，并分派给科室负责人 ${charge.name}（${charge.title || "科室负责人"}）${charge.phone ? " · " + charge.phone : ""}`;
     }));
 
     const confirm = document.getElementById("dp-confirm");
@@ -1756,11 +1789,11 @@ Object.assign(App, {
       const sec = this.state.dpSec;
       if (!sec) { this.toast("请先选择负责科室"); return; }
       const note = ((document.getElementById("dp-note") || {}).value || "").trim();
-      letters.forEach(l => { assignLeader(l, sec, note); upsertLetter(l); });
-      const leader = sectionLeader(sec);
+      letters.forEach(l => { assignSection(l, sec, note); upsertLetter(l); });
+      const charge = sectionCharge(sec);
       this.toast(letters.length > 1
-        ? `已将 ${letters.length} 封来信分派至负责科室 ${sec}，已通知科室分管领导 ${leader ? leader.name : ""}`
-        : `已${isTransfer ? "改派" : "分派"}负责科室 ${sec}，已通知科室分管领导 ${leader ? leader.name : ""}`);
+        ? `已将 ${letters.length} 封来信分派至 ${sec}，已通知科室负责人 ${charge ? charge.name : ""}`
+        : `已${isTransfer ? "改派" : "分派"}至 ${sec}，已通知科室负责人 ${charge ? charge.name : ""}`);
       this.hideModal(); this.render();
     });
     const cancel = document.getElementById("dp-cancel");
@@ -1782,7 +1815,7 @@ Object.assign(App, {
     if (tab !== "全部") list = list.filter(l => l.status === tab);
     list = filterLetters(list, f).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     const pg = this.paginate(list, this.state.inboxPage, 8);
-    const stageOpts = [STAGE.pending, STAGE.needReplier, STAGE.replying, STAGE.collab, STAGE.approving, STAGE.rejected, STAGE.confirm, STAGE.done];
+    const stageOpts = [STAGE.pending, STAGE.replying, STAGE.writing, STAGE.collab, STAGE.approving, STAGE.rejected, STAGE.confirm, STAGE.done];
 
     this.afterRender = () => {
       document.querySelectorAll("[data-tab]").forEach(t => t.addEventListener("click", () => {
@@ -1809,7 +1842,7 @@ Object.assign(App, {
     <div class="card"><div class="card-body" style="padding:0">
       <table><thead><tr>
         <th style="width:140px">编号</th><th>标题</th><th style="width:80px">分类</th>
-        <th style="width:66px">来信人</th><th style="width:150px">承办科室 / 科室分管领导 / 科室负责人</th><th style="width:90px">来信时间</th><th style="width:104px">当前环节</th><th style="width:70px">操作</th>
+        <th style="width:66px">来信人</th><th style="width:150px">承办科室 / 科室负责人</th><th style="width:90px">来信时间</th><th style="width:104px">当前环节</th><th style="width:70px">操作</th>
       </tr></thead><tbody>
         ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-handle="${l.id}">
           <td class="mono">${l.id}</td>
@@ -1828,18 +1861,19 @@ Object.assign(App, {
     ${this.pagerHtml(pg.page, pg.total, "inboxPage")}`;
   },
 
-  /* ---------- 信件办理详情（综合办：分派/改派/督办；科室分管领导：指定科室负责人/审批；科室负责人：拟稿/协同/提交/确认发送） ---------- */
+  /* ---------- 信件办理详情（综合办分派；科室负责人办理；科室回复人起草；分管领导审批） ---------- */
   showHandle(id) {
     const l = getLetterById(id);
     if (!l) return;
     const role = this.role;
     if (role === "college") { this.showCollab(id); return; }
-    if ((role === "leader" || role === "replier") && l.dept !== this.section) {
+    if ((role === "leader" || role === "replier" || role === "writer") && l.dept !== this.section) {
       this.toast(l.dept ? "该信件不属于本科室" : `该信件尚未分派，正在${MOCK.intakeSection}受理`); return;
     }
     const st = stageOf(l);
     const isLeader = role === "leader";
     const isMine = role === "replier" && l.assignee && l.assignee.memberId === this.memberId();
+    const isWriter = role === "writer" && l.writer && l.writer.memberId === this.writerId() && writerDrafting(l);
     const draft = (l.replyDraft && l.replyDraft.content) || "";
     const lastReject = (l.approvals || []).slice().reverse().find(a => a.result === "reject");
     const latestOpinion = (l.collabs || []).slice().reverse().find(c => c.opinion);
@@ -1850,23 +1884,6 @@ Object.assign(App, {
       if (st === STAGE.pending) actions.push(`<button class="btn btn-primary" id="h-dispatch">${svgIcon("share")} 分派负责科室</button>`);
       else if (l.status === STATUS.doing) actions.push(`<button class="btn btn-outline" id="h-dispatch">${svgIcon("share")} 改派科室</button>`);
       if ((l.status === STATUS.doing || l.status === STATUS.pending) && !l.urged) actions.push(`<button class="btn btn-outline" id="h-urge">督办提醒</button>`);
-    }
-
-    if (isLeader && [STAGE.needReplier, STAGE.replying, STAGE.rejected, STAGE.collab].includes(st)) {
-      const cands = replierCandidates(l.dept);
-      const cur = l.assignee ? l.assignee.memberId : "";
-      this.state.hRep = cur || "";
-      blocks.push(`<div class="detail-section action-block"><div class="sec-title">${cur ? "改派科室负责人" : "指定科室负责人"}</div>
-        ${cands.length ? `<div class="pick-grid pick-grid-member" id="h-rep-grid">${cands.map(m => {
-          const load = getMemberLetters(m.id).filter(x => x.status === STATUS.doing).length;
-          return `<button type="button" class="pick-item ${m.id === cur ? "on" : ""}" data-rep="${escapeHtml(m.id)}">
-            <span class="pi-name">${escapeHtml(m.name)}${m.id === cur ? '<span class="pi-rec">当前</span>' : ""}</span>
-            <span class="pi-sub">${escapeHtml(m.title || "科室成员")} · 在办 ${load} 封</span></button>`;
-        }).join("")}</div>` : `<div class="no-reply">本科室暂无可指定的科室负责人，请联系综合办在「科室与人员」中添加</div>`}
-        <div class="form-group" style="margin-top:10px"><label>说明（可选）</label>
-          <input id="h-rep-note" placeholder="如：请核实后三个工作日内拟写答复"></div>
-      </div>`);
-      if (cands.length) actions.push(`<button class="btn btn-primary" id="h-assign">${svgIcon("userCheck")} ${cur ? "确认改派" : "确认指定"}</button>`);
     }
 
     if (isLeader && st === STAGE.approving) {
@@ -1881,26 +1898,49 @@ Object.assign(App, {
       actions.push(`<button class="btn btn-danger" id="h-reject">打回修改</button>`);
     }
 
-    if (isMine && (st === STAGE.replying || st === STAGE.rejected)) {
+    if (isMine && [STAGE.replying, STAGE.rejected, STAGE.collab, STAGE.writing].includes(st)) {
       const col = collegeList(true).find(c => c.name === l.unit);
-      blocks.push(`<div class="detail-section action-block"><div class="sec-title">${st === STAGE.rejected ? "按审批意见修改答复" : "拟写答复"}</div>
-        ${st === STAGE.rejected && lastReject ? `<div class="reject-banner"><b>审批打回</b>（${escapeHtml(lastReject.by)} · ${escapeHtml(lastReject.at)}）：${escapeHtml(lastReject.opinion)}</div>` : ""}
+      const open = openCollab(l);
+      const drafting = writerDrafting(l);
+      const writers = writerCandidates(l.dept);
+      const canWriter = writers.length > 0;
+      const canCollab = !!(col && !open);
+      blocks.push(`<div class="detail-section action-block"><div class="sec-title">${st === STAGE.rejected ? "按审批意见继续办理" : "办理安排"}</div>
+        ${st === STAGE.rejected && lastReject ? `<div class="reject-banner"><b>审批退回</b>（${escapeHtml(lastReject.by)} · ${escapeHtml(lastReject.at)}）：${escapeHtml(lastReject.opinion)}</div>` : ""}
         ${latestOpinion ? `<div class="cb-opinion"><b>${escapeHtml(latestOpinion.college)}处理意见</b>：${escapeHtml(latestOpinion.opinion)}</div>` : ""}
-        <div class="form-group"><label class="form-required">答复内容</label>
-          <textarea id="h-reply" rows="6" placeholder="请拟写正式答复，提交科室分管领导审批后再由您确认发送给学生">${escapeHtml(draft)}</textarea></div>
-        <p class="form-hint" style="color:var(--text-muted)">${col
-          ? `如不能直接拟写，可请来信学生所在学院（${escapeHtml(col.name)}）副书记 ${escapeHtml(col.secretary)} 协同。`
-          : "来信学生所在学院没有副书记。副书记由学工系统维护，信箱直接使用，暂不能发起学院协同。"}</p>
+        ${drafting ? `<div class="no-reply">科室回复人 ${escapeHtml(writerLabel(l))} 正在起草。稿件交回后，由您确认并提交科室分管领导审批。</div>` : ""}
+        ${open ? `<div class="no-reply">已请 ${escapeHtml(open.college)}副书记 ${escapeHtml(open.secretary)} 协同。请其指定人员线下承办后填写处理意见发回。这不妨碍同时指定科室回复人。</div>` : ""}
+        ${(canWriter || canCollab) ? `<p class="form-hint" style="color:var(--text-muted)">可以自己撰写，也可以指定科室回复人、发起学院协同。后两项可以同时勾选，一次确认；也可以先定一项，再回来补另一项。</p>
+        ${canWriter ? `<label class="form-check"><input type="checkbox" id="h-writer-on" ${drafting ? "" : ""}> 指定科室回复人</label>
+          <div class="form-group" id="h-writer-box">
+            <select id="h-writer-pick">${writers.map(m => `<option value="${escapeHtml(m.id)}" ${l.writer && l.writer.memberId === m.id ? "selected" : ""}>${escapeHtml(m.name)}${m.title ? " · " + escapeHtml(m.title) : ""}</option>`).join("")}</select>
+            <input id="h-writer-note" style="margin-top:8px" placeholder="给科室回复人的说明（可选）">
+          </div>` : `<p class="form-hint">本科室暂无其他成员可指定为科室回复人，请自己撰写或发起学院协同。</p>`}
+        ${canCollab ? `<label class="form-check"><input type="checkbox" id="h-collab-on"> 发起学院协同（${escapeHtml(col.name)} · 副书记 ${escapeHtml(col.secretary)}）</label>
+          <div class="form-group"><textarea id="h-collab-note" rows="2" placeholder="需要学院核实或承办的事项"></textarea></div>` : (col ? "" : `<p class="form-hint">来信学生所在学院没有副书记，暂不能发起学院协同。</p>`)}` : ""}
       </div>`);
-      actions.push(`<button class="btn btn-primary" id="h-submit">${svgIcon("share")} ${st === STAGE.rejected ? "修改后再次提交审批" : "提交科室分管领导审批"}</button>`);
-      actions.push(`<button class="btn btn-outline" id="h-save">暂存答复</button>`);
-      if (col && st === STAGE.replying) actions.push(`<button class="btn btn-outline" id="h-collab">${svgIcon("users")} 发起学院协同</button>`);
+      if (canWriter || canCollab) actions.push(`<button class="btn btn-outline" id="h-arrange">${svgIcon("users")} 确认办理安排</button>`);
+      if (!drafting) {
+        blocks.push(`<div class="detail-section action-block"><div class="sec-title">${st === STAGE.rejected ? "自己修改答复" : "自己撰写答复"}</div>
+          <div class="form-group"><label class="form-required">答复内容</label>
+            <textarea id="h-reply" rows="6" placeholder="可自己撰写。若已指定科室回复人，请等稿件交回后再确认提交。">${escapeHtml(draft)}</textarea></div>
+          <p class="form-hint" style="color:var(--text-muted)">提交后由科室分管领导审批。通过后回到您这里确认发送，不会自动发给学生。</p>
+        </div>`);
+        actions.push(`<button class="btn btn-primary" id="h-submit">${svgIcon("share")} ${st === STAGE.rejected ? "修改后再次提交审批" : "提交科室分管领导审批"}</button>`);
+        actions.push(`<button class="btn btn-outline" id="h-save">暂存答复</button>`);
+      }
     }
 
-    if (isMine && st === STAGE.collab) {
-      const c = openCollab(l);
-      blocks.push(`<div class="detail-section action-block"><div class="sec-title">学院协同中</div>
-        <div class="no-reply">已请 ${escapeHtml(c ? c.college + "副书记 " + c.secretary : "学院副书记")} 协同。副书记指定人员线下承办后写处理意见并发回，届时您会收到提醒，再据此拟写答复。</div></div>`);
+    if (isWriter) {
+      blocks.push(`<div class="detail-section action-block"><div class="sec-title">起草答复</div>
+        ${latestOpinion ? `<div class="cb-opinion"><b>学院处理意见（供参考）</b>：${escapeHtml(latestOpinion.opinion)}</div>` : ""}
+        ${l.writer && l.writer.note ? `<div class="cb-note">科室负责人说明：${escapeHtml(l.writer.note)}</div>` : ""}
+        <div class="form-group"><label class="form-required">答复稿</label>
+          <textarea id="h-reply" rows="6" placeholder="写完后交回科室负责人。不要直接回复学生，也不要自己提交审批。">${escapeHtml(draft)}</textarea></div>
+        <p class="form-hint" style="color:var(--text-muted)">稿件交回科室负责人 ${escapeHtml(assigneeLabel(l) || "")} 后，由负责人确认并提交科室分管领导审批。</p>
+      </div>`);
+      actions.push(`<button class="btn btn-primary" id="h-writer-submit">${svgIcon("share")} 交回科室负责人</button>`);
+      actions.push(`<button class="btn btn-outline" id="h-save">暂存稿件</button>`);
     }
 
     if (isMine && st === STAGE.approving) {
@@ -1924,13 +1964,18 @@ Object.assign(App, {
 
     if (role === "replier" && !isMine && l.status !== STATUS.done) {
       blocks.push(`<div class="detail-section"><div class="sec-title">办理答复</div>
-        <div class="no-reply">${l.assignee ? `本信件由 <b>${escapeHtml(assigneeLabel(l))}</b> 负责回复，您可查看但不可代为答复。` : "本信件尚待科室分管领导指定科室负责人。"}</div></div>`);
+        <div class="no-reply">${l.assignee ? `本信件由 <b>${escapeHtml(assigneeLabel(l))}</b> 负责，您可查看但不能代为办理。` : "本信件尚未分派到科室负责人。"}</div></div>`);
+    }
+    if (role === "writer" && !isWriter && l.status !== STATUS.done) {
+      blocks.push(`<div class="detail-section"><div class="sec-title">起草答复</div>
+        <div class="no-reply">${l.writer && l.writer.status === "drafting" ? `本信件由 <b>${escapeHtml(writerLabel(l))}</b> 起草。` : "这封信当前没有指定您起草。稿件须交回科室负责人，回复人不能提交审批，也不能发给学生。"}</div></div>`);
     }
 
     const title = {
       admin: st === STAGE.pending ? "信件受理（综合办）" : "信件督办（综合办）",
-      leader: st === STAGE.approving ? "审批答复（科室分管领导）" : (st === STAGE.needReplier ? "指定科室负责人（科室分管领导）" : "信件详情（本科室）"),
-      replier: isMine ? `信件办理 · ${st}` : "信件详情（本科室）"
+      leader: st === STAGE.approving ? "审批答复（科室分管领导）" : "信件详情（本科室）",
+      replier: isMine ? `信件办理 · ${st}` : "信件详情（本科室）",
+      writer: isWriter ? "起草答复（科室回复人）" : "信件详情（本科室）"
     }[role] || "信件详情";
 
     this.showModal(title, `
@@ -1948,6 +1993,7 @@ Object.assign(App, {
           <div><div class="k">承办科室</div><div class="v">${escapeHtml(deptLabel(l))}</div></div>
           <div><div class="k">科室分管领导</div><div class="v">${escapeHtml(leaderLabel(l) || "—")}</div></div>
           <div><div class="k">科室负责人</div><div class="v">${escapeHtml(assigneeLabel(l) || "—")}</div></div>
+          <div><div class="k">科室回复人</div><div class="v">${escapeHtml(writerLabel(l) || "未指定")}</div></div>
           <div><div class="k">当前办理人</div><div class="v">${escapeHtml(handlerLabel(l))}</div></div>
           <div><div class="k">分派时间</div><div class="v">${escapeHtml(l.dispatchedAt || "—")}</div></div>
           <div><div class="k">办结时限</div><div class="v">${effectiveDeadline(l)}${isOverdue(l) ? ' <span class="tag overdue">超期</span>' : ""}</div></div>
@@ -1970,16 +2016,28 @@ Object.assign(App, {
       done(`已通过${channelLabel(MOCK.urgeChannels)}向 ${urgeTarget(l)} 发送督办提醒`);
     });
 
-    document.querySelectorAll("#h-rep-grid [data-rep]").forEach(b => b.addEventListener("click", () => {
-      this.state.hRep = b.dataset.rep;
-      document.querySelectorAll("#h-rep-grid [data-rep]").forEach(x => x.classList.toggle("on", x === b));
-    }));
-    on("h-assign", () => {
-      const mid = this.state.hRep;
-      if (!mid) { this.toast("请选择科室负责人"); return; }
-      if (l.assignee && l.assignee.memberId === mid) { this.toast("请选择一位新的科室负责人"); return; }
-      const rec = assignReplier(l, mid, ((document.getElementById("h-rep-note") || {}).value || "").trim());
-      done(`已${rec.type === "改派科室负责人" ? "改派" : "指定"} ${rec.name} 为科室负责人，已发送提醒`);
+    on("h-arrange", () => {
+      const useW = !!((document.getElementById("h-writer-on") || {}).checked);
+      const useC = !!((document.getElementById("h-collab-on") || {}).checked);
+      if (!useW && !useC) { this.toast("请勾选科室回复人、学院协同，或两项同时勾选"); return; }
+      if (useW) {
+        const mid = ((document.getElementById("h-writer-pick") || {}).value || "");
+        if (!mid) { this.toast("请选择科室回复人"); return; }
+        const same = l.writer && l.writer.status === "drafting" && l.writer.memberId === mid;
+        if (!same) {
+          const rec = assignWriter(l, mid, ((document.getElementById("h-writer-note") || {}).value || "").trim());
+          if (!rec) { this.toast("无法指定该科室回复人"); return; }
+        }
+      }
+      if (useC && !openCollab(l)) {
+        const note = ((document.getElementById("h-collab-note") || {}).value || "").trim();
+        if (!note) { this.toast("请填写协同说明"); return; }
+        if (!startCollab(l, note)) { this.toast("无法发起学院协同"); return; }
+      }
+      const bits = [];
+      if (useW) bits.push("科室回复人");
+      if (useC) bits.push("学院协同");
+      done(`已确定${bits.join("和")}，两项可以同时进行`);
     });
 
     on("h-pass", () => {
@@ -1997,10 +2055,17 @@ Object.assign(App, {
       saveReplyDraft(l, replyText());
       upsertLetter(l); this.toast("答复已暂存");
     });
+    on("h-writer-submit", () => {
+      const txt = replyText();
+      if (txt.length < 10) { this.toast("请填写答复稿（不少于10字）后再交回"); return; }
+      if (!submitWriterDraft(l, txt)) { this.toast("当前不能交回稿件"); return; }
+      done(`稿件已交回科室负责人 ${l.assignee ? l.assignee.name : ""}`);
+    });
     on("h-submit", () => {
       const txt = replyText();
+      if (writerDrafting(l)) { this.toast("科室回复人还未交回稿件"); return; }
       if (txt.length < 10) { this.toast("请填写答复内容（不少于10字）后再提交审批"); return; }
-      submitApproval(l, txt);
+      if (!submitApproval(l, txt)) { this.toast("当前不能提交审批"); return; }
       done(`已提交 ${l.leader ? l.leader.name : "科室分管领导"} 审批`);
     });
     on("h-collab", () => {
@@ -2106,32 +2171,30 @@ Object.assign(App, {
   },
 
   /* ============================================================
-   * 科室分管领导：指定科室负责人 + 审批全部答复
+   * 科室分管领导：只审批答复
    * ============================================================ */
   renderLeaderHome() {
     const sec = this.section;
     const me = this.leader();
     const list = getSectionLetters(sec);
-    const needRep = list.filter(l => stageOf(l) === STAGE.needReplier).sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""));
     const approving = list.filter(l => stageOf(l) === STAGE.approving);
     const doing = list.filter(l => l.status === STATUS.doing);
     const overdue = list.filter(l => isOverdue(l));
+    const returned = list.filter(l => stageOf(l) === STAGE.rejected);
     this.afterRender = () => this.bindHandleRows();
     return `
     <div class="hero hero-compact">
       <h2>${escapeHtml(sec)} · 科室工作台</h2>
-      <p>${escapeHtml(me ? me.name + "（" + (me.title || "科长") + "）" : "未配置科室分管领导")} ｜ 综合办分到本科室的来信由您指定科室负责人；所有正式答复都须经您审批，通过后由科室负责人确认发送。</p>
+      <p>${escapeHtml(me ? me.name + "（" + (me.title || "科长") + "）" : "未配置科室分管领导")} ｜ 您只负责审批。来信由综合办分给科室负责人；通过后由科室负责人确认发送，不会自动发给学生。</p>
     </div>
     <div class="stat-grid">
-      ${this.statCard("待指定科室负责人", needRep.length, "需尽快指定", "#E07B00")}
       ${this.statCard("待审批", approving.length, "科室负责人已提交", "#006DAD")}
+      ${this.statCard("已退回", returned.length, "负责人修改后再提交", "#DF2027")}
       ${this.statCard("科室在办", doing.length, "办理中信件", "#2A8DC7")}
-      ${this.statCard("超期预警", overdue.length, "需尽快办结", "#DF2027")}
+      ${this.statCard("超期预警", overdue.length, "需尽快办结", "#F29100")}
     </div>
     <div class="card"><div class="card-header"><h3>待审批</h3><span class="more" onclick="location.hash='#/leader-approve'">全部 ›</span></div>
-      <div class="card-body" style="padding:0">${this.letterTable(approving.slice(0, 6), { btn: () => "审批", empty: "暂无待审批答复" })}</div></div>
-    <div class="card"><div class="card-header"><h3>待指定科室负责人</h3><span class="more" onclick="location.hash='#/leader-assign'">全部 ›</span></div>
-      <div class="card-body" style="padding:0">${this.letterTable(needRep.slice(0, 6), { btn: () => "指定", empty: "暂无待指定科室负责人的来信" })}</div></div>
+      <div class="card-body" style="padding:0">${this.letterTable(approving.slice(0, 8), { btn: () => "审批", empty: "暂无待审批答复" })}</div></div>
     ${this.memberLoadCard(sec)}`;
   },
 
@@ -2139,18 +2202,19 @@ Object.assign(App, {
   memberLoadCard(sec, me) {
     const leader = sectionLeader(sec);
     const members = sectionMembers(sec);
-    return `<div class="card"><div class="card-header"><h3>${escapeHtml(sec)} · 科室负责人办理分布</h3><span class="hint">共 ${getSectionLetters(sec).length} 封分到本科室</span></div>
+    return `<div class="card"><div class="card-header"><h3>${escapeHtml(sec)} · 人员办理分布</h3><span class="hint">共 ${getSectionLetters(sec).length} 封分到本科室</span></div>
       <div class="card-body" style="padding:0">
-        <table class="member-load-table"><thead><tr><th>成员</th><th>岗位</th><th>负责总量</th><th>待我办理</th><th>审批中</th><th>已办结</th><th>联系电话</th></tr></thead>
+        <table class="member-load-table"><thead><tr><th>成员</th><th>岗位</th><th>相关信件</th><th>待处理</th><th>审批中</th><th>已办结</th><th>联系电话</th></tr></thead>
         <tbody>
           ${members.length ? members.map(m => {
-            const items = getMemberLetters(m.id);
             const isLeader = leader && m.id === leader.id;
+            const items = isLeader ? [] : (m.charge ? getMemberLetters(m.id) : getWriterLetters(m.id));
+            const pendingN = m.charge ? items.filter(isReplierTurn).length : items.filter(isWriterTurn).length;
             return `<tr${me && m.id === me.id ? ' class="row-hl"' : ""}>
-              <td><strong>${escapeHtml(m.name)}</strong>${isLeader ? ' <span class="tag info">科室分管领导</span>' : ""}${me && m.id === me.id ? ' <span class="tag info">本人</span>' : ""}</td>
+              <td><strong>${escapeHtml(m.name)}</strong>${isLeader ? ' <span class="tag info">科室分管领导</span>' : (m.charge ? ' <span class="tag info">科室负责人</span>' : ' <span class="tag">科室回复人</span>')}${me && m.id === me.id ? ' <span class="tag info">本人</span>' : ""}</td>
               <td>${escapeHtml(m.title || "—")}</td>
               <td>${isLeader ? "—" : items.length}</td>
-              <td>${isLeader ? "—" : items.filter(isReplierTurn).length}</td>
+              <td>${isLeader ? "—" : pendingN}</td>
               <td>${isLeader ? "—" : items.filter(l => stageOf(l) === STAGE.approving).length}</td>
               <td>${isLeader ? "—" : items.filter(l => l.status === STATUS.done).length}</td>
               <td class="mono">${escapeHtml(m.phone || "-")}</td></tr>`;
@@ -2159,19 +2223,16 @@ Object.assign(App, {
       </div></div>`;
   },
 
-  /* 科室分管领导：待指定科室负责人 / 待审批 列表 */
-  renderLeaderList(kind) {
+  /* 科室分管领导：待审批列表 */
+  renderLeaderList() {
     const sec = this.section;
-    const stage = kind === "assign" ? STAGE.needReplier : STAGE.approving;
-    const list = getSectionLetters(sec).filter(l => stageOf(l) === stage)
+    const list = getSectionLetters(sec).filter(l => stageOf(l) === STAGE.approving)
       .sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""));
     this.afterRender = () => this.bindHandleRows();
     return `
-    <p class="section-title">${kind === "assign"
-      ? `${escapeHtml(sec)} · 综合办分到本科室、尚未指定科室负责人的来信。请指定科室负责人。`
-      : `${escapeHtml(sec)} · 科室负责人已提交的答复。所有信件都须审批；不通过请打回并写明修改意见，通过后由科室负责人确认发送。`}</p>
+    <p class="section-title">${escapeHtml(sec)} · 科室负责人已提交的答复。请审批；不通过则退回科室负责人并写明意见。通过后由科室负责人确认发送，不会自动发给学生。</p>
     <div class="card"><div class="card-body" style="padding:0">
-      ${this.letterTable(list, { btn: () => kind === "assign" ? "指定" : "审批", empty: kind === "assign" ? "暂无待指定科室负责人的来信" : "暂无待审批答复" })}
+      ${this.letterTable(list, { btn: () => "审批", empty: "暂无待审批答复" })}
     </div></div>`;
   },
 
@@ -2200,7 +2261,7 @@ Object.assign(App, {
     return `
     <div class="hero hero-compact">
       <h2>${escapeHtml(me ? me.name : sec)} · 我的工作台</h2>
-      <p>${escapeHtml(sec)}${me && me.title ? " · " + escapeHtml(me.title) : ""} ｜ 科室分管领导指定给您的来信由您拟写答复；不能直接拟写的可请学生所在学院副书记协同。答复经科室分管领导审批通过后，由您确认发送并选择公开范围。</p>
+      <p>${escapeHtml(sec)}${me && me.title ? " · " + escapeHtml(me.title) : ""} ｜ 综合办把来信分派给您。您可以自己撰写，也可以指定科室回复人，或发起学院协同，后两者可以同时进行。稿件回到您这里后，再提交科室分管领导审批；通过后由您确认发送。</p>
     </div>
     <div class="stat-grid">
       ${this.statCard("待我办理", todo.length, "回复中 / 已打回 / 待确认发送", "#2A8DC7")}
@@ -2236,7 +2297,8 @@ Object.assign(App, {
     const mine = me ? getMemberLetters(me.id) : [];
     const tabs = [
       { k: "todo", t: "全部待办", f: isReplierTurn },
-      { k: STAGE.replying, t: "回复中", f: l => stageOf(l) === STAGE.replying },
+      { k: STAGE.replying, t: "办理中", f: l => stageOf(l) === STAGE.replying },
+      { k: STAGE.writing, t: "回复人撰写中", f: l => stageOf(l) === STAGE.writing },
       { k: STAGE.rejected, t: "已打回", f: l => stageOf(l) === STAGE.rejected },
       { k: STAGE.confirm, t: "待确认发送", f: l => stageOf(l) === STAGE.confirm },
       { k: STAGE.collab, t: "学院协同中", f: l => stageOf(l) === STAGE.collab },
@@ -2254,7 +2316,7 @@ Object.assign(App, {
       this.bindHandleRows();
     };
     return `
-    <p class="section-title">${escapeHtml(this.section)} · 科室分管领导指定由您回复的来信</p>
+    <p class="section-title">${escapeHtml(this.section)} · 综合办分派给您的来信</p>
     <div class="tabs">
       ${tabs.map(t => `<button class="tab ${cur.k === t.k ? "active" : ""}" data-tab="${t.k}">${t.t} <span class="cnt">${mine.filter(t.f).length}</span></button>`).join("")}
     </div>
@@ -2264,22 +2326,78 @@ Object.assign(App, {
     ${this.pagerHtml(pg.page, pg.total, "repPage")}`;
   },
 
-  /* 科室收件箱：科室分管领导、科室负责人共用 */
+  /* 科室回复人工作台：只起草，交回科室负责人 */
+  renderWriterHome() {
+    const sec = this.section;
+    const me = this.writer;
+    const mine = me ? getWriterLetters(me.id) : [];
+    const todo = mine.filter(isWriterTurn).sort((a, b) => effectiveDeadline(a).localeCompare(effectiveDeadline(b)));
+    const returned = mine.filter(l => l.writer && l.writer.status === "returned" && l.status === STATUS.doing);
+    this.afterRender = () => this.bindHandleRows();
+    return `
+    <div class="hero hero-compact">
+      <h2>${escapeHtml(me ? me.name : sec)} · 回复人工作台</h2>
+      <p>${escapeHtml(sec)}${me && me.title ? " · " + escapeHtml(me.title) : ""} ｜ 科室负责人指定您起草。写完后把稿件交回负责人，由负责人提交审批并确认发送。您不能直接回复学生，也不能自己提交审批。</p>
+    </div>
+    <div class="stat-grid">
+      ${this.statCard("待我起草", todo.length, "交回科室负责人", "#0E8A7D")}
+      ${this.statCard("已交回", returned.length, "等待负责人确认", "#2A8DC7")}
+      ${this.statCard("与我相关", mine.length, "被指定过的信件", "#006DAD")}
+      ${this.statCard("已办结", mine.filter(l => l.status === STATUS.done).length, "负责人已发送", "#1BB975")}
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>待我起草</h3><span class="more" onclick="location.hash='#/writer-todo'">全部 ›</span></div>
+      <div class="card-body" style="padding:0">
+        ${this.letterTable(todo.slice(0, 8), { btn: () => "起草", owner: l => escapeHtml((l.assignee && l.assignee.name) || "-"), ownerLabel: "科室负责人", ownerWidth: 110, empty: "暂无需要您起草的来信" })}
+      </div>
+    </div>`;
+  },
+
+  renderWriterTodo() {
+    const me = this.writer;
+    const mine = me ? getWriterLetters(me.id) : [];
+    const tabs = [
+      { k: "todo", t: "待我起草", f: isWriterTurn },
+      { k: "back", t: "已交回", f: l => l.writer && l.writer.status === "returned" && l.status !== STATUS.done },
+      { k: "done", t: "已办结", f: l => l.status === STATUS.done }
+    ];
+    const tab = this.state.writerTab || "todo";
+    const cur = tabs.find(t => t.k === tab) || tabs[0];
+    const list = mine.filter(cur.f).sort((a, b) => effectiveDeadline(a).localeCompare(effectiveDeadline(b)));
+    this.afterRender = () => {
+      document.querySelectorAll("[data-tab]").forEach(t => t.addEventListener("click", () => {
+        this.state.writerTab = t.dataset.tab; this.render();
+      }));
+      this.bindHandleRows();
+    };
+    return `
+    <p class="section-title">${escapeHtml(this.section)} · 科室负责人指定您起草的来信</p>
+    <div class="tabs">
+      ${tabs.map(t => `<button class="tab ${cur.k === t.k ? "active" : ""}" data-tab="${t.k}">${t.t} <span class="cnt">${mine.filter(t.f).length}</span></button>`).join("")}
+    </div>
+    <div class="card"><div class="card-body" style="padding:0">
+      ${this.letterTable(list, { btn: l => isWriterTurn(l) ? "起草" : "查看", owner: l => escapeHtml((l.assignee && l.assignee.name) || "-"), ownerLabel: "科室负责人", ownerWidth: 110, empty: "暂无信件" })}
+    </div></div>`;
+  },
+
+  /* 科室收件箱：分管领导、科室负责人、科室回复人共用 */
   renderSectionInbox() {
     const sec = this.section;
-    const me = this.member;
     const isRep = this.role === "replier";
+    const isWriter = this.role === "writer";
+    const mineId = isWriter ? this.writerId() : this.memberId();
+    const isMineRow = l => isWriter ? (l.writer && l.writer.memberId === mineId) : (l.assignee && l.assignee.memberId === mineId);
     const f = this.state.secFilter || {};
-    const scope = isRep ? (this.state.secScope || "mine") : "all";
+    const scope = (isRep || isWriter) ? (this.state.secScope || "mine") : "all";
     const base = getSectionLetters(sec);
-    let list = scope === "mine" ? base.filter(l => me && l.assignee && l.assignee.memberId === me.id) : base;
+    let list = scope === "mine" ? base.filter(isMineRow) : base;
     const scopeCounts = {
-      mine: me ? base.filter(l => l.assignee && l.assignee.memberId === me.id).length : 0,
+      mine: base.filter(isMineRow).length,
       all: base.length
     };
     const tabs = [
       { k: "全部", f: () => true },
-      { k: "待回复", f: l => [STAGE.needReplier, STAGE.replying, STAGE.collab, STAGE.rejected, STAGE.confirm].includes(stageOf(l)) },
+      { k: "待回复", f: l => [STAGE.replying, STAGE.writing, STAGE.collab, STAGE.rejected, STAGE.confirm].includes(stageOf(l)) },
       { k: "待审批", f: l => stageOf(l) === STAGE.approving },
       { k: "已办结", f: l => l.status === STATUS.done }
     ];
@@ -2301,16 +2419,13 @@ Object.assign(App, {
       this.bindHandleRows();
     };
     const btn = l => {
-      if (this.role === "leader") {
-        if (stageOf(l) === STAGE.needReplier) return "指定";
-        if (stageOf(l) === STAGE.approving) return "审批";
-        return "查看";
-      }
-      return me && l.assignee && l.assignee.memberId === me.id && isReplierTurn(l) ? "办理" : "查看";
+      if (this.role === "leader") return stageOf(l) === STAGE.approving ? "审批" : "查看";
+      if (isWriter) return isWriterTurn(l) && l.writer && l.writer.memberId === mineId ? "起草" : "查看";
+      return isMineRow(l) && isReplierTurn(l) ? "办理" : "查看";
     };
     return `
-    <p class="section-title">${escapeHtml(sec)} · 综合办分到本科室的来信${isRep ? "；仅指定给本人的信件可拟写答复" : "；科室分管领导负责指定科室负责人和审批答复"}</p>
-    ${isRep ? `<div class="scope-switch">
+    <p class="section-title">${escapeHtml(sec)} · 综合办分到本科室的来信${isRep ? "；分派给本人的由您办理" : (isWriter ? "；指定给本人起草的可以写稿并交回科室负责人" : "；科室分管领导只审批答复")}</p>
+    ${(isRep || isWriter) ? `<div class="scope-switch">
       <button class="scope-btn ${scope === "mine" ? "active" : ""}" data-scope="mine">${svgIcon("userCheck")} 我负责的 <span class="cnt">${scopeCounts.mine}</span></button>
       <button class="scope-btn ${scope === "all" ? "active" : ""}" data-scope="all">${svgIcon("inbox")} 本科室全部 <span class="cnt">${scopeCounts.all}</span></button>
     </div>` : ""}
@@ -2326,8 +2441,8 @@ Object.assign(App, {
     <div class="card"><div class="card-body" style="padding:0">
       ${this.letterTable(pg.rows, {
         btn, ownerLabel: "科室负责人", ownerWidth: 120,
-        owner: l => l.assignee ? escapeHtml(l.assignee.name) + (me && l.assignee.memberId === me.id && isRep ? ' <span class="tag info">本人</span>' : "") : '<span class="tag warn">未指定</span>',
-        hl: l => isRep && me && l.assignee && l.assignee.memberId === me.id,
+        owner: l => l.assignee ? escapeHtml(l.assignee.name) + (isRep && isMineRow(l) ? ' <span class="tag info">本人</span>' : "") : '<span class="tag warn">未指定</span>',
+        hl: l => (isRep || isWriter) && isMineRow(l),
         empty: scope === "mine" ? "暂无指定给我的信件" : "本科室暂无信件"
       })}
     </div></div>
@@ -2352,7 +2467,7 @@ Object.assign(App, {
     return `
     <div class="hero hero-compact">
       <h2>${escapeHtml(col)} · 协同待办</h2>
-      <p>${escapeHtml(c ? c.secretary + "（" + (c.title || "副书记") + "）" : "学工系统未同步副书记")} ｜ 科室负责人不能直接拟写时，会把本学院学生的来信直接发给您。请指定人员线下承办，承办完成后写处理意见发回科室负责人；线下承办不作为系统审批环节。副书记由学工系统维护，信箱直接使用。</p>
+      <p>${escapeHtml(c ? c.secretary + "（" + (c.title || "副书记") + "）" : "学工系统未同步副书记")} ｜ 科室负责人发起学院协同时，会把本学院学生的来信直接发给您。请指定人员线下承办，承办完成后写处理意见发回科室负责人。线下承办不是系统审批，您不能对学生办结。</p>
     </div>
     <div class="tabs">
       <button class="tab ${tab === "open" ? "active" : ""}" data-tab="open">待写处理意见 <span class="cnt">${list.filter(openOf).length}</span></button>
@@ -2901,7 +3016,7 @@ Object.assign(App, {
     };
 
     return `
-    <p class="section-title">维护学工部各科室及其成员。每个科室标记一位科室分管领导，负责指定科室负责人和审批答复；其余在用成员为可被指定的科室负责人。</p>
+    <p class="section-title">维护学工部各科室及其成员。每个科室一位科室分管领导，只审批；一位科室负责人，由综合办把来信分给此人；其余在用成员可作为科室回复人。</p>
     <div class="card">
       <div class="card-header"><h3>科室通讯录</h3><button class="btn btn-primary btn-sm" id="btn-add-sec">＋ 新增科室</button></div>
       <div class="card-body" style="padding:0">
@@ -2916,7 +3031,7 @@ Object.assign(App, {
             <td>${ld ? escapeHtml(ld.name) : '<span class="tag warn">未设置</span>'}</td>
             <td class="mono">${escapeHtml(d.phone || "-")}</td>
             <td>${escapeHtml(d.email || "-")}</td>
-            <td>${replierCandidates(d.name).length ? `${replierCandidates(d.name).length} 人` : '<span class="tag warn">未配置</span>'}</td>
+            <td>${sectionCharge(d.name) ? escapeHtml(sectionCharge(d.name).name) : '<span class="tag warn">未配置</span>'}</td>
             <td>${usage(d.name)}</td>
             <td class="table-actions">
               <button class="btn btn-outline btn-sm" data-edit-sec="${i}">编辑</button>
@@ -2937,12 +3052,12 @@ Object.assign(App, {
           <th style="width:170px">邮箱</th><th style="width:70px">经办量</th><th style="width:80px">状态</th><th style="width:180px">操作</th>
         </tr></thead><tbody>
           ${members.length ? members.map((m, i) => {
-            const items = m.leader ? getSectionLetters(active).filter(l => l.leader && l.leader.memberId === m.id) : getMemberLetters(m.id);
+            const items = m.leader ? getSectionLetters(active).filter(l => l.leader && l.leader.memberId === m.id) : (m.charge ? getMemberLetters(m.id) : getWriterLetters(m.id));
             const doing = items.filter(l => l.status === STATUS.doing).length;
             const off = m.enabled === false;
             return `<tr class="${off ? "row-off" : ""}">
               <td><strong>${escapeHtml(m.name)}</strong></td>
-              <td>${m.leader ? '<span class="tag info">科室分管领导</span>' : '<span class="tag">科室负责人</span>'}</td>
+              <td><span class="tag ${m.leader || m.charge ? "info" : ""}">${escapeHtml(memberDutyLabel(m))}</span></td>
               <td>${escapeHtml(m.title || "-")}</td>
               <td class="mono">${escapeHtml(m.phone || "-")}</td>
               <td>${escapeHtml(m.email || "-")}</td>
@@ -2959,7 +3074,7 @@ Object.assign(App, {
         </tbody></table>
       </div>
     </div>
-    <p class="form-hint" style="color:var(--text-muted)">提示：点击上方科室行可切换下方成员列表。分派时系统自动带出该科室的科室分管领导；停用的科室负责人不再出现在科室分管领导的指定列表中，历史记录保留。</p>`;
+    <p class="form-hint" style="color:var(--text-muted)">提示：点击上方科室行可切换下方成员列表。综合办分派时带出该科室的科室负责人。停用的回复人不再出现在指定列表中，历史记录保留。</p>`;
   },
 
   /* 科室分管领导变更后，同步本科室在办信件上的科室分管领导快照 */
@@ -2991,10 +3106,11 @@ Object.assign(App, {
       </div>
       <div class="form-group"><label class="form-required">身份</label>
         <div class="radio-group">
-          <label><input type="radio" name="mb-role" value="replier" ${!m.leader ? "checked" : ""}> 科室负责人（由科室分管领导指定回复来信）</label>
-          <label><input type="radio" name="mb-role" value="leader" ${m.leader ? "checked" : ""}> 科室分管领导（指定科室负责人、审批答复）</label>
+          <label><input type="radio" name="mb-role" value="writer" ${!m.leader && !m.charge ? "checked" : ""}> 科室回复人（由科室负责人指定起草）</label>
+          <label><input type="radio" name="mb-role" value="charge" ${m.charge && !m.leader ? "checked" : ""}> 科室负责人（综合办把来信分给此人）</label>
+          <label><input type="radio" name="mb-role" value="leader" ${m.leader ? "checked" : ""}> 科室分管领导（只审批答复）</label>
         </div>
-        <p class="form-hint" style="color:var(--text-muted)">每个科室只有一位科室分管领导${curLeader && curLeader.id !== m.id ? `，当前为 ${escapeHtml(curLeader.name)}；改为本成员后，本科室在办信件的科室分管领导同步更换` : ""}</p>
+        <p class="form-hint" style="color:var(--text-muted)">每个科室一位科室分管领导、一位科室负责人${curLeader && curLeader.id !== m.id ? `。当前分管领导为 ${escapeHtml(curLeader.name)}` : ""}。</p>
       </div>
       <div class="form-row">
         <div class="form-group"><label>联系电话</label>
@@ -3019,7 +3135,9 @@ Object.assign(App, {
       if (!name) { this.toast("请填写成员姓名"); return; }
       if (!title) { this.toast("请填写岗位 / 职务"); return; }
       if (list.some((x, i) => x.name === name && i !== idx)) { this.toast("该科室已存在同名成员"); return; }
-      const asLeader = (document.querySelector('input[name="mb-role"]:checked') || {}).value === "leader";
+      const duty = (document.querySelector('input[name="mb-role"]:checked') || {}).value || "writer";
+      const asLeader = duty === "leader";
+      const asCharge = duty === "charge";
       const enabled = (document.querySelector('input[name="mb-enabled"]:checked') || {}).value !== "0";
       if (m.leader && !asLeader) { this.toast("请先将其他成员设为科室分管领导，再调整本成员身份"); return; }
       if (asLeader && !enabled) { this.toast("科室分管领导须为在用状态"); return; }
@@ -3032,8 +3150,9 @@ Object.assign(App, {
         if (doing) { this.toast(`${m.name} 仍负责回复 ${doing} 封在办信件，改派后才能设为科室分管领导`); return; }
         list.forEach(x => { x.leader = false; });
       }
+      if (asCharge) list.forEach(x => { x.charge = false; });
       const data = {
-        id: m.id || genMemberId(), name, title, leader: asLeader,
+        id: m.id || genMemberId(), name, title, leader: asLeader, charge: asCharge,
         phone: document.getElementById("mb-phone").value.trim(),
         email: document.getElementById("mb-email").value.trim(),
         enabled
@@ -3418,7 +3537,7 @@ Object.assign(App, {
         <div class="form-group">
           <textarea id="urge-template" rows="4" class="rating-comment" style="width:100%">${escapeHtml(MOCK.urgeTemplate)}</textarea>
           <p class="form-hint">可用占位符：${chip(urgePh)}
-            <br><code class="ph-chip">{当前办理人}</code> 按信件所处环节自动取：待分派为综合办，待指定科室负责人 / 待审批为科室分管领导，其余为科室负责人。</p>
+            <br><code class="ph-chip">{当前办理人}</code> 按信件所处环节自动取：待分派为综合办，科室回复人起草中为回复人，待审批为科室分管领导，待确认发送和其他办理环节为科室负责人。</p>
         </div>
         <div class="form-group">
           <label class="form-required">默认发送渠道</label>

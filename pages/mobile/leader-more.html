@@ -27,7 +27,7 @@
         <button class="m-back hidden" id="m-back" aria-label="返回">‹</button>
         <div class="m-appbar-title" id="m-title">更多</div>
         <button class="m-appbar-btn" id="m-mailbox-btn" aria-label="切换信箱" style="display:none">&#9662;</button>
-        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="m-bell-dot">4</span></button>
+        <button class="m-appbar-btn m-bell" id="m-bell" aria-label="消息通知"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 1 1 12 0v5.5l1.5 1.5h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="m-bell-dot">3</span></button>
       </header>
       <main class="m-main" id="m-content">
 
@@ -36,15 +36,16 @@
       <div><div class="nm">陈静</div><div class="sb">学生资助管理科 · 科长</div></div>
     </div>
     <div class="m-section-title">切换身份（演示）</div>
-    <div class="m-role-switch m-role-5">
-      <button class="m-role-chip " data-role="student" onclick="location.href='home.html'">学生</button><button class="m-role-chip " data-role="admin" onclick="location.href='admin-more.html'">综合办</button><button class="m-role-chip active" data-role="leader" onclick="location.href='leader-more.html'">科室分管领导</button><button class="m-role-chip " data-role="replier" onclick="location.href='replier-more.html'">科室负责人</button><button class="m-role-chip " data-role="college" onclick="location.href='college-more.html'">学院副书记</button>
+    <div class="m-role-switch m-role-6">
+      <button class="m-role-chip " data-role="student" onclick="location.href='home.html'">学生</button><button class="m-role-chip " data-role="admin" onclick="location.href='admin-more.html'">综合办</button><button class="m-role-chip " data-role="replier" onclick="location.href='replier-more.html'">科室负责人</button><button class="m-role-chip " data-role="writer" onclick="location.href='writer-more.html'">科室回复人</button><button class="m-role-chip active" data-role="leader" onclick="location.href='leader-more.html'">科室分管领导</button><button class="m-role-chip " data-role="college" onclick="location.href='college-more.html'">学院副书记</button>
     </div>
     
     <div class="m-section-title">选择科室</div>
     <div class="m-role-secs">
       <button class="m-chip " data-sec="综合办公室">综合办公室</button><button class="m-chip " data-sec="思想政治教育科">思想政治教育科</button><button class="m-chip " data-sec="学生日常管理科">学生日常管理科</button><button class="m-chip active" data-sec="学生资助管理科">学生资助管理科</button><button class="m-chip " data-sec="心理健康教育中心">心理健康教育中心</button><button class="m-chip " data-sec="学生公寓管理科">学生公寓管理科</button><button class="m-chip " data-sec="就业创业指导中心">就业创业指导中心</button><button class="m-chip " data-sec="征兵与国防教育办公室">征兵与国防教育办公室</button>
     </div>
-    <p class="m-hint">科室分管领导：陈静，由综合办在桌面端「科室与人员」中标记</p>
+    <p class="m-hint">科室分管领导：陈静，只负责审批</p>
+    
     
     
     <button class="m-btn m-btn-primary" data-home style="margin:6px 0 4px">进入科室分管领导工作台</button>
@@ -58,7 +59,6 @@
       
       <nav class="m-tabbar" id="m-tabbar">
         <button class="m-tab" onclick="location.href='leader-home.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>工作台</span></button>
-        <button class="m-tab" onclick="location.href='leader-assign.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="6" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="m7.8 10.9 8.4-3.8M7.8 13.1l8.4 3.8"/></svg></span><span>待指定 (1)</span></button>
         <button class="m-tab" onclick="location.href='leader-approve.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="10" cy="8" r="3.4"/><path d="M4 19.5a6 6 0 0 1 10.4-4.1"/><path d="m15.5 17.8 1.9 1.9 3.4-3.9"/></svg></span><span>待审批 (2)</span></button>
         <button class="m-tab" onclick="location.href='leader-inbox.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>收件箱</span></button>
         <button class="m-tab active" onclick="location.href='leader-more.html'"><span class="m-tab-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span>更多</span></button>

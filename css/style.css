@@ -174,7 +174,8 @@ body {
 .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
 .topbar {
-  height: 60px;
+  height: auto;
+  min-height: 60px;
   background: var(--header-grad);
   border-bottom: none;
   box-shadow: var(--shadow-header);
@@ -185,7 +186,10 @@ body {
 .topbar-left { display: flex; align-items: center; gap: 12px; }
 .topbar-title h2 { font-size: 18px; font-weight: 400; color: #fff; letter-spacing: .2px; }
 .breadcrumb { font-size: 12px; color: rgba(255, 255, 255, .82); }
-.topbar-actions { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; min-width: 0; flex-wrap: wrap; justify-content: flex-end; padding: 8px 0; }
+.topbar .role-switch button { padding: 4px 8px; font-size: 12px; }
+.form-check { display: flex; align-items: flex-start; gap: 8px; margin: 8px 0; font-size: 14px; color: var(--text); }
+.form-check input { margin-top: 3px; }
 
 .icon-btn {
   border: none; background: rgba(255, 255, 255, .16); border-radius: var(--radius-sm);

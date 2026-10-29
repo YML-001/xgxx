@@ -25,7 +25,7 @@
       </div>
       <nav class="nav-group" id="sidebar-nav">
         <div class="nav-section-title">学院协同</div>
-        <button class="nav-item active" onclick="location.href='college-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.3a3.2 3.2 0 0 1 0 6"/><path d="M17.5 19.5a5.5 5.5 0 0 0-3-5"/></svg></span><span>协同待办</span><span class="nav-badge">1</span></button>
+        <button class="nav-item active" onclick="location.href='college-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16 5.3a3.2 3.2 0 0 1 0 6"/><path d="M17.5 19.5a5.5 5.5 0 0 0-3-5"/></svg></span><span>协同待办</span><span class="nav-badge">2</span></button>
         <button class="nav-item" onclick="location.href='college-col-visible.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/><circle cx="12" cy="12" r="2.7"/></svg></span><span>学院可见信件</span></button>
         <div class="nav-section-title">信息公开</div>
         <button class="nav-item" onclick="location.href='college-policy.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 2.5h7l5 5V21.5H6z"/><path d="M13 2.5V8h5"/><path d="M9 13h6M9 16.5h6"/></svg></span><span>制度文件</span></button>
@@ -49,8 +49,8 @@
         </div>
         <div class="topbar-actions">
           <div class="mailbox-switch" id="mailbox-switch"><span class="switch-label">学院</span><select class="ctx-select" title="切换学院（设计稿示意）"><option selected>计算机学院 · 黄志远</option><option >机械学院 · 钟立新</option><option >生命科学学院 · 杜晓梅</option><option >自动化学院 · 雷鸣</option><option >材料学院 · 宋佳</option><option >商学院 · 叶婧</option><option >电信学院 · 程浩</option><option >外国语学院 · 林薇</option><option >法学院 · 高远</option></select></div>
-          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="active" onclick="location.href='college-home.html'">学院副书记</button></div>
-          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 1）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">1</span></button>
+          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='writer-home.html'">科室回复人</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="active" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 2）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">2</span></button>
           <button class="btn btn-primary" id="btn-write-quick" style="display:none">＋ 我要写信</button>
         </div>
       </header>
@@ -58,21 +58,28 @@
 
     <div class="hero hero-compact">
       <h2>计算机学院 · 协同待办</h2>
-      <p>黄志远（党委副书记） ｜ 科室负责人不能直接拟写时，会把本学院学生的来信直接发给您。请指定人员线下承办，承办完成后写处理意见发回科室负责人；线下承办不作为系统审批环节。副书记由学工系统维护，信箱直接使用。</p>
+      <p>黄志远（党委副书记） ｜ 科室负责人发起学院协同时，会把本学院学生的来信直接发给您。请指定人员线下承办，承办完成后写处理意见发回科室负责人。线下承办不是系统审批，您不能对学生办结。</p>
     </div>
     <div class="tabs">
-      <button class="tab active" data-tab="open">待写处理意见 <span class="cnt">1</span></button>
+      <button class="tab active" data-tab="open">待写处理意见 <span class="cnt">2</span></button>
       <button class="tab " data-tab="done">已发回 <span class="cnt">1</span></button>
     </div>
     <div class="card"><div class="card-body" style="padding:0">
       <table><thead><tr><th style="width:140px">编号</th><th>标题</th><th style="width:66px">来信人</th><th style="width:150px">发起科室 / 科室负责人</th><th style="width:130px">发起时间</th><th style="width:104px">当前环节</th><th style="width:76px">操作</th></tr></thead>
       <tbody>
-        <tr class="clickable" data-collab="XG20261026403">
+        <tr class="clickable" data-collab="XG20261028408">
+            <td class="mono">XG20261028408</td>
+            <td>关于助学贷款回执补交方式的咨询<div class="cell-excerpt">协同说明：请学院协助核对该生助学贷款回执是否已交到学院。</div></td>
+            <td>岑*</td>
+            <td>学生资助管理科<div class="cell-sub">邱敏</div></td>
+            <td>2026-10-28 18:40</td>
+            <td><span class="badge stage-badge" style="background:#0E8A7D1a;color:#0E8A7D"><span class="dot" style="background:#0E8A7D"></span>回复人撰写中</span></td>
+            <td><button class="btn btn-primary btn-sm">写意见</button></td></tr><tr class="clickable" data-collab="XG20261026403">
             <td class="mono">XG20261026403</td>
             <td>关于学院励志奖学金推荐名单公示不清的反映<div class="cell-excerpt">协同说明：请学院核实本院推荐名单的公示时间、范围与公示期。</div></td>
             <td>许*</td>
             <td>学生资助管理科<div class="cell-sub">邱敏</div></td>
-            <td>2026-10-27 08:40</td>
+            <td>2026-10-26 19:10</td>
             <td><span class="badge stage-badge" style="background:#7A5CC21a;color:#7A5CC2"><span class="dot" style="background:#7A5CC2"></span>学院协同中</span></td>
             <td><button class="btn btn-primary btn-sm">写意见</button></td></tr>
       </tbody></table>

@@ -27,7 +27,7 @@
         <div class="nav-section-title">办理</div>
         <button class="nav-item" onclick="location.href='admin-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>办理工作台</span></button>
         <button class="nav-item" onclick="location.href='admin-dispatch.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="6" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="m7.8 10.9 8.4-3.8M7.8 13.1l8.4 3.8"/></svg></span><span>待分派信件</span><span class="nav-badge">5</span></button>
-        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">29</span></button>
+        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">30</span></button>
         <button class="nav-item" onclick="location.href='admin-supervise.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span><span>督办催办</span><span class="nav-badge">9</span></button>
         <div class="nav-section-title">运营</div>
         <button class="nav-item" onclick="location.href='admin-publish.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开情况</span></button>
@@ -58,8 +58,8 @@
         </div>
         <div class="topbar-actions">
           <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
-          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
-          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 16）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">16</span></button>
+          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='writer-home.html'">科室回复人</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 15）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">15</span></button>
           <button class="btn btn-primary" id="btn-write-quick" style="display:none">＋ 我要写信</button>
         </div>
       </header>
@@ -79,7 +79,7 @@
                 <button class="btn btn-ghost btn-xs" data-move-faq="0" dir="down"  title="下移"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 10l6 6 6-6"/></svg></button>
               </div>
             </td>
-            <td><div class="faq-q-cell">写信后多久能收到回复？</div><div class="faq-a-cell">提交成功后，系统会立即发送收悉回执，承诺在 7 天内给予正式回复。回执只表示来信已收到，不代表办结；正式答复经科室分管领导审批后由科室负责人发送给您。</div></td>
+            <td><div class="faq-q-cell">写信后多久能收到回复？</div><div class="faq-a-cell">提交成功后，系统会立即发送收悉回执，承诺在 7 天内给予正式回复。回执只表示来信已收到，不是正式答复，此时状态仍是待分派。正式答复经科室分管领导审批后，由科室负责人确认发送给您。</div></td>
             <td><span class="tag">办理流程</span></td>
             <td><span class="badge" style="background:#1BB9751a;color:#1BB975">启用</span></td>
             <td class="table-actions">
@@ -94,7 +94,7 @@
                 <button class="btn btn-ghost btn-xs" data-move-faq="1" dir="down"  title="下移"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 10l6 6 6-6"/></svg></button>
               </div>
             </td>
-            <td><div class="faq-q-cell">我的信件会由谁办理？</div><div class="faq-a-cell">来信统一送达学工部综合办公室，由综合办分派负责科室；科室分管领导指定科室负责人拟写答复，并审批每一封正式答复。需要学院协同的事项，由科室负责人请学生所在学院的副书记协助处理。</div></td>
+            <td><div class="faq-q-cell">我的信件会由谁办理？</div><div class="faq-a-cell">来信统一送达学工部综合办公室。综合办指定负责科室，并分派给该科室的科室负责人。负责人可以自己撰写，也可以指定本科室的科室回复人起草，或请学生所在学院的副书记协同；指定回复人和学院协同可以同时进行。答复由科室负责人提交科室分管领导审批，通过后再由负责人确认发送。</div></td>
             <td><span class="tag">办理流程</span></td>
             <td><span class="badge" style="background:#1BB9751a;color:#1BB975">启用</span></td>
             <td class="table-actions">
@@ -139,7 +139,7 @@
                 <button class="btn btn-ghost btn-xs" data-move-faq="4" dir="down"  title="下移"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M6 10l6 6 6-6"/></svg></button>
               </div>
             </td>
-            <td><div class="faq-q-cell">信件长时间没有回复怎么办？</div><div class="faq-a-cell">待分派或办理中的信件可在详情点击「催办」，系统会提醒当前办理人：未分派时为综合办，待指定科室负责人或待审批时为科室分管领导，其余环节为科室负责人。超过办结时限的信件也会自动提醒并纳入综合办督办。</div></td>
+            <td><div class="faq-q-cell">信件长时间没有回复怎么办？</div><div class="faq-a-cell">待分派或办理中的信件可在详情点击「催办」。未分派时提醒综合办；科室回复人正在起草时提醒回复人；待审批时提醒科室分管领导；待确认发送和其他办理环节提醒科室负责人。办结后不能催办。超过办结时限的信件也会自动提醒，并纳入综合办督办。</div></td>
             <td><span class="tag">办理流程</span></td>
             <td><span class="badge" style="background:#1BB9751a;color:#1BB975">启用</span></td>
             <td class="table-actions">

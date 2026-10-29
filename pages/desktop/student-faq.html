@@ -56,7 +56,7 @@
         </div>
         <div class="topbar-actions">
           <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
-          <div class="role-switch" id="role-switch"><button class="active" onclick="location.href='student-home.html'">学生</button><button class="" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <div class="role-switch" id="role-switch"><button class="active" onclick="location.href='student-home.html'">学生</button><button class="" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='writer-home.html'">科室回复人</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
           <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 1）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">1</span></button>
           <button class="btn btn-primary" id="btn-write-quick" onclick="location.href='student-write-notice.html'">＋ 我要写信</button>
         </div>
@@ -66,11 +66,11 @@
     <div class="card"><div class="card-header"><h3>常见问题</h3></div>
       <div class="card-body">
         <details class="faq-item"><summary>写信后多久能收到回复？</summary>
-          <div class="faq-a">提交成功后，系统会立即发送收悉回执，承诺在 7 天内给予正式回复。回执只表示来信已收到，不代表办结；正式答复经科室分管领导审批后由科室负责人发送给您。</div></details><details class="faq-item"><summary>我的信件会由谁办理？</summary>
-          <div class="faq-a">来信统一送达学工部综合办公室，由综合办分派负责科室；科室分管领导指定科室负责人拟写答复，并审批每一封正式答复。需要学院协同的事项，由科室负责人请学生所在学院的副书记协助处理。</div></details><details class="faq-item"><summary>如何查看我的信件办理进度？</summary>
+          <div class="faq-a">提交成功后，系统会立即发送收悉回执，承诺在 7 天内给予正式回复。回执只表示来信已收到，不是正式答复，此时状态仍是待分派。正式答复经科室分管领导审批后，由科室负责人确认发送给您。</div></details><details class="faq-item"><summary>我的信件会由谁办理？</summary>
+          <div class="faq-a">来信统一送达学工部综合办公室。综合办指定负责科室，并分派给该科室的科室负责人。负责人可以自己撰写，也可以指定本科室的科室回复人起草，或请学生所在学院的副书记协同；指定回复人和学院协同可以同时进行。答复由科室负责人提交科室分管领导审批，通过后再由负责人确认发送。</div></details><details class="faq-item"><summary>如何查看我的信件办理进度？</summary>
           <div class="faq-a">登录后进入「我的信件」，或在「信件查询」中输入信件编号，即可查看收悉回执、分派、办理、答复的完整流程时间轴。</div></details><details class="faq-item"><summary>对办理结果不满意怎么办？</summary>
           <div class="faq-a">在信件详情中对答复进行满意度评价；若不满意可点击「申请二次办理」，信件将回到原科室负责人重新办理，答复仍须科室分管领导审批后再发给您。</div></details><details class="faq-item"><summary>信件长时间没有回复怎么办？</summary>
-          <div class="faq-a">待分派或办理中的信件可在详情点击「催办」，系统会提醒当前办理人：未分派时为综合办，待指定科室负责人或待审批时为科室分管领导，其余环节为科室负责人。超过办结时限的信件也会自动提醒并纳入综合办督办。</div></details><details class="faq-item"><summary>哪些事项不予受理？</summary>
+          <div class="faq-a">待分派或办理中的信件可在详情点击「催办」。未分派时提醒综合办；科室回复人正在起草时提醒回复人；待审批时提醒科室分管领导；待确认发送和其他办理环节提醒科室负责人。办结后不能催办。超过办结时限的信件也会自动提醒，并纳入综合办督办。</div></details><details class="faq-item"><summary>哪些事项不予受理？</summary>
           <div class="faq-a">非学工部职责范围（如教务、后勤、网络等）、涉及紧急救助（110/119/120）、涉及国家机密或个人隐私、应通过法定程序解决，以及重复无理诉求等事项不予受理。</div></details>
       </div>
     </div>

@@ -27,7 +27,7 @@
         <div class="nav-section-title">办理</div>
         <button class="nav-item" onclick="location.href='admin-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>办理工作台</span></button>
         <button class="nav-item" onclick="location.href='admin-dispatch.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="6" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="m7.8 10.9 8.4-3.8M7.8 13.1l8.4 3.8"/></svg></span><span>待分派信件</span><span class="nav-badge">5</span></button>
-        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">29</span></button>
+        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">30</span></button>
         <button class="nav-item" onclick="location.href='admin-supervise.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span><span>督办催办</span><span class="nav-badge">9</span></button>
         <div class="nav-section-title">运营</div>
         <button class="nav-item" onclick="location.href='admin-publish.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开情况</span></button>
@@ -58,8 +58,8 @@
         </div>
         <div class="topbar-actions">
           <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
-          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
-          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 16）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">16</span></button>
+          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='writer-home.html'">科室回复人</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 15）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">15</span></button>
           <button class="btn btn-primary" id="btn-write-quick" style="display:none">＋ 我要写信</button>
         </div>
       </header>
@@ -95,8 +95,7 @@
         <div class="form-group">
           <textarea id="ack-template" rows="7" class="rating-comment" style="width:100%">尊敬的{姓名}同学：
 您好！您于{来信时间}通过学工信箱提交的来信「{标题}」（编号{编号}）我们已经收到，感谢您的反馈。
-综合办公室将进行受理，并流转至相关科室办理。我们将在{承诺天数}天内给予您正式回复，请留意「我的信件」中的办理进度。
-本消息仅表示来信已收悉，正式办理结果将另行答复。
+这是收悉回执，不是正式答复。来信目前仍是待分派。综合办将指定负责科室，并分派给该科室的科室负责人办理。我们将在{承诺天数}天内给予您正式回复，请留意「我的信件」中的办理进度。
 学工部综合办公室
 {回执时间}</textarea>
           <p class="form-hint">可用占位符：<code class="ph-chip">{姓名}</code> <code class="ph-chip">{标题}</code> <code class="ph-chip">{编号}</code> <code class="ph-chip">{来信时间}</code> <code class="ph-chip">{承诺天数}</code> <code class="ph-chip">{回执时间}</code>。回执只表示来信已收悉，不代表办理结果。</p>
@@ -107,9 +106,9 @@
       <div class="card-header"><h3>催办消息模板（M-15 / M-16）</h3><span class="hint">学生催办、综合办督办共用</span></div>
       <div class="card-body">
         <div class="form-group">
-          <textarea id="urge-template" rows="4" class="rating-comment" style="width:100%">尊敬的{当前办理人}：学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）提交的信件已办理{已过天数}天仍未办结，现进行催办，请尽快处理。—— {催办时间}</textarea>
+          <textarea id="urge-template" rows="4" class="rating-comment" style="width:100%">尊敬的{当前办理人}：学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）提交的信件已办理{已过天数}天仍未办结。请处理您手头这一环节：待分派请综合办指定负责科室并分派给科室负责人；科室回复人起草中请把稿件交回科室负责人；待审批请科室分管领导审批；待确认发送请科室负责人确认发送。请尽快处理。—— {催办时间}</textarea>
           <p class="form-hint">可用占位符：<code class="ph-chip">{当前办理人}</code> <code class="ph-chip">{科室}</code> <code class="ph-chip">{科室分管领导}</code> <code class="ph-chip">{科室负责人}</code> <code class="ph-chip">{姓名}</code> <code class="ph-chip">{事务分类}</code> <code class="ph-chip">{标题}</code> <code class="ph-chip">{编号}</code> <code class="ph-chip">{来信时间}</code> <code class="ph-chip">{已过天数}</code> <code class="ph-chip">{催办时间}</code>
-            <br><code class="ph-chip">{当前办理人}</code> 按信件所处环节自动取：待分派为综合办，待指定科室负责人 / 待审批为科室分管领导，其余为科室负责人。</p>
+            <br><code class="ph-chip">{当前办理人}</code> 按信件所处环节自动取：待分派为综合办，科室回复人起草中为回复人，待审批为科室分管领导，待确认发送和其他办理环节为科室负责人。</p>
         </div>
         <div class="form-group">
           <label class="form-required">默认发送渠道</label>
@@ -127,70 +126,79 @@
         <tbody><tr>
           <td class="mono">M-01</td><td>提交回执</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">尊敬的{姓名}同学：<br>您好！您于{来信时间}通过学工信箱提交的来信「{标题}」（编号{编号}）我们已经收到，感谢您的反馈。<br>综合办公室将进行受理，并流转至相关科室办理。我们将在{承诺天数}天内给予您正式回复，请留意「我的信件」中的办理进度。<br>本消息仅表示来信已收悉，正式办理结果将另行答复。<br>学工部综合办公室<br>{回执时间}</td></tr><tr>
+          <td class="tpl-cell">尊敬的{姓名}同学：<br>您好！您于{来信时间}通过学工信箱提交的来信「{标题}」（编号{编号}）我们已经收到，感谢您的反馈。<br>这是收悉回执，不是正式答复。来信目前仍是待分派。综合办将指定负责科室，并分派给该科室的科室负责人办理。我们将在{承诺天数}天内给予您正式回复，请留意「我的信件」中的办理进度。<br>学工部综合办公室<br>{回执时间}</td></tr><tr>
           <td class="mono">M-02</td><td>正式答复提醒</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">尊敬的{姓名}同学：<br>您提交的来信「{标题}」（编号{编号}）已办理完成。请登录学工信箱，在「我的信件」中查看正式答复，并作出评价。<br>学工部综合办公室<br>{答复时间}</td></tr><tr>
+          <td class="tpl-cell">尊敬的{姓名}同学：<br>您提交的来信「{标题}」（编号{编号}）已由科室负责人确认发送，正式答复已经发出。请登录学工信箱，在「我的信件」中查看，并作出评价。<br>学工部综合办公室<br>{答复时间}</td></tr><tr>
           <td class="mono">M-03</td><td>新来信待分派</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">综合办公室：收到一封新的学生来信待分派。学生{姓名}（{所在单位}）就「{事务分类}·{标题}」（编号{编号}）于{来信时间}提交，请及时指定负责科室。</td></tr><tr>
-          <td class="mono">M-04</td><td>分派负责科室</td>
+          <td class="tpl-cell">综合办：收到一封新的学生来信，目前仍是待分派。学生{姓名}（{所在单位}）就「{事务分类}·{标题}」（编号{编号}）于{来信时间}提交。请及时指定负责科室，并把这封信分派给该科室的科室负责人。</td></tr><tr>
+          <td class="mono">M-04</td><td>分派给科室负责人</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室分管领导}：综合办公室将学生{姓名}的来信「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）分至{承办科室}，请指定科室负责人。分派说明：{分派说明}。</td></tr><tr>
-          <td class="mono">M-05</td><td>改派科室</td>
+          <td class="tpl-cell">{科室负责人}：综合办已将学生{姓名}（{所在单位}）的来信「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）分派给您，负责科室为{承办科室}。您可以自己撰写答复，也可以指定本科室的科室回复人起草，或发起学院协同。指定科室回复人和发起学院协同可以同时进行。办结时限{办结时限}。分派说明：{分派说明}。</td></tr><tr>
+          <td class="mono">M-05</td><td>改派给科室负责人</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室分管领导}：学生来信「{标题}」（编号{编号}）已由综合办公室于{分派时间}改派至{承办科室}，原科室为{原承办科室}。请指定科室负责人。改派说明：{分派说明}。</td></tr><tr>
-          <td class="mono">M-06</td><td>指定科室负责人</td>
+          <td class="tpl-cell">{科室负责人}：学生来信「{标题}」（编号{编号}）已由综合办于{分派时间}改派至{承办科室}，现由您负责办理。原负责科室为{原承办科室}，原科室负责人为{原科室负责人}。您可以自己撰写答复，也可以指定科室回复人，或发起学院协同；指定回复人和学院协同可以同时进行。改派说明：{分派说明}。</td></tr><tr>
+          <td class="mono">M-06</td><td>指定科室回复人</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：您有一封学生来信待办理。学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）由{科室分管领导}指定您回复，办结时限{办结时限}。请登录学工信箱拟写答复。</td></tr><tr>
-          <td class="mono">M-07</td><td>改派科室负责人</td>
+          <td class="tpl-cell">{科室回复人}：科室负责人{科室负责人}请您为学生{姓名}的来信「{标题}」（编号{编号}，来信{来信时间}）起草答复。写完后请把稿件交回科室负责人，由负责人确认后再提交科室分管领导审批。请不要直接回复学生，也不要自己提交审批。办结时限{办结时限}。指派说明：{指派说明}。</td></tr><tr>
+          <td class="mono">M-07</td><td>改派科室回复人</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：学生来信「{标题}」（编号{编号}）已改由您回复，原科室负责人为{原科室负责人}。办结时限{办结时限}。请及时接手。</td></tr><tr>
+          <td class="tpl-cell">学生来信「{标题}」（编号{编号}）的起草人已由科室负责人{科室负责人}调整为{科室回复人}，原科室回复人为{原科室回复人}。请{科室回复人}起草完成后交回科室负责人，不要直接回复学生，也不要自己提交审批。指派说明：{指派说明}。</td></tr><tr>
           <td class="mono">M-08</td><td>待审批</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室分管领导}：{科室负责人}已提交「{标题}」（编号{编号}）的答复，请审批。所有信件均须审批后，才能由科室负责人确认发给学生。</td></tr><tr>
-          <td class="mono">M-09</td><td>审批通过</td>
+          <td class="tpl-cell">{科室分管领导}：科室负责人{科室负责人}已提交「{标题}」（编号{编号}）的答复，请您审批。您只负责通过或退回。审批通过后，由科室负责人确认发送并选择公开范围，不会自动发给学生。</td></tr><tr>
+          <td class="mono">M-09</td><td>审批通过待发送</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：您提交的「{标题}」（编号{编号}）已由科室分管领导审批通过。请登录学工信箱确认发送。确认前不会发给学生。</td></tr><tr>
-          <td class="mono">M-10</td><td>审批打回</td>
+          <td class="tpl-cell">{科室负责人}：您提交的「{标题}」（编号{编号}）已由科室分管领导{科室分管领导}审批通过。请确认发送，并选择公开范围：全部公开，或仅该学院副书记可见。审批通过后不会自动发送，确认之前学生收不到正式答复。</td></tr><tr>
+          <td class="mono">M-10</td><td>审批退回</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：您提交的「{标题}」（编号{编号}）未通过审批。修改意见：{审批意见}。请按意见修改后再次提交审批。通过前请勿回复学生。</td></tr><tr>
+          <td class="tpl-cell">{科室负责人}：您提交的「{标题}」（编号{编号}）未通过科室分管领导审批，已退回给您。审批意见：{审批意见}。您可以自己修改，也可以交给科室回复人修改，然后再提交审批。</td></tr><tr>
           <td class="mono">M-11</td><td>请学院协同</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{副书记}：科室负责人{科室负责人}就学生{姓名}（{所在单位}）的来信「{标题}」（编号{编号}）请学院协同。请指定人员线下承办；承办完成后请写处理意见，并发回科室负责人。</td></tr><tr>
+          <td class="tpl-cell">{副书记}：科室负责人{科室负责人}就学生{姓名}（{所在单位}）的来信「{标题}」（编号{编号}）请您组织学院协同。请指定人员线下承办；承办完成后，请填写处理意见并发回科室负责人。线下承办不是系统审批，您不能对学生办结。协同说明：{协同说明}。</td></tr><tr>
           <td class="mono">M-13</td><td>学院处理意见发回</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：学院副书记已就「{标题}」（编号{编号}）写明处理意见：{处理意见}。请据此编辑正式答复，再提交科室分管领导审批。</td></tr><tr>
+          <td class="tpl-cell">{科室负责人}：学院副书记{副书记}已就「{标题}」（编号{编号}）发回处理意见：{处理意见}。请据此确认答复稿，再提交科室分管领导审批。学院副书记不能直接对学生办结。</td></tr><tr>
           <td class="mono">M-15</td><td>学生催办</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">尊敬的{当前办理人}：学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）提交的信件已办理{已过天数}天仍未办结，现进行催办，请尽快处理。—— {催办时间}</td></tr><tr>
+          <td class="tpl-cell">尊敬的{当前办理人}：学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）提交的信件已办理{已过天数}天仍未办结。请处理您手头这一环节：待分派请综合办指定负责科室并分派给科室负责人；科室回复人起草中请把稿件交回科室负责人；待审批请科室分管领导审批；待确认发送请科室负责人确认发送。请尽快处理。—— {催办时间}</td></tr><tr>
           <td class="mono">M-16</td><td>综合办督办</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">尊敬的{当前办理人}：学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）提交的信件已办理{已过天数}天仍未办结，现进行催办，请尽快处理。—— {催办时间}</td></tr><tr>
+          <td class="tpl-cell">尊敬的{当前办理人}：学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）提交的信件已办理{已过天数}天仍未办结。请处理您手头这一环节：待分派请综合办指定负责科室并分派给科室负责人；科室回复人起草中请把稿件交回科室负责人；待审批请科室分管领导审批；待确认发送请科室负责人确认发送。请尽快处理。—— {催办时间}</td></tr><tr>
           <td class="mono">M-17</td><td>超期未分派</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">综合办公室：「{标题}」（编号{编号}，来信{来信时间}）已{已过天数}天仍未指定负责科室，请尽快分派。—— {提醒时间}</td></tr><tr>
-          <td class="mono">M-18</td><td>待指定科室负责人</td>
+          <td class="tpl-cell">综合办：「{标题}」（编号{编号}，来信{来信时间}）已{已过天数}天仍未指定负责科室。请尽快把来信分派给相应科室的科室负责人。—— {提醒时间}</td></tr><tr>
+          <td class="mono">M-18</td><td>回复稿临近时限</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室分管领导}：「{标题}」（编号{编号}）已分至{承办科室}，尚未指定科室负责人，距办结时限还剩{剩余天数}天，请尽快指定。—— {提醒时间}</td></tr><tr>
+          <td class="tpl-cell">{科室回复人}：您正在起草的「{标题}」（编号{编号}）距办结时限{办结时限}还剩{剩余天数}天。请尽快完成稿件并交回科室负责人{科室负责人}。不要直接回复学生，也不要自己提交审批。—— {提醒时间}</td></tr><tr>
           <td class="mono">M-19</td><td>临近超期</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：您负责的「{标题}」（编号{编号}）距办结时限{办结时限}还剩{剩余天数}天，请尽快拟写答复并提交审批。—— {提醒时间}</td></tr><tr>
+          <td class="tpl-cell">{当前办理人}：「{标题}」（编号{编号}）距办结时限{办结时限}还剩{剩余天数}天，仍未办结。请处理您负责的环节：科室负责人请确认稿件并提交审批，或在审批通过后确认发送；科室分管领导请尽快审批。—— {提醒时间}</td></tr><tr>
           <td class="mono">M-20</td><td>已经超期</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">【超期提醒】「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）已超出办结时限{超期天数}天仍未办结。当前办理人：{当前办理人}。请立即处理。—— {提醒时间}</td></tr><tr>
+          <td class="tpl-cell">【超期提醒】「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）已超出办结时限{超期天数}天仍未办结。当前办理人：{当前办理人}。请立即处理您负责的环节。—— {提醒时间}</td></tr><tr>
           <td class="mono">M-21</td><td>补充材料</td>
           <td>系统消息</td>
-          <td class="tpl-cell">{当前办理人}：学生{姓名}对「{标题}」（编号{编号}）于{提交时间}提交了补充材料，请登录学工信箱查看。</td></tr><tr>
+          <td class="tpl-cell">{当前办理人}：学生{姓名}对「{标题}」（编号{编号}）于{提交时间}补充了材料。请登录学工信箱查看，并按您当前环节继续办理。</td></tr><tr>
           <td class="mono">M-22</td><td>二次办理</td>
           <td>系统消息、ITS</td>
-          <td class="tpl-cell">{科室负责人}：学生{姓名}对「{标题}」（编号{编号}）的办理结果不满意，已于{发起时间}申请二次办理。请重新核实并提交审批，新办结时限{办结时限}。</td></tr><tr>
+          <td class="tpl-cell">{科室负责人}：学生{姓名}对「{标题}」（编号{编号}）的办理结果不满意，已于{发起时间}申请二次办理。信件已回到您这里。请重新核实，可自己撰写、指定科室回复人或发起学院协同，然后提交科室分管领导审批；通过后再由您确认发送。新办结时限{办结时限}。</td></tr><tr>
           <td class="mono">M-23</td><td>撤回来信</td>
           <td>系统消息</td>
-          <td class="tpl-cell">{当前办理人}：学生{姓名}已于{撤回时间}撤回「{标题}」（编号{编号}），该信件无需继续办理。</td></tr><tr>
+          <td class="tpl-cell">{当前办理人}：学生{姓名}已于{撤回时间}撤回「{标题}」（编号{编号}）。这封信无需继续办理。</td></tr><tr>
           <td class="mono">M-24</td><td>满意度评价</td>
           <td>系统消息</td>
-          <td class="tpl-cell">{科室负责人}：学生{姓名}对「{标题}」（编号{编号}）作出评价：{评分}星。{评价内容}　—— {评价时间}</td></tr></tbody></table>
+          <td class="tpl-cell">{科室负责人}：学生{姓名}对「{标题}」（编号{编号}）作出评价：{评分}星。{评价内容}　—— {评价时间}</td></tr><tr>
+          <td class="mono">M-25</td><td>回复稿已交回</td>
+          <td>系统消息、ITS</td>
+          <td class="tpl-cell">{科室负责人}：科室回复人{科室回复人}已将「{标题}」（编号{编号}）的答复稿交回给您。请确认稿件后，提交科室分管领导审批。科室回复人不能自己提交审批，也不能直接发给学生。</td></tr><tr>
+          <td class="mono">M-26</td><td>协同意见供参考</td>
+          <td>系统消息、ITS</td>
+          <td class="tpl-cell">{科室回复人}：学院副书记{副书记}已就「{标题}」（编号{编号}）发回处理意见：{处理意见}。供您起草时参考。稿件仍须交回科室负责人{科室负责人}，请不要直接回复学生，也不要自己提交审批。</td></tr><tr>
+          <td class="mono">M-27</td><td>来信已改出</td>
+          <td>系统消息、ITS</td>
+          <td class="tpl-cell">{原科室负责人}：您负责的来信「{标题}」（编号{编号}）已由综合办于{分派时间}改派至{承办科室}，现由科室负责人{科室负责人}办理。您无需继续办理。改派说明：{分派说明}。</td></tr></tbody></table>
       </div>
     </div>
       </main>
