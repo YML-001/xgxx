@@ -338,7 +338,11 @@ body {
 
 /* ---------------- 两列布局 ---------------- */
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.grid-3-2 { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; }
+.grid-3-2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 300px); gap: 20px; }
+.two-col > *,
+.grid-3-2 > * { min-width: 0; }
+.grid-3-2 table th,
+.grid-3-2 table td { padding-left: 10px; padding-right: 10px; }
 
 /* ---------------- 列表 / 表格（对齐 VXE 表头） ---------------- */
 table { width: 100%; border-collapse: collapse; font-size: 14px; color: var(--text-soft); }
@@ -363,11 +367,41 @@ tbody tr.clickable:hover { background: var(--primary-soft); }
 .table-actions .btn-danger.btn-sm:hover { color: #fab6b6; border-color: transparent; }
 .table-actions .btn[disabled] { opacity: .55; cursor: not-allowed; }
 
-/* 科室工作台 · 科室负责人办理分布：七列均分铺满卡片（仅 PC 这张表） */
-.member-load-table { width: 100%; table-layout: fixed; }
+/* 列表：短字段单行；未写死宽度的列（标题等）吃掉剩余空间，表格仍铺满卡片 */
+.content table,
+.modal-body table { width: 100%; table-layout: auto; }
+.card-body:has(> table),
+.modal-body:has(> table) { overflow-x: auto; }
+.content table th,
+.content table td,
+.modal-body table th,
+.modal-body table td { white-space: nowrap; word-break: keep-all; }
+.content table thead th:not([style*="width"]),
+.modal-body table thead th:not([style*="width"]) { width: 100%; }
+.content table td.table-empty,
+.modal-body table td.table-empty { white-space: normal; word-break: normal; }
+.content table td:has(.cell-title),
+.content table td:has(.faq-q-cell),
+.content table td:has(.tpl-cell),
+.modal-body table td:has(.cell-title),
+.modal-body table td:has(.faq-q-cell),
+.modal-body table td:has(.tpl-cell) {
+  white-space: normal; word-break: normal; width: 100%; min-width: 168px; max-width: 0;
+}
+.content table td:has(.cell-title) .cell-sub,
+.modal-body table td:has(.cell-title) .cell-sub {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* 人员办理分布：短列按内容宽，成员列吃剩余，避免岗位标签被均分列宽拆行 */
+.content table.member-load-table,
+.member-load-table { width: 100%; table-layout: auto; }
+.content table.member-load-table thead th,
+.member-load-table thead th { width: auto; white-space: nowrap; }
+.content table.member-load-table thead th:first-child,
+.member-load-table thead th:first-child { width: 100%; }
 .member-load-table th,
-.member-load-table td { white-space: nowrap; }
-.member-load-table thead th { width: calc(100% / 7); }
+.member-load-table td { white-space: nowrap; word-break: keep-all; }
 
 /* 徽章/标签（对齐 zt_tag） */
 .badge {
@@ -386,8 +420,16 @@ tbody tr.clickable:hover { background: var(--primary-soft); }
 .tag.overdue { background: #FCE8EA; color: #DF2027; border-color: #DF2027; }
 .tag.info { background: #D6EAF9; color: #2A8DC7; border-color: #2A8DC7; }
 
-/* 列表标题下的正文摘要（单行省略号，避免撑破表格） */
-.cell-excerpt { margin-top: 3px; font-size: 12px; font-weight: 400; color: var(--text-muted); line-height: 1.4; max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* 列表标题、正文摘要：最多两行，超出省略 */
+.cell-title,
+.cell-excerpt,
+.faq-q-cell {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden; white-space: normal; word-break: normal; overflow-wrap: break-word;
+  line-height: 1.45;
+}
+.cell-excerpt { margin-top: 3px; font-size: 12px; font-weight: 400; color: var(--text-muted); line-height: 1.45; max-width: none; }
+.tpl-cell { white-space: normal; word-break: break-word; overflow-wrap: break-word; }
 
 /* ---------------- 筛选区（对齐 MySearch 白卡） ---------------- */
 .filter-bar {

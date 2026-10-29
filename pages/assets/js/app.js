@@ -473,6 +473,11 @@ const App = {
     return `<span class="badge" style="background:${c}1a;color:${c}">${cat}</span>`;
   },
 
+  /* 列表标题：最多两行，超出省略 */
+  cellTitle(html) {
+    return `<div class="cell-title">${html}</div>`;
+  },
+
   /* 列表标题下的正文摘要（空内容返回空串，调用处自动跳过） */
   cellExcerpt(l) {
     const e = contentExcerpt(l.content, 56);
@@ -559,7 +564,7 @@ Object.assign(App, {
           <table><thead><tr><th>标题</th><th style="width:120px">承办科室</th><th style="width:100px">时间</th></tr></thead>
           <tbody>
             ${pub.length ? pub.map(l => `<tr class="clickable" data-open-public="${l.id}">
-              <td>${escapeHtml(l.title)}${this.cellExcerpt(l)}</td><td>${deptLabel(l)}</td><td>${l.date}</td></tr>`).join("")
+              <td>${this.cellTitle(escapeHtml(l.title))}${this.cellExcerpt(l)}</td><td>${deptLabel(l)}</td><td>${l.date}</td></tr>`).join("")
               : `<tr><td colspan="3" class="table-empty">暂无公开信件</td></tr>`}
           </tbody></table>
         </div>
@@ -906,7 +911,7 @@ Object.assign(App, {
       </tr></thead><tbody>
         ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-open="${l.id}">
           <td class="mono">${l.id}</td>
-          <td>${escapeHtml(l.title)} ${l.urged ? '<span class="tag warn">已催办</span>' : ""} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.supplements && l.supplements.length ? '<span class="tag info">已补充</span>' : ""}${this.cellExcerpt(l)}</td>
+          <td>${this.cellTitle(`${escapeHtml(l.title)} ${l.urged ? '<span class="tag warn">已催办</span>' : ""} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.supplements && l.supplements.length ? '<span class="tag info">已补充</span>' : ""}`)}${this.cellExcerpt(l)}</td>
           <td>${this.catBadge(l.category)}</td>
           <td>${this.ownerCell(l, true)}</td>
           <td>${l.date}</td>
@@ -1296,7 +1301,7 @@ Object.assign(App, {
         </tr></thead><tbody>
           ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-open-public="${l.id}">
             <td class="mono">${l.id}</td>
-            <td>${escapeHtml(l.title)}${this.cellExcerpt(l)}</td>
+            <td>${this.cellTitle(escapeHtml(l.title))}${this.cellExcerpt(l)}</td>
             <td>${this.catBadge(l.category)}</td>
             <td>${this.ownerCell(l, true)}</td>
             <td>${this.statusBadge(l.status)}</td>
@@ -1330,7 +1335,7 @@ Object.assign(App, {
       <table><thead><tr><th style="width:60px">序号</th><th>标题</th><th style="width:90px">分类</th><th style="width:120px">承办科室</th><th style="width:100px">时间</th></tr></thead>
       <tbody>
         ${pg.rows.length ? pg.rows.map((l, i) => `<tr class="clickable" data-open-public="${l.id}">
-          <td>${(pg.page - 1) * 8 + i + 1}</td><td>${escapeHtml(l.title)}${this.cellExcerpt(l)}</td>
+          <td>${(pg.page - 1) * 8 + i + 1}</td><td>${this.cellTitle(escapeHtml(l.title))}${this.cellExcerpt(l)}</td>
           <td>${this.catBadge(l.category)}</td><td>${deptLabel(l)}</td><td>${l.date}</td></tr>`).join("")
           : `<tr><td colspan="5" class="table-empty">暂无公开信件</td></tr>`}
       </tbody></table>
@@ -1368,7 +1373,7 @@ Object.assign(App, {
       <table><thead><tr><th style="width:60px">序号</th><th style="width:150px">文号</th><th>文件标题</th><th style="width:100px">类别</th><th style="width:90px">效力状态</th><th style="width:100px">日期</th></tr></thead>
       <tbody>
         ${pg.rows.length ? pg.rows.map((p, i) => `<tr class="clickable" data-open-policy="${escapeHtml(p.code)}">
-          <td>${(pg.page - 1) * 8 + i + 1}</td><td class="mono">${p.code}</td><td>${escapeHtml(p.title)}</td>
+          <td>${(pg.page - 1) * 8 + i + 1}</td><td class="mono">${p.code}</td><td>${this.cellTitle(escapeHtml(p.title))}</td>
           <td><span class="tag">${p.cat}</span></td>
           <td><span class="badge" style="background:${p.status === "现行有效" ? "#1BB9751a;color:#1BB975" : "#6270791a;color:#627079"}">${p.status}</span></td>
           <td>${p.date}</td></tr>`).join("")
@@ -1602,7 +1607,7 @@ Object.assign(App, {
           <tbody>
             ${pending.length ? pending.slice(0, 8).map(l => `<tr class="clickable" data-handle="${l.id}">
               <td>
-                <div>${escapeHtml(l.title)} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""}</div>
+                <div class="cell-title">${escapeHtml(l.title)} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""}</div>
                 <div class="cell-sub"><span class="mono">${l.id}</span> · ${escapeHtml(l.name)} · ${escapeHtml(l.unit || "-")} · ${escapeHtml(l.affair)}</div>
               </td>
               <td>${l.date}</td>
@@ -1678,7 +1683,7 @@ Object.assign(App, {
           ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-handle="${l.id}">
             <td class="sel-cell"><input type="checkbox" class="dp-sel" data-sel="${l.id}" onclick="event.stopPropagation()"></td>
             <td class="mono">${l.id}</td>
-            <td>${escapeHtml(l.title)} <span class="tag">${escapeHtml(l.affair)}</span> ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.urged ? '<span class="tag warn">已催办</span>' : ""}${this.cellExcerpt(l)}</td>
+            <td>${this.cellTitle(`${escapeHtml(l.title)} <span class="tag">${escapeHtml(l.affair)}</span> ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.urged ? '<span class="tag warn">已催办</span>' : ""}`)}${this.cellExcerpt(l)}</td>
             <td>${this.catBadge(l.category)}</td>
             <td>${escapeHtml(l.name)}</td>
             <td>${escapeHtml(l.unit || "-")}</td>
@@ -1694,7 +1699,7 @@ Object.assign(App, {
         <table><thead><tr><th style="width:140px">编号</th><th>标题</th><th style="width:130px">承办科室</th><th style="width:140px">科室分管领导</th><th style="width:130px">分派时间</th></tr></thead>
         <tbody>
           ${recent.length ? recent.map(({ l, d }) => `<tr class="clickable" data-handle="${l.id}">
-            <td class="mono">${l.id}</td><td>${escapeHtml(l.title)}</td>
+            <td class="mono">${l.id}</td><td>${this.cellTitle(escapeHtml(l.title))}</td>
             <td>${escapeHtml(d.section)}</td>
             <td>${escapeHtml(d.name)}${d.title ? `<span class="cell-sub">${escapeHtml(d.title)}${d.type === "改派科室" ? " · 改派" : ""}</span>` : ""}</td>
             <td>${escapeHtml(d.at || "")}</td></tr>`).join("")
@@ -1846,7 +1851,7 @@ Object.assign(App, {
       </tr></thead><tbody>
         ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-handle="${l.id}">
           <td class="mono">${l.id}</td>
-          <td>${escapeHtml(l.title)} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.urged ? '<span class="tag warn">已催办</span>' : ""} ${l.reopened ? '<span class="tag warn">二次办理</span>' : ""}${this.cellExcerpt(l)}</td>
+          <td>${this.cellTitle(`${escapeHtml(l.title)} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.urged ? '<span class="tag warn">已催办</span>' : ""} ${l.reopened ? '<span class="tag warn">二次办理</span>' : ""}`)}${this.cellExcerpt(l)}</td>
           <td>${this.catBadge(l.category)}</td>
           <td>${escapeHtml(l.name)}</td>
           <td>${this.ownerCell(l)}</td>
@@ -2127,7 +2132,7 @@ Object.assign(App, {
       ${open ? `<div class="detail-section action-block"><div class="sec-title">处理意见</div>
         <div class="cb-note">协同说明（${escapeHtml(open.by || "")}）：${escapeHtml(open.note || "—")}</div>
         <div class="form-group" style="margin-top:10px"><label class="form-required">处理意见</label>
-          <textarea id="col-opinion" rows="4" placeholder="请指定人员线下承办，承办完成后在此写明处理意见"></textarea></div>
+          <textarea id="col-opinion" rows="4" placeholder="请填写处理意见"></textarea></div>
         <p class="form-hint" style="color:var(--text-muted)">处理意见发回科室负责人，由其拟写正式答复并提交科室分管领导审批。副书记不直接对学生办结。</p>
       </div>
       <div class="modal-actions"><button class="btn btn-primary" id="col-send">${svgIcon("share")} 发回科室负责人</button></div>` : ""}`);
@@ -2153,7 +2158,7 @@ Object.assign(App, {
         const b = btn(l);
         return `<tr class="clickable ${o.hl && o.hl(l) ? "row-hl" : ""}" data-handle="${l.id}">
           <td class="mono">${l.id}</td>
-          <td>${escapeHtml(l.title)} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.urged && l.status !== STATUS.done ? '<span class="tag warn">催办</span>' : ""} ${l.reopened ? '<span class="tag warn">二次办理</span>' : ""} ${l.supplements && l.supplements.length ? '<span class="tag info">已补充</span>' : ""}${this.cellExcerpt(l)}</td>
+          <td>${this.cellTitle(`${escapeHtml(l.title)} ${isOverdue(l) ? '<span class="tag overdue">超期</span>' : ""} ${l.urged && l.status !== STATUS.done ? '<span class="tag warn">催办</span>' : ""} ${l.reopened ? '<span class="tag warn">二次办理</span>' : ""} ${l.supplements && l.supplements.length ? '<span class="tag info">已补充</span>' : ""}`)}${this.cellExcerpt(l)}</td>
           <td>${this.catBadge(l.category)}</td>
           <td>${escapeHtml(l.name)}</td>
           <td>${o.owner ? o.owner(l) : this.ownerCell(l)}</td>
@@ -2480,7 +2485,7 @@ Object.assign(App, {
           const cb = (l.collabs || []).filter(x => x.college === col).slice(-1)[0] || {};
           return `<tr class="clickable" data-collab="${l.id}">
             <td class="mono">${l.id}</td>
-            <td>${escapeHtml(l.title)}<div class="cell-excerpt">协同说明：${escapeHtml(cb.note || "—")}</div></td>
+            <td>${this.cellTitle(escapeHtml(l.title))}<div class="cell-excerpt">协同说明：${escapeHtml(cb.note || "—")}</div></td>
             <td>${escapeHtml(l.name)}</td>
             <td>${escapeHtml(l.dept || "-")}<div class="cell-sub">${escapeHtml(l.assignee ? l.assignee.name : "-")}</div></td>
             <td>${escapeHtml(cb.at || "")}</td>
@@ -2504,7 +2509,7 @@ Object.assign(App, {
       <table><thead><tr><th style="width:140px">编号</th><th>标题</th><th style="width:80px">分类</th><th style="width:66px">来信人</th><th style="width:130px">承办科室</th><th style="width:140px">公开范围</th><th style="width:100px">办结时间</th></tr></thead>
       <tbody>
         ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-collab="${l.id}">
-          <td class="mono">${l.id}</td><td>${escapeHtml(l.title)}${this.cellExcerpt(l)}</td>
+          <td class="mono">${l.id}</td><td>${this.cellTitle(escapeHtml(l.title))}${this.cellExcerpt(l)}</td>
           <td>${this.catBadge(l.category)}</td><td>${escapeHtml(l.name)}</td><td>${escapeHtml(l.dept || "-")}</td>
           <td><span class="tag ${l.publicScope === "all" ? "ok" : "info"}">${PUBLIC_SCOPE[l.publicScope]}</span></td>
           <td>${escapeHtml(((l.reply && l.reply.time) || "").slice(0, 10))}</td></tr>`).join("")
@@ -2531,7 +2536,7 @@ Object.assign(App, {
 
     const rowHtml = (l) => `<tr class="clickable" data-handle="${l.id}">
       <td class="sel-cell"><input type="checkbox" class="urge-sel" data-sel="${l.id}" onclick="event.stopPropagation()"></td>
-      <td class="mono">${l.id}</td><td>${escapeHtml(l.title)} ${l.urged ? '<span class="tag warn">已催办</span>' : ""}${this.cellExcerpt(l)}</td>
+      <td class="mono">${l.id}</td><td>${this.cellTitle(`${escapeHtml(l.title)} ${l.urged ? '<span class="tag warn">已催办</span>' : ""}`)}${this.cellExcerpt(l)}</td>
       <td>${this.ownerCell(l)}</td>
       <td>${escapeHtml(handlerLabel(l))}</td>
       <td>${effectiveDeadline(l)}</td><td>${this.stageBadge(l)}</td></tr>`;
@@ -2555,7 +2560,7 @@ Object.assign(App, {
     <div class="card"><div class="card-header"><h3>学生催办件</h3><span class="hint">学生主动发起的催办</span></div>
       <div class="card-body" style="padding:0"><table><thead><tr><th style="width:140px">编号</th><th>标题</th><th style="width:150px">科室 / 科室负责人</th><th style="width:150px">催办送达</th><th style="width:95px">办结时限</th><th style="width:104px">当前环节</th><th style="width:90px">操作</th></tr></thead>
       <tbody>${urged.length ? urged.map(l => `<tr class="clickable" data-handle="${l.id}">
-        <td class="mono">${l.id}</td><td>${escapeHtml(l.title)} <span class="tag warn">已催办</span>${this.cellExcerpt(l)}</td><td>${this.ownerCell(l)}</td>
+        <td class="mono">${l.id}</td><td>${this.cellTitle(`${escapeHtml(l.title)} <span class="tag warn">已催办</span>`)}${this.cellExcerpt(l)}</td><td>${this.ownerCell(l)}</td>
         <td>${escapeHtml(((l.reminders || []).slice(-1)[0] || {}).to || handlerLabel(l))}</td>
         <td>${effectiveDeadline(l)}</td><td>${this.stageBadge(l)}</td>
         <td>${l.status === STATUS.pending
@@ -2618,7 +2623,7 @@ Object.assign(App, {
       <table><thead><tr><th style="width:140px">编号</th><th>标题</th><th style="width:150px">科室 / 科室负责人</th><th style="width:110px">所在单位</th><th style="width:100px">办结时间</th><th style="width:140px">公开范围</th></tr></thead>
       <tbody>
         ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-open-public="${l.id}">
-          <td class="mono">${l.id}</td><td>${escapeHtml(l.title)}${this.cellExcerpt(l)}</td><td>${this.ownerCell(l)}</td>
+          <td class="mono">${l.id}</td><td>${this.cellTitle(escapeHtml(l.title))}${this.cellExcerpt(l)}</td><td>${this.ownerCell(l)}</td>
           <td>${escapeHtml(l.unit || "-")}</td><td>${escapeHtml(((l.reply && l.reply.time) || l.date || "").slice(0, 10))}</td>
           <td>${l.publicScope ? `<span class="tag ${l.publicScope === "all" ? "ok" : "info"}">${PUBLIC_SCOPE[l.publicScope]}</span>` : "—"}</td>
         </tr>`).join("") : `<tr><td colspan="6" class="table-empty">暂无信件</td></tr>`}
@@ -3309,7 +3314,7 @@ Object.assign(App, {
         </tr></thead><tbody>
           ${list.length ? list.map((p, i) => `<tr>
             <td class="mono">${escapeHtml(p.code)}</td>
-            <td>${escapeHtml(p.title)}</td>
+            <td>${this.cellTitle(escapeHtml(p.title))}</td>
             <td><span class="tag">${escapeHtml(p.cat)}</span></td>
             <td>${p.status === "现行有效" ? '<span class="tag" style="background:#1BB9751a;color:#1BB975">现行有效</span>' : '<span class="tag" style="background:#6270791a;color:#627079">已废止</span>'}</td>
             <td>${escapeHtml(p.date)}</td>

@@ -1551,7 +1551,7 @@ Object.assign(MApp, {
       ${this.letterDetailBody(l, "view")}
       ${open ? `<div class="m-sec"><div class="m-sec-t">处理意见</div>
         <div class="cb-note">协同说明（${escapeHtml(open.by || "")}）：${escapeHtml(open.note || "—")}</div>
-        <div class="m-field" style="margin-top:8px"><label class="req">处理意见</label><textarea id="mcol-op" rows="4" placeholder="请指定人员线下承办，承办完成后写明处理意见"></textarea></div>
+        <div class="m-field" style="margin-top:8px"><label class="req">处理意见</label><textarea id="mcol-op" rows="4" placeholder="请填写处理意见"></textarea></div>
         <p class="m-hint">处理意见发回科室负责人，由其拟写答复并提交科室分管领导审批。</p></div>
       <div class="m-sheet-actions"><button class="m-btn m-btn-primary" id="mcol-send">发回科室负责人</button></div>` : ""}`);
     const send = document.getElementById("mcol-send");
