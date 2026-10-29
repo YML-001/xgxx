@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""绘制学工信箱调整后的业务流程图。"""
+"""绘制学工信箱办理流程图，供建设方案和修改清单嵌入。"""
 
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                   "docs", "manual-assets", "mailbox-flow.png")
+OUT = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "docs", "manual-assets", "mailbox-flow.png",
+)
 
-W, H = 1680, 1680
+W, H = 1400, 2200
 NAVY = (31, 92, 153)
 INK = (30, 41, 59)
 MUTED = (71, 85, 105)
@@ -25,27 +27,32 @@ PURPLE_S = (106, 64, 150)
 WHITE = (255, 255, 255)
 BG = (248, 250, 252)
 
+COLLECTED = []
 
-def font(size, bold=False):
-    candidates = [
+
+def font(size):
+    for path in (
         "/System/Library/Fonts/PingFang.ttc",
         "/System/Library/Fonts/STHeiti Medium.ttc",
         "/Library/Fonts/Arial Unicode.ttf",
-    ]
-    for path in candidates:
+    ):
         if os.path.exists(path):
-            index = 0
             try:
-                return ImageFont.truetype(path, size, index=index)
+                return ImageFont.truetype(path, size, index=0)
             except Exception:
                 return ImageFont.truetype(path, size)
     return ImageFont.load_default()
 
 
-F_TITLE = font(36)
-F_BOX = font(26)
-F_SMALL = font(22)
-F_TAG = font(20)
+F_TITLE = font(42)
+F_BOX = font(32)
+F_SMALL = font(28)
+F_TAG = font(24)
+
+
+def remember(text):
+    COLLECTED.append(text)
+    return text
 
 
 def wrap(draw, text, fnt, max_w):
@@ -68,30 +75,33 @@ def wrap(draw, text, fnt, max_w):
     return lines or [""]
 
 
+def text_height(draw, text, fnt, max_w, gap):
+    lines = wrap(draw, text, fnt, max_w)
+    heights = []
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line or " ", font=fnt)
+        heights.append(bbox[3] - bbox[1])
+    total = sum(heights) + gap * (len(lines) - 1 if len(lines) > 1 else 0)
+    return lines, heights, total
+
+
+def text_block(draw, xy, text, fnt, fill, max_w, gap=8):
+    lines, heights, total = text_height(draw, text, fnt, max_w, gap)
+    x, y = xy
+    cy = y
+    for line, h in zip(lines, heights):
+        tw = draw.textlength(line, font=fnt) if line else 0
+        draw.text((x + (max_w - tw) / 2, cy), line, font=fnt, fill=fill)
+        cy += h + gap
+    return total
+
+
 def rounded(draw, box, radius, fill, outline, width=3):
     draw.rounded_rectangle(box, radius=radius, fill=fill, outline=outline, width=width)
 
 
-def text_block(draw, xy, text, fnt, fill, max_w, align="center", line_gap=8):
-    lines = wrap(draw, text, fnt, max_w)
-    x, y = xy
-    heights = []
-    for line in lines:
-        bbox = draw.textbbox((0, 0), line, font=fnt)
-        heights.append(bbox[3] - bbox[1])
-    total = sum(heights) + line_gap * (len(lines) - 1)
-    cy = y
-    for line, h in zip(lines, heights):
-        tw = draw.textlength(line, font=fnt)
-        tx = x + (max_w - tw) / 2 if align == "center" else x
-        draw.text((tx, cy), line, font=fnt, fill=fill)
-        cy += h + line_gap
-    return total
-
-
 def arrow(draw, x1, y1, x2, y2, color=LINE):
     draw.line((x1, y1, x2, y2), fill=color, width=3)
-    # arrow head
     if abs(x2 - x1) >= abs(y2 - y1):
         sign = 1 if x2 > x1 else -1
         pts = [(x2, y2), (x2 - sign * 14, y2 - 7), (x2 - sign * 14, y2 + 7)]
@@ -101,115 +111,107 @@ def arrow(draw, x1, y1, x2, y2, color=LINE):
     draw.polygon(pts, fill=color)
 
 
-def label(draw, x, y, text, fill=MUTED):
-    tw = draw.textlength(text, font=F_TAG)
-    draw.text((x - tw / 2, y), text, font=F_TAG, fill=fill)
+def draw_box(draw, x, y, w, text, fill, stroke, fnt):
+    max_w = w - 36
+    _, _, total = text_height(draw, text, fnt, max_w, 8)
+    h = max(78, int(total + 28))
+    rounded(draw, (x, y, x + w, y + h), 16, fill, stroke, 3)
+    text_block(draw, (x + 18, y + (h - total) / 2), text, fnt, INK, max_w)
+    return h
 
 
 def main():
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
-    d.text((80, 36), "学工信箱办理流程", font=F_TITLE, fill=NAVY)
-    d.text((80, 88), "学生提交后 7 天内正式回复　·　全部信件均须科室领导审批　·　不按问题类型推荐科室",
-           font=F_SMALL, fill=MUTED)
-
-    # main column boxes
-    mx, mw = 70, 760
-
-    def box(y, h, text, fill, stroke, fnt=F_BOX):
-        rounded(d, (mx, y, mx + mw, y + h), 16, fill, stroke, 3)
-        text_block(d, (mx + 24, y + 16), text, fnt, INK, mw - 48)
-        return y + h
-
-    def down(y, length=36):
-        arrow(d, mx + mw / 2, y, mx + mw / 2, y + length)
-        return y + length
-
-    def cbox(gx, gw, cy, h, text):
-        max_w = gw - 80
-        lines = wrap(d, text, F_SMALL, max_w)
-        line_gap = 8
-        heights = []
-        for line in lines:
-            bbox = d.textbbox((0, 0), line, font=F_SMALL)
-            heights.append(bbox[3] - bbox[1])
-        total = sum(heights) + line_gap * (len(lines) - 1 if len(lines) > 1 else 0)
-        if total + 24 > h:
-            raise SystemExit(f"学院协同文字超出方框（需要{total + 24:.0f}，现有{h}）：{text}")
-        rounded(d, (gx + 24, cy, gx + gw - 24, cy + h), 14, PURPLE_F, PURPLE_S, 3)
-        text_block(d, (gx + 40, cy + (h - total) / 2), text, F_SMALL, INK, max_w)
-        return cy + h
-
-    y = 140
-    y = box(y, 72, "1  学生提交来信", BLUE_F, NAVY)
-    y = down(y, 28)
-    y = box(y, 96, "2  系统立即回执：已收到，7 天内正式回复，感谢反馈。仍为待分派，不算办结。", BLUE_F, NAVY, F_SMALL)
-    y = down(y, 28)
-    y = box(y, 96, "3  综合办人工指定科室领导（科长）。不按问题类型自动推荐科室。", BLUE_F, NAVY, F_SMALL)
-    y = down(y, 28)
-    y = box(y, 88, "4  科室领导指定具体回复人，之后也由同一人审批答复", BLUE_F, NAVY, F_SMALL)
-    y = down(y, 28)
-
-    dy = y
-    rounded(d, (mx + 70, dy, mx + mw - 70, dy + 84), 18, GOLD_F, GOLD_S, 3)
-    text_block(d, (mx + 90, dy + 22), "5  回复人能否直接拟写答复？", F_BOX, INK, mw - 180)
-
-    gx, gw, gh = 900, 720, 430
-    gy = dy
-    rounded(d, (gx, gy, gx + gw, gy + gh), 18, WHITE, PURPLE_S, 3)
-    d.text((gx + 24, gy + 16), "不能直接拟写：学院协同", font=F_BOX, fill=PURPLE_S)
-    cy = gy + 62
-    cy = cbox(gx, gw, cy, 70, "直接发给学院副书记")
-    arrow(d, gx + gw / 2, cy, gx + gw / 2, cy + 20, PURPLE_S)
-    cy += 20
-    cy = cbox(
-        gx, gw, cy, 96,
-        "副书记指定人员线下承办，承办结果回到副书记。\n线下承办不作为系统审批环节。",
+    title = remember("学工信箱办理流程")
+    d.text((40, 28), title, font=F_TITLE, fill=NAVY)
+    sub = remember(
+        "综合办指定负责科室，分派给科室负责人。\n"
+        "负责人可自己写，也可同时指定科室回复人与学院协同。\n"
+        "稿件回到负责人后，提交分管领导审批；通过后由负责人确认回复学生。"
     )
-    arrow(d, gx + gw / 2, cy, gx + gw / 2, cy + 20, PURPLE_S)
-    cy += 20
-    cy = cbox(gx, gw, cy, 76, "副书记写处理意见后，发回科室回复人编辑")
-    if cy > gy + gh - 48:
-        raise SystemExit(f"学院协同方框与回箭头过近：bottom={cy - gy:.0f}, limit={gh - 48}")
+    sub_h = text_block(d, (40, 86), sub, F_TAG, MUTED, 900, gap=6)
 
-    arrow(d, mx + mw - 70, dy + 42, gx, dy + 42, PURPLE_S)
-    label(d, (mx + mw + gx) / 2 - 10, dy + 10, "不能")
+    left_x, left_w = 36, 780
+    right_x, right_w = 860, 500
+    y = 86 + sub_h + 28
 
-    edit_top = gy + gh - 78
-    arrow(d, mx + mw / 2, dy + 84, mx + mw / 2, edit_top, LINE)
-    label(d, mx + mw / 2 - 28, dy + 92, "能")
-    y = box(edit_top, 78, "6  回复人编辑答复内容", BLUE_F, NAVY)
-    arrow(d, gx + 28, gy + gh - 40, mx + mw, edit_top + 39, PURPLE_S)
-    y = down(y, 28)
-    y = box(y, 88, "7  提交科室领导审批。所有信件都要审，简单回复也不例外。", GOLD_F, GOLD_S, F_SMALL)
-    y = down(y, 26)
+    steps_before = [
+        (remember("1  学生提交来信\n只存草稿不进入办理"), BLUE_F, NAVY, F_BOX),
+        (remember("2  立即发送 7 日收悉回执\n不是正式答复，状态仍为待分派"), BLUE_F, NAVY, F_SMALL),
+        (remember("3  综合办指定负责科室\n分派给该科室的科室负责人\n不自动推荐科室\n不直接指定科室回复人\n也不直接分给分管领导"), BLUE_F, NAVY, F_SMALL),
+    ]
+    for text, fill, stroke, fnt in steps_before:
+        h = draw_box(d, left_x, y, left_w, text, fill, stroke, fnt)
+        y += h
+        arrow(d, left_x + left_w / 2, y, left_x + left_w / 2, y + 28)
+        y += 28
 
-    dec_y = y
-    rounded(d, (mx + 70, dec_y, mx + mw - 70, dec_y + 84), 18, GOLD_F, GOLD_S, 3)
-    text_block(d, (mx + 90, dec_y + 22), "8  科室领导是否通过？", F_BOX, INK, mw - 180)
-    y = dec_y + 84
-    y = down(y, 26)
-    label(d, mx + mw / 2 - 36, y - 24, "通过")
+    y4 = y
+    middle = [
+        (remember("4  科室负责人办理\n可自己写答复\n可指定科室回复人起草\n可发起学院协同\n后两项可以同时进行"), GOLD_F, GOLD_S, F_SMALL),
+        (remember("5  回复稿回到科室负责人\n自己写的由本人确认\n回复人交回，或学院意见发回\n仍由负责人确认后提交"), BLUE_F, NAVY, F_SMALL),
+        (remember("6  科室负责人提交\n科室分管领导审批"), GOLD_F, GOLD_S, F_BOX),
+        (remember("7  通过后不自动发送\n分管领导不能改完直接发\n负责人确认回复学生\n并选择公开范围"), GREEN_F, GREEN_S, F_SMALL),
+    ]
+    for i, (text, fill, stroke, fnt) in enumerate(middle):
+        h = draw_box(d, left_x, y, left_w, text, fill, stroke, fnt)
+        y += h
+        if i < len(middle) - 1:
+            arrow(d, left_x + left_w / 2, y, left_x + left_w / 2, y + 26)
+            y += 26
+    y_after = y
 
-    rx = 900
-    rounded(d, (rx, dec_y, rx + 720, dec_y + 130), 16, RED_F, RED_S, 3)
-    text_block(d, (rx + 24, dec_y + 28), "不通过：打回回复人。回复人按修改意见编辑后，再次提交科室领导审批。通过前不发给学生。", F_SMALL, INK, 672)
-    arrow(d, mx + mw - 70, dec_y + 42, rx, dec_y + 42, RED_S)
-    label(d, (mx + mw + rx) / 2 - 30, dec_y + 8, "不通过")
+    side = remember(
+        "可同时进行\n\n"
+        "科室回复人只起草\n"
+        "写完交回科室负责人\n"
+        "不能提交审批\n"
+        "不能直接回复学生\n\n"
+        "学院副书记线下承办\n"
+        "处理意见发回负责人\n"
+        "不能对学生办结\n"
+        "承办不是系统审批\n\n"
+        "审批不通过时\n"
+        "退回科室负责人并附意见\n"
+        "负责人可自己修改\n"
+        "或再交科室回复人修改\n"
+        "然后再次提交审批"
+    )
+    pad = 22
+    inner_w = right_w - pad * 2
+    _, _, side_total = text_height(d, side, F_SMALL, inner_w, 8)
+    side_h = side_total + pad * 2
+    span = y_after - y4
+    if side_h > span:
+        raise SystemExit("右侧说明高于主流程，需要 %s，现有 %s" % (side_h, span))
+    top = y4 + (span - side_h) / 2
+    rounded(d, (right_x, top, right_x + right_w, top + side_h), 16, WHITE, PURPLE_S, 3)
+    text_block(d, (right_x + pad, top + pad), side, F_SMALL, INK, inner_w)
+    arrow(d, left_x + left_w, y4 + 48, right_x, top + 36, PURPLE_S)
 
-    y = box(y, 88, "9  审批通过后不直接发送。回复人再确认一次，然后正式回复。", GREEN_F, GREEN_S, F_SMALL)
-    y = down(y, 28)
-    y = box(y, 72, "10  学生收到正式答复，信件办结", GREEN_F, GREEN_S)
-    y = down(y, 28)
-    end_y = box(y, 96, "11  科室选择公开范围：全部公开，或仅该学院副书记可见。", BLUE_F, NAVY, F_SMALL)
-    # crop unused canvas
-    cropped = img.crop((0, 0, W, min(H, end_y + 48)))
+    y = y_after
+    arrow(d, left_x + left_w / 2, y, left_x + left_w / 2, y + 28)
+    y += 28
+    end_text = remember("8  学生收到正式答复，信件办结\n学生始终能看到自己的答复")
+    h = draw_box(d, left_x, y, left_w, end_text, GREEN_F, GREEN_S, F_BOX)
+    y += h + 18
+    foot = remember("公开范围只有两种：全部公开，或仅该学院副书记可见。")
+    d.text((left_x, y), foot, font=F_TAG, fill=MUTED)
+    y += 40
+
+    blob = "\n".join(COLLECTED)
+    for word in ("学办主任", "分案", "科室领导", "待指定回复人"):
+        if word in blob:
+            raise SystemExit("流程图含禁用词：" + word)
+    for word in ("科室负责人", "科室回复人", "科室分管领导", "可以同时", "指定负责科室"):
+        if word not in blob:
+            raise SystemExit("流程图缺少：" + word)
+
+    cropped = img.crop((0, 0, W, min(H, int(y + 24))))
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
     cropped.save(OUT, "PNG")
     print(OUT, cropped.size)
-    return
-
-    img.save(OUT, "PNG")
-    print(OUT)
 
 
 if __name__ == "__main__":

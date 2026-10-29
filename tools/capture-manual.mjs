@@ -117,7 +117,6 @@ try {
     await shot(page, "pc-stu-detail");
     await page.evaluate(() => document.getElementById("modal")?.classList.remove("show"));
     for (const [hash, name] of [
-      ["query", "pc-stu-query"],
       ["public", "pc-stu-public"],
       ["policy", "pc-stu-policy"],
       ["stats", "pc-stu-stats"],
@@ -214,8 +213,6 @@ try {
     await mgo(page, "more");
     await hideDemoMore(page);
     await shot(page, "m-stu-more");
-    await mgo(page, "query");
-    await shot(page, "m-stu-query");
     await ctx.close();
   }
 

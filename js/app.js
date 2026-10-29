@@ -9,7 +9,6 @@ const NAV = {
     { key: "home", label: "工作台", ico: "home" },
     { key: "write", label: "我要写信", ico: "write" },
     { key: "my", label: "我的信件", ico: "mail" },
-    { key: "query", label: "信件查询", ico: "search" },
     { section: "信息公开" },
     { key: "public", label: "公开信件", ico: "megaphone" },
     { key: "policy", label: "制度文件", ico: "doc" },
@@ -75,7 +74,6 @@ const ROUTE_TITLES = {
   "write": ["我要写信", "首页 / 我要写信"],
   "write-notice": ["写信须知", "首页 / 我要写信 / 写信须知"],
   "my": ["我的信件", "首页 / 我的信件"],
-  "query": ["信件查询", "首页 / 信件查询"],
   "public": ["公开信件", "信息公开 / 公开信件"],
   "policy": ["制度文件", "信息公开 / 制度文件"],
   "stats": ["数据统计", "信息公开 / 数据统计"],
@@ -123,6 +121,12 @@ const App = {
   leader() { return sectionLeader(this.section); },
 
   homeRoute() { return HOME_ROUTES[this.role] || "home"; },
+
+  /* 旧「信件查询」已下线：有公开信件的身份去公开信件，其余回本角色首页 */
+  removedQueryRoute() {
+    const keys = (NAV[this.role] || []).filter(i => i.key).map(i => i.key);
+    return keys.includes("public") ? "public" : this.homeRoute();
+  },
 
   /* 当前身份的消息接收键 */
   identityKey() {
@@ -379,7 +383,12 @@ const App = {
 
   /* ---------------- 路由 ---------------- */
   onHashChange() {
-    const h = location.hash.replace(/^#\/?/, "") || this.homeRoute();
+    let h = location.hash.replace(/^#\/?/, "") || this.homeRoute();
+    if (h === "query") {
+      h = this.removedQueryRoute();
+      const next = "#/" + h;
+      if (location.hash !== next) history.replaceState(null, "", location.pathname + location.search + next);
+    }
     this.route = h;
     this.applyRole();
     this.render();
@@ -405,7 +414,6 @@ const App = {
       "write": () => this.renderWrite(),
       "write-notice": () => this.renderNotice(),
       "my": () => this.renderMy(),
-      "query": () => this.renderQuery(),
       "public": () => this.renderPublic(),
       "policy": () => this.renderPolicy(),
       "stats": () => this.renderStats(),
@@ -552,7 +560,6 @@ Object.assign(App, {
 
     <div class="quick-grid">
       ${this.quickCard("write", "write", "我要写信", "反映问题 · 提出建议")}
-      ${this.quickCard("query", "search", "信件查询", "凭编号追踪进度")}
       ${this.quickCard("my", "mail", "我的信件", `共 ${mine.length} 封`)}
       ${this.quickCard("public", "megaphone", "公开信件", "看看大家在关注什么")}
     </div>
@@ -1232,86 +1239,6 @@ Object.assign(App, {
     });
     const cancel = document.getElementById("sup-cancel");
     if (cancel) cancel.addEventListener("click", () => this.showMyDetail(l.id));
-  },
-
-  /* ---------- 信件查询（编号快速查询 + 多条件组合查询） ---------- */
-  renderQuery() {
-    const f = this.state.queryFilter || {};
-    const hasCond = Object.keys(f).some(k => f[k]);
-    const visible = getAllLetters().filter(l => l.owner === "me" || (l.status === STATUS.done && l.publicScope === "all"));
-    const results = filterLetters(visible, Object.assign({ mailbox: this.mailbox }, f))
-      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-    const pg = this.paginate(results, this.state.queryPage, 8);
-    const recent = visible.slice(0, 4);
-
-    this.afterRender = () => {
-      const btn = document.getElementById("q-btn");
-      const input = document.getElementById("q-input");
-      const run = () => {
-        const id = input.value.trim();
-        const l = getLetterById(id);
-        const box = document.getElementById("q-result");
-        if (!id) { box.innerHTML = `<div class="no-reply">请输入信件编号</div>`; return; }
-        if (!l || l.status === STATUS.draft || !(l.owner === "me" || (l.status === STATUS.done && l.publicScope === "all"))) {
-          box.innerHTML = `<div class="no-reply">未查询到编号为 <b>${escapeHtml(id)}</b> 的信件（仅可查询本人来信或已公开信件）</div>`; return;
-        }
-        box.innerHTML = this.letterDetailHtml(l, l.owner === "me" ? "student" : "public");
-        box.querySelectorAll(".modal-actions").forEach(x => x.remove());
-      };
-      btn.addEventListener("click", run);
-      input.addEventListener("keydown", e => { if (e.key === "Enter") run(); });
-      this.bindFilter("query");
-      document.querySelectorAll("[data-open-public]").forEach(r =>
-        r.addEventListener("click", () => {
-          const l = getLetterById(r.dataset.openPublic);
-          if (l && l.owner === "me") this.showMyDetail(l.id);
-          else this.showPublicDetail(r.dataset.openPublic);
-        }));
-      this.bindStudentRowActions();
-    };
-
-    return `
-    <div class="card"><div class="card-header"><h3>凭编号快速查询</h3><span class="hint">已知编号可精确定位</span></div>
-      <div class="card-body">
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <input id="q-input" placeholder="请输入信件编号，如 XG20260612118" style="flex:1;min-width:240px;padding:10px 12px;border:1px solid var(--border);border-radius:9px">
-          <button class="btn btn-primary" id="q-btn">查询</button>
-        </div>
-        <p class="form-hint" style="color:var(--text-muted)">提示：可试试这些编号 ${recent.map(l => `<span class="tag" onclick="document.getElementById('q-input').value='${l.id}';document.getElementById('q-btn').click()" style="cursor:pointer">${l.id}</span>`).join("")}</p>
-        <div id="q-result" style="margin-top:14px"><div class="no-reply">输入编号后点击查询，查看信件的办理流程与答复</div></div>
-      </div>
-    </div>
-    <p class="section-title">多条件组合查询</p>
-    ${this.filterBar("query", [
-      { name: "title", label: "信件标题", type: "text" },
-      { name: "category", label: "信件分类", type: "select", options: MOCK.letterCategories.map(c => c.label) },
-      { name: "affair", label: "事务分类", type: "select", options: MOCK.affairCategories },
-      { name: "status", label: "办理状态", type: "select", options: [STATUS.pending, STATUS.doing, STATUS.done] },
-      { name: "section", label: "承办科室", type: "select", options: MOCK.sections.map(s => s.name) },
-      { name: "start", label: "起始日期", type: "date" },
-      { name: "end", label: "截止日期", type: "date" }
-    ])}
-    <div class="card">
-      <div class="card-header"><h3>查询结果</h3><span class="hint">${hasCond ? `按条件筛选 · 共 ${results.length} 封` : `默认展示最近来信 · 共 ${results.length} 封`}</span></div>
-      <div class="card-body" style="padding:0">
-        <table><thead><tr>
-          <th style="width:140px">信件编号</th><th>标题</th><th style="width:80px">分类</th>
-          <th style="width:140px">承办科室 / 科室负责人</th><th style="width:90px">状态</th><th style="width:95px">来信时间</th>
-          <th style="width:200px">操作</th>
-        </tr></thead><tbody>
-          ${pg.rows.length ? pg.rows.map(l => `<tr class="clickable" data-open-public="${l.id}">
-            <td class="mono">${l.id}</td>
-            <td>${this.cellTitle(escapeHtml(l.title))}${this.cellExcerpt(l)}</td>
-            <td>${this.catBadge(l.category)}</td>
-            <td>${this.ownerCell(l, true)}</td>
-            <td>${this.statusBadge(l.status)}</td>
-            <td>${l.date}</td>
-            <td>${l.owner === "me" ? this.studentRowActionsHtml(l) : `<span style="font-size:12px;color:var(--text-muted)">—</span>`}</td>
-          </tr>`).join("") : `<tr><td colspan="7" class="table-empty">未找到符合条件的信件，请调整查询条件后重试</td></tr>`}
-        </tbody></table>
-      </div>
-    </div>
-    ${this.pagerHtml(pg.page, pg.total, "queryPage")}`;
   },
 
   /* ---------- 公开信件 ---------- */

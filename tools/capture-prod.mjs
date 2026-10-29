@@ -127,8 +127,8 @@ const browser = await chromium.launch({ channel: "chrome", headless: true });
   await login(page, "8209250713");
   await shot(page, "pc-system");
   await enterXg(page);
-  const menus = ["工作台", "我的信件", "我要写信", "信件查询", "数据统计", "公开信件", "制度文件", "科室联系方式", "常见问题"];
-  const files = ["pc-stu-home", "pc-stu-my", "pc-stu-write", "pc-stu-query", "pc-stu-stats", "pc-stu-public", "pc-stu-policy", "pc-stu-dept", "pc-stu-faq"];
+  const menus = ["工作台", "我的信件", "我要写信", "数据统计", "公开信件", "制度文件", "科室联系方式", "常见问题"];
+  const files = ["pc-stu-home", "pc-stu-my", "pc-stu-write", "pc-stu-stats", "pc-stu-public", "pc-stu-policy", "pc-stu-dept", "pc-stu-faq"];
   for (let i = 0; i < menus.length; i++) {
     if (await clickMenu(page, menus[i])) await shot(page, files[i]);
   }

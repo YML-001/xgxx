@@ -301,7 +301,7 @@ body {
 .hero.hero-compact p { font-size: 13px; max-width: 900px; }
 
 /* ---------------- 快捷卡片 ---------------- */
-.quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 10px; }
+.quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 10px; }
 .quick-card {
   background: linear-gradient(180deg, #EDF8FF 0%, #FFFFFF 72%);
   border: 1px solid #fff; border-radius: var(--radius-quick);

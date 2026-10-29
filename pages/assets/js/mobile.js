@@ -53,7 +53,6 @@ const M_ROUTES = {
   more: { title: "更多", tab: "more" },
   write: { title: "我要写信", sub: true },
   "write-notice": { title: "写信须知", sub: true },
-  query: { title: "信件查询", sub: true },
   policy: { title: "制度文件", sub: true },
   stats: { title: "数据统计", sub: true },
   dept: { title: "科室联系", sub: true },
@@ -93,6 +92,11 @@ const MApp = {
 
   homeRoute() { return M_HOME[this.role] || "home"; },
 
+  /* 旧「信件查询」已下线：学院副书记没有公开信件，回到首页；其余身份打开公开信件 */
+  removedQueryRoute() {
+    return this.role === "college" ? this.homeRoute() : "public";
+  },
+
   identityKey() {
     if (this.role === "admin") return "admin";
     if (this.role === "leader") { const l = this.leader(); return l ? "member:" + l.id : ""; }
@@ -128,7 +132,11 @@ const MApp = {
     this.writer = getWriter();
     this.college = getCollege();
     this.mailbox = getMailbox();
-    this.route = this.homeRoute();
+    const hashRoute = (location.hash || "").replace(/^#\/?/, "");
+    this.route = hashRoute === "query" ? this.removedQueryRoute() : this.homeRoute();
+    if (hashRoute === "query") {
+      history.replaceState(null, "", location.pathname + location.search + "#/" + this.route);
+    }
     this.bindShell();
     this.startClock();
     this.render();
@@ -153,6 +161,7 @@ const MApp = {
 
   /* 导航 */
   go(route) {
+    if (route === "query") route = this.removedQueryRoute();
     const meta = M_ROUTES[route];
     if (!meta) return;
     if (meta.tab) this._lastTab = route;
@@ -192,7 +201,7 @@ const MApp = {
   canVisit(r) {
     if (["more", "public", "policy", "dept", "faq", "msgs"].includes(r)) return true;
     if ((M_TABS[this.role] || []).some(t => t.key === r)) return true;
-    if (this.role === "student") return ["write", "write-notice", "query", "stats"].includes(r);
+    if (this.role === "student") return ["write", "write-notice", "stats"].includes(r);
     return this.role === "admin" && r === "admin-stats";
   },
 
@@ -201,6 +210,7 @@ const MApp = {
     this.member = getMember();
     this.writer = getWriter();
     this.college = getCollege();
+    if (this.route === "query") this.route = this.removedQueryRoute();
     if (!this.canVisit(this.route)) this.route = this.homeRoute();
     const meta = M_ROUTES[this.route] || { title: "学工信箱" };
     document.getElementById("m-title").textContent = meta.title;
@@ -211,7 +221,7 @@ const MApp = {
 
     const map = {
       home: () => this.pHome(), public: () => this.pPublic(), my: () => this.pMy(), more: () => this.pMore(),
-      write: () => this.pWrite(), "write-notice": () => this.pNotice(), query: () => this.pQuery(),
+      write: () => this.pWrite(), "write-notice": () => this.pNotice(),
       policy: () => this.pPolicy(), stats: () => this.pStats(), dept: () => this.pDept(), faq: () => this.pFaq(),
       msgs: () => this.pMessages(),
       "leader-home": () => this.pLeaderHome(), "leader-approve": () => this.pLeaderList("approve"),
@@ -310,7 +320,6 @@ Object.assign(MApp, {
     const pub = getPublicLetters().filter(l => l.mailbox === this.mailbox).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
     const quick = [
       { k: "write-notice", ico: "write", t: "写信" },
-      { k: "query", ico: "search", t: "查询" },
       { k: "my", ico: "mail", t: "我的" },
       { k: "public", ico: "megaphone", t: "公开" }
     ];
@@ -571,67 +580,6 @@ Object.assign(MApp, {
     </div>`).join("") : `<div class="m-empty"><span class="ico">${svgIcon("megaphone")}</span>暂无公开信件</div>`}`;
   },
 
-  /* 信件查询（编号快速查询 + 多条件查询） */
-  pQuery() {
-    const visible = l => l.owner === "me" || (l.status === STATUS.done && l.publicScope === "all");
-    const scope = getAllLetters().filter(l => l.status !== STATUS.draft && visible(l));
-    const recent = getMyLetters().filter(l => l.status !== STATUS.draft).slice(0, 4);
-    const f = this.state.queryFilter || {};
-    const hasCond = Object.keys(f).some(k => f[k]);
-    const results = filterLetters(scope, Object.assign({ mailbox: this.mailbox }, f))
-      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-    const sel = (name, v) => f[name] === v ? "selected" : "";
-    this._after = () => {
-      const run = () => {
-        const id = document.getElementById("m-q-input").value.trim();
-        const l = getLetterById(id);
-        const box = document.getElementById("m-q-result");
-        if (!id) { box.innerHTML = `<div class="m-no-reply">请输入信件编号</div>`; return; }
-        if (!l || l.status === STATUS.draft || !visible(l)) { box.innerHTML = `<div class="m-no-reply">未查询到编号 ${escapeHtml(id)} 的信件（仅可查询本人来信和公开信件）</div>`; return; }
-        box.innerHTML = this.letterDetailBody(l, l.owner === "me" ? "student" : "public");
-        this.bindDetailActions(l, "student");
-      };
-      document.getElementById("m-q-btn").addEventListener("click", run);
-      document.querySelectorAll("[data-fill]").forEach(t => t.addEventListener("click", () => { document.getElementById("m-q-input").value = t.dataset.fill; run(); }));
-      const apply = document.getElementById("m-q-search");
-      if (apply) apply.addEventListener("click", () => {
-        const o = {};
-        const title = document.getElementById("m-q-title").value.trim();
-        const category = document.getElementById("m-q-cat").value;
-        const status = document.getElementById("m-q-status").value;
-        if (title) o.title = title;
-        if (category) o.category = category;
-        if (status) o.status = status;
-        this.state.queryFilter = o; this.render();
-      });
-      const reset = document.getElementById("m-q-reset");
-      if (reset) reset.addEventListener("click", () => { this.state.queryFilter = {}; this.render(); });
-      document.querySelectorAll("[data-letter]").forEach(el => el.addEventListener("click", () => {
-        const x = getLetterById(el.dataset.letter);
-        this.showLetterDetail(el.dataset.letter, x && x.owner === "me" ? "student" : "public");
-      }));
-    };
-    return `
-    <div class="m-search"><input id="m-q-input" placeholder="输入信件编号，如 XG20260612118"><button class="m-btn m-btn-primary m-btn-sm" id="m-q-btn">查询</button></div>
-    <div style="margin-bottom:14px">${recent.map(l => `<span class="m-chip" data-fill="${l.id}" style="display:inline-block;margin:0 6px 6px 0">${l.id}</span>`).join("")}</div>
-    <div id="m-q-result"><div class="m-no-reply">输入编号后查询办理进度与答复</div></div>
-
-    <div class="m-section-title" style="margin-top:18px">多条件查询</div>
-    <div class="m-field"><label>信件标题</label><input id="m-q-title" value="${escapeHtml(f.title || "")}" placeholder="输入标题关键字"></div>
-    <div class="m-field-2">
-      <div class="m-field"><label>信件分类</label>
-        <select id="m-q-cat"><option value="">全部</option>${MOCK.letterCategories.map(c => `<option ${sel("category", c.label)}>${c.label}</option>`).join("")}</select></div>
-      <div class="m-field"><label>办理状态</label>
-        <select id="m-q-status"><option value="">全部</option>${[STATUS.pending, STATUS.doing, STATUS.done].map(s => `<option ${sel("status", s)}>${s}</option>`).join("")}</select></div>
-    </div>
-    <div class="m-btn-row" style="margin-bottom:16px">
-      <button class="m-btn m-btn-outline" id="m-q-reset">重置</button>
-      <button class="m-btn m-btn-primary" id="m-q-search">搜索</button>
-    </div>
-    <div class="m-section-title">查询结果 · ${hasCond ? `共 ${results.length} 封` : "最近来信"}</div>
-    ${results.length ? results.slice(0, 20).map(l => this.letterListItem(l)).join("") : `<div class="m-empty"><span class="ico">${svgIcon("search")}</span>未找到符合条件的信件</div>`}`;
-  },
-
   /* 制度文件 */
   pPolicy() {
     const kw = this.state.polKw || "";
@@ -777,7 +725,7 @@ Object.assign(MApp, {
       { k: "dept", ico: "phone", t: "科室联系" }, { k: "faq", ico: "help", t: "常见问题" }
     ];
     const moreItems = this.role === "student" ? [
-      { k: "query", ico: "search", t: "信件查询" }, { k: "policy", ico: "doc", t: "制度文件" },
+      { k: "policy", ico: "doc", t: "制度文件" },
       { k: "stats", ico: "chart", t: "数据统计" }, { k: "dept", ico: "phone", t: "科室联系" },
       { k: "faq", ico: "help", t: "常见问题" }
     ] : (this.role === "college" ? common.filter(i => i.k !== "public") : common);
