@@ -27,7 +27,7 @@
         <div class="nav-section-title">办理</div>
         <button class="nav-item" onclick="location.href='admin-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>办理工作台</span></button>
         <button class="nav-item" onclick="location.href='admin-dispatch.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="6" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="m7.8 10.9 8.4-3.8M7.8 13.1l8.4 3.8"/></svg></span><span>待分派信件</span><span class="nav-badge">5</span></button>
-        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">14</span></button>
+        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">29</span></button>
         <button class="nav-item" onclick="location.href='admin-supervise.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span><span>督办催办</span><span class="nav-badge">9</span></button>
         <div class="nav-section-title">运营</div>
         <button class="nav-item" onclick="location.href='admin-publish.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开情况</span></button>
@@ -58,7 +58,7 @@
         </div>
         <div class="topbar-actions">
           <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
-          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室领导</button><button class="" onclick="location.href='replier-home.html'">科室回复人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
           <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 16）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">16</span></button>
           <button class="btn btn-primary" id="btn-write-quick" style="display:none">＋ 我要写信</button>
         </div>
@@ -75,21 +75,21 @@
             <tr>
               <td><span class="badge" style="background:#2A8DC71a;color:#2A8DC7">建议类</span></td>
               <td><span class="color-swatch" style="background:#2A8DC7"></span><span class="mono">#2A8DC7</span></td>
-              <td>9</td>
+              <td>12</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-cat="0">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-cat="0">删除</button>
               </td></tr><tr>
               <td><span class="badge" style="background:#F291001a;color:#F29100">问题类</span></td>
               <td><span class="color-swatch" style="background:#F29100"></span><span class="mono">#F29100</span></td>
-              <td>10</td>
+              <td>12</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-cat="1">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-cat="1">删除</button>
               </td></tr><tr>
               <td><span class="badge" style="background:#006DAD1a;color:#006DAD">咨询类</span></td>
               <td><span class="color-swatch" style="background:#006DAD"></span><span class="mono">#006DAD</span></td>
-              <td>13</td>
+              <td>23</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-cat="2">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-cat="2">删除</button>
@@ -118,25 +118,25 @@
           <tbody>
             <tr>
               <td>思想教育</td>
-              <td>2</td>
+              <td>3</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="0">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="0">删除</button>
               </td></tr><tr>
               <td>党团组织</td>
-              <td>0</td>
+              <td>1</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="1">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="1">删除</button>
               </td></tr><tr>
               <td>学籍异动</td>
-              <td>0</td>
+              <td>1</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="2">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="2">删除</button>
               </td></tr><tr>
               <td>请假考勤</td>
-              <td>2</td>
+              <td>3</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="3">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="3">删除</button>
@@ -166,7 +166,7 @@
                 <button class="btn btn-danger btn-sm" data-del-affair="7">删除</button>
               </td></tr><tr>
               <td>心理咨询</td>
-              <td>2</td>
+              <td>3</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="8">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="8">删除</button>
@@ -178,19 +178,19 @@
                 <button class="btn btn-danger btn-sm" data-del-affair="9">删除</button>
               </td></tr><tr>
               <td>宿舍管理</td>
-              <td>3</td>
+              <td>5</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="10">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="10">删除</button>
               </td></tr><tr>
               <td>住宿调整</td>
-              <td>2</td>
+              <td>4</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="11">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="11">删除</button>
               </td></tr><tr>
               <td>就业指导</td>
-              <td>3</td>
+              <td>4</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="12">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="12">删除</button>
@@ -202,25 +202,25 @@
                 <button class="btn btn-danger btn-sm" data-del-affair="13">删除</button>
               </td></tr><tr>
               <td>创业服务</td>
-              <td>0</td>
+              <td>1</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="14">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="14">删除</button>
               </td></tr><tr>
               <td>征兵入伍</td>
-              <td>3</td>
+              <td>4</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="15">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="15">删除</button>
               </td></tr><tr>
               <td>国防教育</td>
-              <td>0</td>
+              <td>1</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="16">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="16">删除</button>
               </td></tr><tr>
               <td>其他事务</td>
-              <td>2</td>
+              <td>4</td>
               <td class="table-actions">
                 <button class="btn btn-outline btn-sm" data-edit-affair="17">编辑</button>
                 <button class="btn btn-danger btn-sm" data-del-affair="17">删除</button>

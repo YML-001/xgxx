@@ -238,7 +238,7 @@
       <h2 id="how" style="font-size:16px;color:var(--text);margin-bottom:8px">怎么看这一页</h2>
       <p>每条都有编号、名称、发给谁、什么时候发、<strong>标题</strong>和<strong>正文</strong>。标题就是消息列表里显示的名称，系统没有另外的邮件主题。</p>
       <p>正文按模板原文演示。占位符换成一行可读的示例，花括号里仍保留字段原名。例如「李诚 <code class="ph">{姓名}</code>」表示这次演示填李诚，系统实际填的是来信人姓名。</p>
-      <p>示范来信：李诚，计算机学院，2026-10-27 10:10 提交「关于国家助学金第二批发放时间的咨询」，编号 XG202610271001。承办科室为学生资助管理科，科室领导陈静，回复人邱敏；学院副书记黄志远。改派举例中，原科室为学生日常管理科（科室领导张伟），原回复人为冯磊。各条是单独的示范，不必连成同一封信的时间线。</p>
+      <p>示范来信：李诚，计算机学院，2026-10-27 10:10 提交「关于国家助学金第二批发放时间的咨询」，编号 XG202610271001。承办科室为学生资助管理科，科室分管领导陈静，科室负责人邱敏；学院副书记黄志远。改派举例中，原科室为学生日常管理科（科室分管领导张伟），原科室负责人为冯磊。各条是单独的示范，不必连成同一封信的时间线。</p>
     </section>
 
     <nav class="card" aria-label="模板目录">
@@ -246,10 +246,10 @@
         <li><a href="#M-01"><b>M-01</b> 提交回执</a></li>
         <li><a href="#M-02"><b>M-02</b> 正式答复提醒</a></li>
         <li><a href="#M-03"><b>M-03</b> 新来信待分派</a></li>
-        <li><a href="#M-04"><b>M-04</b> 分给科室领导</a></li>
+        <li><a href="#M-04"><b>M-04</b> 分派负责科室</a></li>
         <li><a href="#M-05"><b>M-05</b> 改派科室</a></li>
-        <li><a href="#M-06"><b>M-06</b> 指定回复人</a></li>
-        <li><a href="#M-07"><b>M-07</b> 改派回复人</a></li>
+        <li><a href="#M-06"><b>M-06</b> 指定科室负责人</a></li>
+        <li><a href="#M-07"><b>M-07</b> 改派科室负责人</a></li>
         <li><a href="#M-08"><b>M-08</b> 待审批</a></li>
         <li><a href="#M-09"><b>M-09</b> 审批通过</a></li>
         <li><a href="#M-10"><b>M-10</b> 审批打回</a></li>
@@ -258,7 +258,7 @@
         <li><a href="#M-15"><b>M-15</b> 学生催办</a></li>
         <li><a href="#M-16"><b>M-16</b> 综合办督办</a></li>
         <li><a href="#M-17"><b>M-17</b> 超期未分派</a></li>
-        <li><a href="#M-18"><b>M-18</b> 待指定回复人</a></li>
+        <li><a href="#M-18"><b>M-18</b> 待指定科室负责人</a></li>
         <li><a href="#M-19"><b>M-19</b> 临近超期</a></li>
         <li><a href="#M-20"><b>M-20</b> 已经超期</a></li>
         <li><a href="#M-21"><b>M-21</b> 补充材料</a></li>
@@ -290,7 +290,7 @@
       <div class="meta">
         <div><span class="k">发给谁</span><span class="v">来信学生</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">回复人确认发送、信件办结时。确认之前不会把正式答复发给学生。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室负责人确认发送、信件办结时。确认之前不会把正式答复发给学生。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">正式答复提醒</span></div>
       </div>
       <p class="body-label">正文</p>
@@ -305,98 +305,98 @@
       <div class="meta">
         <div><span class="k">发给谁</span><span class="v">综合办公室</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">学生提交来信后，与收悉回执同时发送，提醒综合办指定科室领导。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">学生提交来信后，与收悉回执同时发送，提醒综合办指定负责科室。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">新来信待分派</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">综合办公室：收到一封新的学生来信待分派。学生李诚 <code class="ph">{姓名}</code>（计算机学院 <code class="ph">{所在单位}</code>）就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）于2026-10-27 10:10 <code class="ph">{来信时间}</code>提交，请及时指定科室领导。</div>
+      <div class="demo">综合办公室：收到一封新的学生来信待分派。学生李诚 <code class="ph">{姓名}</code>（计算机学院 <code class="ph">{所在单位}</code>）就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）于2026-10-27 10:10 <code class="ph">{来信时间}</code>提交，请及时指定负责科室。</div>
     </article>
 
     <article class="card item" id="M-04">
-      <header class="item-hd"><span class="code">M-04</span><h2>分给科室领导</h2></header>
+      <header class="item-hd"><span class="code">M-04</span><h2>分派负责科室</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">承办科室的科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">承办科室的科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">综合办第一次把来信分给某个科室领导时。改派到其他科室时发的是 M-05，不是这一条。</span></div>
-        <div class="full"><span class="k">标题</span><span class="v">分给科室领导</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">综合办第一次把来信分派到负责科室时。改派到其他科室时发的是 M-05，不是这一条。</span></div>
+        <div class="full"><span class="k">标题</span><span class="v">分派负责科室</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">陈静 <code class="ph">{科室领导}</code>：综合办公室将学生李诚 <code class="ph">{姓名}</code>的来信「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）分至学生资助管理科 <code class="ph">{承办科室}</code>，请指定回复人。分派说明：请核实第二批发放时间后回复 <code class="ph">{分派说明}</code>。</div>
+      <div class="demo">陈静 <code class="ph">{科室分管领导}</code>：综合办公室将学生李诚 <code class="ph">{姓名}</code>的来信「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）分至学生资助管理科 <code class="ph">{承办科室}</code>，请指定科室负责人。分派说明：请核实第二批发放时间后回复 <code class="ph">{分派说明}</code>。</div>
       <p class="aside">分派说明留空时，系统填「无」。</p>
     </article>
 
     <article class="card item" id="M-05">
       <header class="item-hd"><span class="code">M-05</span><h2>改派科室</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">新科室领导，并同时发给原科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">新科室分管领导，并同时发给原科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
         <div class="full"><span class="k">什么时候发</span><span class="v">综合办把已经分派的来信改派到另一个科室时。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">改派科室</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">陈静 <code class="ph">{科室领导}</code>：学生来信「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已由综合办公室于2026-10-27 11:20 <code class="ph">{分派时间}</code>改派至学生资助管理科 <code class="ph">{承办科室}</code>，原科室为学生日常管理科 <code class="ph">{原承办科室}</code>。请指定回复人。改派说明：请核实第二批发放时间后回复 <code class="ph">{分派说明}</code>。</div>
-      <p class="aside">原科室领导也会收到一条。那一条里的 <code class="ph">{科室领导}</code> 填原领导自己的姓名，例如张伟；其余内容相同。分派说明留空时填「无」。</p>
+      <div class="demo">陈静 <code class="ph">{科室分管领导}</code>：学生来信「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已由综合办公室于2026-10-27 11:20 <code class="ph">{分派时间}</code>改派至学生资助管理科 <code class="ph">{承办科室}</code>，原科室为学生日常管理科 <code class="ph">{原承办科室}</code>。请指定科室负责人。改派说明：请核实第二批发放时间后回复 <code class="ph">{分派说明}</code>。</div>
+      <p class="aside">原科室分管领导也会收到一条。那一条里的 <code class="ph">{科室分管领导}</code> 填原领导自己的姓名，例如张伟；其余内容相同。分派说明留空时填「无」。</p>
     </article>
 
     <article class="card item" id="M-06">
-      <header class="item-hd"><span class="code">M-06</span><h2>指定回复人</h2></header>
+      <header class="item-hd"><span class="code">M-06</span><h2>指定科室负责人</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">被指定的科室回复人</span></div>
+        <div><span class="k">发给谁</span><span class="v">被指定的科室负责人</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">科室领导第一次指定回复人时。换成另一名回复人时发的是 M-07。</span></div>
-        <div class="full"><span class="k">标题</span><span class="v">指定回复人</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室分管领导第一次指定科室负责人时。换成另一名科室负责人时发的是 M-07。</span></div>
+        <div class="full"><span class="k">标题</span><span class="v">指定科室负责人</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：您有一封学生来信待办理。学生李诚 <code class="ph">{姓名}</code>就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）由陈静 <code class="ph">{科室领导}</code>指定您回复，办结时限2026-11-03 <code class="ph">{办结时限}</code>。请登录学工信箱拟写答复。</div>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：您有一封学生来信待办理。学生李诚 <code class="ph">{姓名}</code>就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）由陈静 <code class="ph">{科室分管领导}</code>指定您回复，办结时限2026-11-03 <code class="ph">{办结时限}</code>。请登录学工信箱拟写答复。</div>
     </article>
 
     <article class="card item" id="M-07">
-      <header class="item-hd"><span class="code">M-07</span><h2>改派回复人</h2></header>
+      <header class="item-hd"><span class="code">M-07</span><h2>改派科室负责人</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">新回复人，并同时发给原回复人</span></div>
+        <div><span class="k">发给谁</span><span class="v">新科室负责人，并同时发给原科室负责人</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">科室领导把这封信改派给另一名回复人时。</span></div>
-        <div class="full"><span class="k">标题</span><span class="v">改派回复人</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室分管领导把这封信改派给另一名科室负责人时。</span></div>
+        <div class="full"><span class="k">标题</span><span class="v">改派科室负责人</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：学生来信「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已改由您回复，原回复人为冯磊 <code class="ph">{原回复人}</code>。办结时限2026-11-03 <code class="ph">{办结时限}</code>。请及时接手。</div>
-      <p class="aside">原回复人也会收到一条。那一条里的 <code class="ph">{回复人}</code> 填原回复人自己的姓名，例如冯磊；<code class="ph">{原回复人}</code> 仍是冯磊。</p>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：学生来信「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已改由您回复，原科室负责人为冯磊 <code class="ph">{原科室负责人}</code>。办结时限2026-11-03 <code class="ph">{办结时限}</code>。请及时接手。</div>
+      <p class="aside">原科室负责人也会收到一条。那一条里的 <code class="ph">{科室负责人}</code> 填原科室负责人自己的姓名，例如冯磊；<code class="ph">{原科室负责人}</code> 仍是冯磊。</p>
     </article>
 
     <article class="card item" id="M-08">
       <header class="item-hd"><span class="code">M-08</span><h2>待审批</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">回复人提交答复、送科室领导审批时。打回后再次提交，也会再发这一条。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室负责人提交答复、送科室分管领导审批时。打回后再次提交，也会再发这一条。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">待审批</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">陈静 <code class="ph">{科室领导}</code>：邱敏 <code class="ph">{回复人}</code>已提交「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）的答复，请审批。所有信件均须审批后，才能由回复人确认发给学生。</div>
+      <div class="demo">陈静 <code class="ph">{科室分管领导}</code>：邱敏 <code class="ph">{科室负责人}</code>已提交「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）的答复，请审批。所有信件均须审批后，才能由科室负责人确认发给学生。</div>
     </article>
 
     <article class="card item" id="M-09">
       <header class="item-hd"><span class="code">M-09</span><h2>审批通过</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室回复人</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室负责人</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">科室领导审批通过时。通过后仍要回复人确认发送，才会变成发给学生的正式答复。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室分管领导审批通过时。通过后仍要科室负责人确认发送，才会变成发给学生的正式答复。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">审批通过</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：您提交的「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已由科室领导审批通过。请登录学工信箱确认发送。确认前不会发给学生。</div>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：您提交的「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已由科室分管领导审批通过。请登录学工信箱确认发送。确认前不会发给学生。</div>
     </article>
 
     <article class="card item" id="M-10">
       <header class="item-hd"><span class="code">M-10</span><h2>审批打回</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室回复人</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室负责人</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">科室领导审批不通过、把答复打回时。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室分管领导审批不通过、把答复打回时。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">审批打回</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：您提交的「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）未通过审批。修改意见：请写明第二批的具体发放日期 <code class="ph">{审批意见}</code>。请按意见修改后再次提交审批。通过前请勿回复学生。</div>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：您提交的「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）未通过审批。修改意见：请写明第二批的具体发放日期 <code class="ph">{审批意见}</code>。请按意见修改后再次提交审批。通过前请勿回复学生。</div>
       <p class="aside">审批意见留空时，系统填「无」。</p>
     </article>
 
@@ -405,23 +405,23 @@
       <div class="meta">
         <div><span class="k">发给谁</span><span class="v">来信学生所在学院的党委副书记</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">回复人发起学院协同时，直接发给该学生所在学院的副书记。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">科室负责人发起学院协同时，直接发给该学生所在学院的副书记。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">请学院协同</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">黄志远 <code class="ph">{副书记}</code>：科室回复人邱敏 <code class="ph">{回复人}</code>就学生李诚 <code class="ph">{姓名}</code>（计算机学院 <code class="ph">{所在单位}</code>）的来信「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）请学院协同。请指定人员线下承办；承办完成后请写处理意见，并发回科室回复人。</div>
+      <div class="demo">黄志远 <code class="ph">{副书记}</code>：科室负责人邱敏 <code class="ph">{科室负责人}</code>就学生李诚 <code class="ph">{姓名}</code>（计算机学院 <code class="ph">{所在单位}</code>）的来信「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）请学院协同。请指定人员线下承办；承办完成后请写处理意见，并发回科室负责人。</div>
     </article>
 
     <article class="card item" id="M-13">
       <header class="item-hd"><span class="code">M-13</span><h2>学院处理意见发回</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室回复人</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室负责人</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">学院副书记写明处理意见，并发回科室回复人时。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">学院副书记写明处理意见，并发回科室负责人时。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">学院处理意见发回</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：学院副书记已就「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）写明处理意见：学院已核对该生银行卡信息，请按批次时间答复 <code class="ph">{处理意见}</code>。请据此编辑正式答复，再提交科室领导审批。</div>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：学院副书记已就「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）写明处理意见：学院已核对该生银行卡信息，请按批次时间答复 <code class="ph">{处理意见}</code>。请据此编辑正式答复，再提交科室分管领导审批。</div>
     </article>
 
     <article class="card item" id="M-15">
@@ -429,11 +429,11 @@
       <div class="meta">
         <div><span class="k">发给谁</span><span class="v">当前办理人</span></div>
         <div><span class="k">渠道</span><span class="v">默认系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">学生对未办结来信发起催办时。当前办理人按环节确定：待分派是综合办公室；待指定回复人、待审批是科室领导；回复中、学院协同中、已打回、待确认发送是回复人。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">学生对未办结来信发起催办时。当前办理人按环节确定：待分派是综合办公室；待指定科室负责人、待审批是科室分管领导；回复中、学院协同中、已打回、待确认发送是科室负责人。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">学生催办</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">尊敬的学生资助管理科回复人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）提交的信件已办理5 <code class="ph">{已过天数}</code>天仍未办结，现进行催办，请尽快处理。—— 2026-11-01 09:30 <code class="ph">{催办时间}</code></div>
+      <div class="demo">尊敬的学生资助管理科科室负责人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）提交的信件已办理5 <code class="ph">{已过天数}</code>天仍未办结，现进行催办，请尽快处理。—— 2026-11-01 09:30 <code class="ph">{催办时间}</code></div>
       <p class="aside">上面按「回复中」示范。若信还在待分派，<code class="ph">{当前办理人}</code> 为综合办公室。渠道按这次催办实际勾选的发送，未勾选时用默认渠道。正文与综合办督办 M-16 共用同一段模板。</p>
     </article>
 
@@ -446,7 +446,7 @@
         <div class="full"><span class="k">标题</span><span class="v">综合办督办</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">尊敬的学生资助管理科回复人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）提交的信件已办理5 <code class="ph">{已过天数}</code>天仍未办结，现进行催办，请尽快处理。—— 2026-11-01 14:20 <code class="ph">{催办时间}</code></div>
+      <div class="demo">尊敬的学生资助管理科科室负责人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>就「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）提交的信件已办理5 <code class="ph">{已过天数}</code>天仍未办结，现进行催办，请尽快处理。—— 2026-11-01 14:20 <code class="ph">{催办时间}</code></div>
       <p class="aside">名称是「综合办督办」，正文与 M-15 共用，句中仍写「现进行催办」。这是系统里的原文。</p>
     </article>
 
@@ -455,49 +455,49 @@
       <div class="meta">
         <div><span class="k">发给谁</span><span class="v">综合办公室</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">系统自动检查。来信仍是待分派，且自来信之日起已达到超期天数（默认 7 天）仍未分给科室领导。每封信只发一次。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">系统自动检查。来信仍是待分派，且自来信之日起已达到超期天数（默认 7 天）仍未指定负责科室。每封信只发一次。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">超期未分派</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">综合办公室：「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）已8 <code class="ph">{已过天数}</code>天仍未分给科室领导，请尽快分派。—— 2026-11-04 09:00 <code class="ph">{提醒时间}</code></div>
+      <div class="demo">综合办公室：「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）已8 <code class="ph">{已过天数}</code>天仍未指定负责科室，请尽快分派。—— 2026-11-04 09:00 <code class="ph">{提醒时间}</code></div>
     </article>
 
     <article class="card item" id="M-18">
-      <header class="item-hd"><span class="code">M-18</span><h2>待指定回复人</h2></header>
+      <header class="item-hd"><span class="code">M-18</span><h2>待指定科室负责人</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">系统自动检查。来信已分到科室，尚未指定回复人，且距办结时限不超过 2 天（含已经超期、剩余天数记为 0）。每封信只发一次。</span></div>
-        <div class="full"><span class="k">标题</span><span class="v">待指定回复人</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">系统自动检查。来信已分到科室，尚未指定科室负责人，且距办结时限不超过 2 天（含已经超期、剩余天数记为 0）。每封信只发一次。</span></div>
+        <div class="full"><span class="k">标题</span><span class="v">待指定科室负责人</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">陈静 <code class="ph">{科室领导}</code>：「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已分至学生资助管理科 <code class="ph">{承办科室}</code>，尚未指定回复人，距办结时限还剩2 <code class="ph">{剩余天数}</code>天，请尽快指定。—— 2026-11-01 09:00 <code class="ph">{提醒时间}</code></div>
+      <div class="demo">陈静 <code class="ph">{科室分管领导}</code>：「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）已分至学生资助管理科 <code class="ph">{承办科室}</code>，尚未指定科室负责人，距办结时限还剩2 <code class="ph">{剩余天数}</code>天，请尽快指定。—— 2026-11-01 09:00 <code class="ph">{提醒时间}</code></div>
     </article>
 
     <article class="card item" id="M-19">
       <header class="item-hd"><span class="code">M-19</span><h2>临近超期</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室回复人，并同时发给科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室负责人，并同时发给科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
         <div class="full"><span class="k">什么时候发</span><span class="v">系统自动检查。信件处于回复中或已打回，距办结时限还剩 0 至 2 天。每封信只发一次。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">临近超期</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：您负责的「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）距办结时限2026-11-03 <code class="ph">{办结时限}</code>还剩2 <code class="ph">{剩余天数}</code>天，请尽快拟写答复并提交审批。—— 2026-11-01 09:00 <code class="ph">{提醒时间}</code></div>
-      <p class="aside">科室领导收到的是同一段正文，称呼仍是回复人。</p>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：您负责的「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）距办结时限2026-11-03 <code class="ph">{办结时限}</code>还剩2 <code class="ph">{剩余天数}</code>天，请尽快拟写答复并提交审批。—— 2026-11-01 09:00 <code class="ph">{提醒时间}</code></div>
+      <p class="aside">科室分管领导收到的是同一段正文，称呼仍是科室负责人。</p>
     </article>
 
     <article class="card item" id="M-20">
       <header class="item-hd"><span class="code">M-20</span><h2>已经超期</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">回复人、科室领导、综合办公室</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室负责人、科室分管领导、综合办公室</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
         <div class="full"><span class="k">什么时候发</span><span class="v">系统自动检查。待分派或办理中的信件已超过办结时限仍未办结。时限从来信日算起，二次办理则从重新办理日起算，默认 7 天。每封信只发一次。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">已经超期</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">【超期提醒】「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）已超出办结时限3 <code class="ph">{超期天数}</code>天仍未办结。当前办理人：学生资助管理科回复人邱敏 <code class="ph">{当前办理人}</code>。请立即处理。—— 2026-11-06 09:00 <code class="ph">{提醒时间}</code></div>
-      <p class="aside">还没有回复人或科室领导时，对应的那一封不发。上面按回复中示范；若仍待分派，当前办理人是综合办公室，收件人只有综合办公室。</p>
+      <div class="demo">【超期提醒】「奖助学金 <code class="ph">{事务分类}</code>·关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>，来信2026-10-27 10:10 <code class="ph">{来信时间}</code>）已超出办结时限3 <code class="ph">{超期天数}</code>天仍未办结。当前办理人：学生资助管理科科室负责人邱敏 <code class="ph">{当前办理人}</code>。请立即处理。—— 2026-11-06 09:00 <code class="ph">{提醒时间}</code></div>
+      <p class="aside">还没有科室负责人或科室分管领导时，对应的那一封不发。上面按回复中示范；若仍待分派，当前办理人是综合办公室，收件人只有综合办公室。</p>
     </article>
 
     <article class="card item" id="M-21">
@@ -509,20 +509,20 @@
         <div class="full"><span class="k">标题</span><span class="v">补充材料</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">学生资助管理科回复人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>对「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）于2026-10-28 14:05 <code class="ph">{提交时间}</code>提交了补充材料，请登录学工信箱查看。</div>
+      <div class="demo">学生资助管理科科室负责人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>对「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）于2026-10-28 14:05 <code class="ph">{提交时间}</code>提交了补充材料，请登录学工信箱查看。</div>
     </article>
 
     <article class="card item" id="M-22">
       <header class="item-hd"><span class="code">M-22</span><h2>二次办理</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">原回复人，并同时发给科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">原科室负责人，并同时发给科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">系统消息、ITS</span></div>
-        <div class="full"><span class="k">什么时候发</span><span class="v">学生对办理结果不满意、申请二次办理时。信件回到原回复人，答复仍须审批后再确认发送。</span></div>
+        <div class="full"><span class="k">什么时候发</span><span class="v">学生对办理结果不满意、申请二次办理时。信件回到原科室负责人，答复仍须审批后再确认发送。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">二次办理</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：学生李诚 <code class="ph">{姓名}</code>对「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）的办理结果不满意，已于2026-10-28 16:00 <code class="ph">{发起时间}</code>申请二次办理。请重新核实并提交审批，新办结时限2026-11-04 <code class="ph">{办结时限}</code>。</div>
-      <p class="aside">科室领导收到的是同一段正文。新办结时限从二次办理当天重新计算。</p>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：学生李诚 <code class="ph">{姓名}</code>对「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）的办理结果不满意，已于2026-10-28 16:00 <code class="ph">{发起时间}</code>申请二次办理。请重新核实并提交审批，新办结时限2026-11-04 <code class="ph">{办结时限}</code>。</div>
+      <p class="aside">科室分管领导收到的是同一段正文。新办结时限从二次办理当天重新计算。</p>
     </article>
 
     <article class="card item" id="M-23">
@@ -534,20 +534,20 @@
         <div class="full"><span class="k">标题</span><span class="v">撤回来信</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">学生资助管理科回复人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>已于2026-10-28 16:40 <code class="ph">{撤回时间}</code>撤回「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>），该信件无需继续办理。</div>
+      <div class="demo">学生资助管理科科室负责人邱敏 <code class="ph">{当前办理人}</code>：学生李诚 <code class="ph">{姓名}</code>已于2026-10-28 16:40 <code class="ph">{撤回时间}</code>撤回「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>），该信件无需继续办理。</div>
     </article>
 
     <article class="card item" id="M-24">
       <header class="item-hd"><span class="code">M-24</span><h2>满意度评价</h2></header>
       <div class="meta">
-        <div><span class="k">发给谁</span><span class="v">科室回复人，并同时发给科室领导</span></div>
+        <div><span class="k">发给谁</span><span class="v">科室负责人，并同时发给科室分管领导</span></div>
         <div><span class="k">渠道</span><span class="v">仅系统消息</span></div>
         <div class="full"><span class="k">什么时候发</span><span class="v">学生对已办结来信作出满意度评价时。</span></div>
         <div class="full"><span class="k">标题</span><span class="v">满意度评价</span></div>
       </div>
       <p class="body-label">正文</p>
-      <div class="demo">邱敏 <code class="ph">{回复人}</code>：学生李诚 <code class="ph">{姓名}</code>对「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）作出评价：5 <code class="ph">{评分}</code>星。办理及时，答复清楚 <code class="ph">{评价内容}</code>　—— 2026-10-28 17:10 <code class="ph">{评价时间}</code></div>
-      <p class="aside">科室领导收到的是同一段正文。学生没写评价内容时，<code class="ph">{评价内容}</code> 留空。</p>
+      <div class="demo">邱敏 <code class="ph">{科室负责人}</code>：学生李诚 <code class="ph">{姓名}</code>对「关于国家助学金第二批发放时间的咨询 <code class="ph">{标题}</code>」（编号XG202610271001 <code class="ph">{编号}</code>）作出评价：5 <code class="ph">{评分}</code>星。办理及时，答复清楚 <code class="ph">{评价内容}</code>　—— 2026-10-28 17:10 <code class="ph">{评价时间}</code></div>
+      <p class="aside">科室分管领导收到的是同一段正文。学生没写评价内容时，<code class="ph">{评价内容}</code> 留空。</p>
     </article>
 
     <p class="foot"><a href="index.html">返回导航</a> · 共 22 条 · 模板原文仍在系统数据中，本页只做演示</p>

@@ -6,18 +6,18 @@
 
 const STORE_KEYS = {
   role: "xg_role",             // student / admin / leader / replier / college
-  section: "xg_section",       // 科室领导、回复人当前所属科室
-  member: "xg_member",         // 回复人当前身份（科室成员 id）
+  section: "xg_section",       // 科室分管领导、科室负责人当前所属科室
+  member: "xg_member",         // 科室负责人当前身份（科室成员 id）
   college: "xg_college",       // 学院副书记当前所属学院
   mailbox: "xg_mailbox",
   letters: "xg_letters",       // 本地新增/修改的信件
   msgs: "xg_msgs",             // 消息通知（M-01 ~ M-24）
-  seedFlag: "xg_seeded_v8",
+  seedFlag: "xg_seeded_v9",
   config: "xg_config_v9",      // 分类/事务/科室+成员/学院/制度/时限/模板 配置
   faq: "xg_faq_v3"            // 常见问题配置（管理员维护）
 };
 
-/* 学生可见状态：提交后为「待分派」，综合办分给科室领导后为「办理中」，回复人确认发送后为「已办结」 */
+/* 学生可见状态：提交后为「待分派」，综合办分派负责科室后为「办理中」，科室负责人确认发送后为「已办结」 */
 const STATUS = {
   draft: "草稿",
   pending: "待分派",
@@ -29,7 +29,7 @@ const STATUS = {
 /* 办理端当前环节（学生端只看 STATUS，办理端按环节流转） */
 const STAGE = {
   pending: "待分派",
-  needReplier: "待指定回复人",
+  needReplier: "待指定科室负责人",
   replying: "回复中",
   collab: "学院协同中",
   approving: "待审批",
@@ -40,9 +40,9 @@ const STAGE = {
 };
 
 /* 身份标签 */
-const ROLE_LABELS = { student: "学生", admin: "综合办", leader: "科室领导", replier: "科室回复人", college: "学院副书记" };
+const ROLE_LABELS = { student: "学生", admin: "综合办", leader: "科室分管领导", replier: "科室负责人", college: "学院副书记" };
 
-/* 公开范围：由回复人在确认发送时选择 */
+/* 公开范围：由科室负责人在确认发送时选择 */
 const PUBLIC_SCOPE = { all: "全部公开", college: "仅该学院副书记可见" };
 
 /* 催办发送渠道标签 */
@@ -59,26 +59,26 @@ const DEFAULT_ACK_TEMPLATE = "尊敬的{姓名}同学：\n您好！您于{来信
 const MSG_TEMPLATES = {
   "M-01": { name: "提交回执", channel: ["sys", "its"], text: DEFAULT_ACK_TEMPLATE },
   "M-02": { name: "正式答复提醒", channel: ["sys", "its"], text: "尊敬的{姓名}同学：\n您提交的来信「{标题}」（编号{编号}）已办理完成。请登录学工信箱，在「我的信件」中查看正式答复，并作出评价。\n学工部综合办公室\n{答复时间}" },
-  "M-03": { name: "新来信待分派", channel: ["sys", "its"], text: "综合办公室：收到一封新的学生来信待分派。学生{姓名}（{所在单位}）就「{事务分类}·{标题}」（编号{编号}）于{来信时间}提交，请及时指定科室领导。" },
-  "M-04": { name: "分给科室领导", channel: ["sys", "its"], text: "{科室领导}：综合办公室将学生{姓名}的来信「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）分至{承办科室}，请指定回复人。分派说明：{分派说明}。" },
-  "M-05": { name: "改派科室", channel: ["sys", "its"], text: "{科室领导}：学生来信「{标题}」（编号{编号}）已由综合办公室于{分派时间}改派至{承办科室}，原科室为{原承办科室}。请指定回复人。改派说明：{分派说明}。" },
-  "M-06": { name: "指定回复人", channel: ["sys", "its"], text: "{回复人}：您有一封学生来信待办理。学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）由{科室领导}指定您回复，办结时限{办结时限}。请登录学工信箱拟写答复。" },
-  "M-07": { name: "改派回复人", channel: ["sys", "its"], text: "{回复人}：学生来信「{标题}」（编号{编号}）已改由您回复，原回复人为{原回复人}。办结时限{办结时限}。请及时接手。" },
-  "M-08": { name: "待审批", channel: ["sys", "its"], text: "{科室领导}：{回复人}已提交「{标题}」（编号{编号}）的答复，请审批。所有信件均须审批后，才能由回复人确认发给学生。" },
-  "M-09": { name: "审批通过", channel: ["sys", "its"], text: "{回复人}：您提交的「{标题}」（编号{编号}）已由科室领导审批通过。请登录学工信箱确认发送。确认前不会发给学生。" },
-  "M-10": { name: "审批打回", channel: ["sys", "its"], text: "{回复人}：您提交的「{标题}」（编号{编号}）未通过审批。修改意见：{审批意见}。请按意见修改后再次提交审批。通过前请勿回复学生。" },
-  "M-11": { name: "请学院协同", channel: ["sys", "its"], text: "{副书记}：科室回复人{回复人}就学生{姓名}（{所在单位}）的来信「{标题}」（编号{编号}）请学院协同。请指定人员线下承办；承办完成后请写处理意见，并发回科室回复人。" },
-  "M-13": { name: "学院处理意见发回", channel: ["sys", "its"], text: "{回复人}：学院副书记已就「{标题}」（编号{编号}）写明处理意见：{处理意见}。请据此编辑正式答复，再提交科室领导审批。" },
+  "M-03": { name: "新来信待分派", channel: ["sys", "its"], text: "综合办公室：收到一封新的学生来信待分派。学生{姓名}（{所在单位}）就「{事务分类}·{标题}」（编号{编号}）于{来信时间}提交，请及时指定负责科室。" },
+  "M-04": { name: "分派负责科室", channel: ["sys", "its"], text: "{科室分管领导}：综合办公室将学生{姓名}的来信「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）分至{承办科室}，请指定科室负责人。分派说明：{分派说明}。" },
+  "M-05": { name: "改派科室", channel: ["sys", "its"], text: "{科室分管领导}：学生来信「{标题}」（编号{编号}）已由综合办公室于{分派时间}改派至{承办科室}，原科室为{原承办科室}。请指定科室负责人。改派说明：{分派说明}。" },
+  "M-06": { name: "指定科室负责人", channel: ["sys", "its"], text: "{科室负责人}：您有一封学生来信待办理。学生{姓名}就「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）由{科室分管领导}指定您回复，办结时限{办结时限}。请登录学工信箱拟写答复。" },
+  "M-07": { name: "改派科室负责人", channel: ["sys", "its"], text: "{科室负责人}：学生来信「{标题}」（编号{编号}）已改由您回复，原科室负责人为{原科室负责人}。办结时限{办结时限}。请及时接手。" },
+  "M-08": { name: "待审批", channel: ["sys", "its"], text: "{科室分管领导}：{科室负责人}已提交「{标题}」（编号{编号}）的答复，请审批。所有信件均须审批后，才能由科室负责人确认发给学生。" },
+  "M-09": { name: "审批通过", channel: ["sys", "its"], text: "{科室负责人}：您提交的「{标题}」（编号{编号}）已由科室分管领导审批通过。请登录学工信箱确认发送。确认前不会发给学生。" },
+  "M-10": { name: "审批打回", channel: ["sys", "its"], text: "{科室负责人}：您提交的「{标题}」（编号{编号}）未通过审批。修改意见：{审批意见}。请按意见修改后再次提交审批。通过前请勿回复学生。" },
+  "M-11": { name: "请学院协同", channel: ["sys", "its"], text: "{副书记}：科室负责人{科室负责人}就学生{姓名}（{所在单位}）的来信「{标题}」（编号{编号}）请学院协同。请指定人员线下承办；承办完成后请写处理意见，并发回科室负责人。" },
+  "M-13": { name: "学院处理意见发回", channel: ["sys", "its"], text: "{科室负责人}：学院副书记已就「{标题}」（编号{编号}）写明处理意见：{处理意见}。请据此编辑正式答复，再提交科室分管领导审批。" },
   "M-15": { name: "学生催办", channel: ["sys", "its"], text: DEFAULT_URGE_TEMPLATE },
   "M-16": { name: "综合办督办", channel: ["sys", "its"], text: DEFAULT_URGE_TEMPLATE },
-  "M-17": { name: "超期未分派", channel: ["sys", "its"], text: "综合办公室：「{标题}」（编号{编号}，来信{来信时间}）已{已过天数}天仍未分给科室领导，请尽快分派。—— {提醒时间}" },
-  "M-18": { name: "待指定回复人", channel: ["sys", "its"], text: "{科室领导}：「{标题}」（编号{编号}）已分至{承办科室}，尚未指定回复人，距办结时限还剩{剩余天数}天，请尽快指定。—— {提醒时间}" },
-  "M-19": { name: "临近超期", channel: ["sys", "its"], text: "{回复人}：您负责的「{标题}」（编号{编号}）距办结时限{办结时限}还剩{剩余天数}天，请尽快拟写答复并提交审批。—— {提醒时间}" },
+  "M-17": { name: "超期未分派", channel: ["sys", "its"], text: "综合办公室：「{标题}」（编号{编号}，来信{来信时间}）已{已过天数}天仍未指定负责科室，请尽快分派。—— {提醒时间}" },
+  "M-18": { name: "待指定科室负责人", channel: ["sys", "its"], text: "{科室分管领导}：「{标题}」（编号{编号}）已分至{承办科室}，尚未指定科室负责人，距办结时限还剩{剩余天数}天，请尽快指定。—— {提醒时间}" },
+  "M-19": { name: "临近超期", channel: ["sys", "its"], text: "{科室负责人}：您负责的「{标题}」（编号{编号}）距办结时限{办结时限}还剩{剩余天数}天，请尽快拟写答复并提交审批。—— {提醒时间}" },
   "M-20": { name: "已经超期", channel: ["sys", "its"], text: "【超期提醒】「{事务分类}·{标题}」（编号{编号}，来信{来信时间}）已超出办结时限{超期天数}天仍未办结。当前办理人：{当前办理人}。请立即处理。—— {提醒时间}" },
   "M-21": { name: "补充材料", channel: ["sys"], text: "{当前办理人}：学生{姓名}对「{标题}」（编号{编号}）于{提交时间}提交了补充材料，请登录学工信箱查看。" },
-  "M-22": { name: "二次办理", channel: ["sys", "its"], text: "{回复人}：学生{姓名}对「{标题}」（编号{编号}）的办理结果不满意，已于{发起时间}申请二次办理。请重新核实并提交审批，新办结时限{办结时限}。" },
+  "M-22": { name: "二次办理", channel: ["sys", "its"], text: "{科室负责人}：学生{姓名}对「{标题}」（编号{编号}）的办理结果不满意，已于{发起时间}申请二次办理。请重新核实并提交审批，新办结时限{办结时限}。" },
   "M-23": { name: "撤回来信", channel: ["sys"], text: "{当前办理人}：学生{姓名}已于{撤回时间}撤回「{标题}」（编号{编号}），该信件无需继续办理。" },
-  "M-24": { name: "满意度评价", channel: ["sys"], text: "{回复人}：学生{姓名}对「{标题}」（编号{编号}）作出评价：{评分}星。{评价内容}　—— {评价时间}" }
+  "M-24": { name: "满意度评价", channel: ["sys"], text: "{科室负责人}：学生{姓名}对「{标题}」（编号{编号}）作出评价：{评分}星。{评价内容}　—— {评价时间}" }
 };
 
 const MOCK = {
@@ -92,7 +92,7 @@ const MOCK = {
     avatar: "李"
   },
 
-  /* 综合办管理员（统一受理全部来信，分给科室领导） */
+  /* 综合办管理员（统一受理全部来信，分派负责科室） */
   admin: {
     name: "王敏",
     role: "综合办公室 · 信箱管理员",
@@ -130,8 +130,8 @@ const MOCK = {
 
   /* 学工部内设科室（含负责人、联系方式与科室成员）
    * duty：职责说明，展示在科室联系方式中。分派不按事务匹配科室，由综合办人工指定。
-   * members：科室成员；leader 为科室领导（科长），每科室一名，负责指定回复人并审批答复；
-   *   其余在用成员为回复人候选 */
+   * members：科室成员；leader 为科室分管领导，每科室一名，负责指定科室负责人并审批答复；
+   *   其余在用成员为科室负责人候选 */
   sections: [
     {
       name: "综合办公室", head: "王建国", phone: "0731-88830001", email: "zhb@xg.edu.cn",
@@ -280,11 +280,11 @@ const MOCK = {
 
   /* 常见问题（可由管理员在「常见问题配置」中维护，学生端按 enabled + order 展示） */
   faqs: [
-    { id: "faq1", q: "写信后多久能收到回复？", a: "提交成功后，系统会立即发送收悉回执，承诺在 7 天内给予正式回复。回执只表示来信已收到，不代表办结；正式答复经科室领导审批后由回复人发送给您。", category: "办理流程", order: 1, enabled: true },
-    { id: "faq2", q: "我的信件会由谁办理？", a: "来信统一送达学工部综合办公室，由综合办分给承办科室的科室领导（科长）；科长指定本科室回复人拟写答复，并审批每一封正式答复。需要学院协同的事项，由回复人请学生所在学院的副书记协助处理。", category: "办理流程", order: 2, enabled: true },
+    { id: "faq1", q: "写信后多久能收到回复？", a: "提交成功后，系统会立即发送收悉回执，承诺在 7 天内给予正式回复。回执只表示来信已收到，不代表办结；正式答复经科室分管领导审批后由科室负责人发送给您。", category: "办理流程", order: 1, enabled: true },
+    { id: "faq2", q: "我的信件会由谁办理？", a: "来信统一送达学工部综合办公室，由综合办分派负责科室；科室分管领导指定科室负责人拟写答复，并审批每一封正式答复。需要学院协同的事项，由科室负责人请学生所在学院的副书记协助处理。", category: "办理流程", order: 2, enabled: true },
     { id: "faq3", q: "如何查看我的信件办理进度？", a: "登录后进入「我的信件」，或在「信件查询」中输入信件编号，即可查看收悉回执、分派、办理、答复的完整流程时间轴。", category: "使用指南", order: 3, enabled: true },
-    { id: "faq4", q: "对办理结果不满意怎么办？", a: "在信件详情中对答复进行满意度评价；若不满意可点击「申请二次办理」，信件将回到原回复人重新办理，答复仍须科室领导审批后再发给您。", category: "办理流程", order: 4, enabled: true },
-    { id: "faq5", q: "信件长时间没有回复怎么办？", a: "待分派或办理中的信件可在详情点击「催办」，系统会提醒当前办理人：未分派时为综合办，待指定回复人或待审批时为科室领导，其余环节为回复人。超过办结时限的信件也会自动提醒并纳入综合办督办。", category: "办理流程", order: 5, enabled: true },
+    { id: "faq4", q: "对办理结果不满意怎么办？", a: "在信件详情中对答复进行满意度评价；若不满意可点击「申请二次办理」，信件将回到原科室负责人重新办理，答复仍须科室分管领导审批后再发给您。", category: "办理流程", order: 4, enabled: true },
+    { id: "faq5", q: "信件长时间没有回复怎么办？", a: "待分派或办理中的信件可在详情点击「催办」，系统会提醒当前办理人：未分派时为综合办，待指定科室负责人或待审批时为科室分管领导，其余环节为科室负责人。超过办结时限的信件也会自动提醒并纳入综合办督办。", category: "办理流程", order: 5, enabled: true },
     { id: "faq6", q: "哪些事项不予受理？", a: "非学工部职责范围（如教务、后勤、网络等）、涉及紧急救助（110/119/120）、涉及国家机密或个人隐私、应通过法定程序解决，以及重复无理诉求等事项不予受理。", category: "受理范围", order: 6, enabled: true }
   ]
 };
@@ -292,11 +292,11 @@ const MOCK = {
 /* ---------------- 受理范围/流程说明文案（写信须知与前台展示共用） ---------------- */
 const FLOW_STEPS = [
   { step: "提交来信", actor: "来信人", note: "提交后立即收到收悉回执，承诺 7 天内正式回复" },
-  { step: "分给科室领导", actor: "综合办公室", note: "综合办指定承办科室的科室领导（科长）" },
-  { step: "指定回复人", actor: "科室领导", note: "科室领导指定本科室回复人" },
-  { step: "拟写答复", actor: "回复人", note: "回复人拟写答复；需要时请学院副书记协同" },
-  { step: "领导审批", actor: "科室领导", note: "所有答复均须审批，不通过则打回修改" },
-  { step: "确认发送", actor: "回复人", note: "审批通过后回复人确认发送，信件办结并接受评价" }
+  { step: "分派负责科室", actor: "综合办公室", note: "综合办指定负责科室" },
+  { step: "指定科室负责人", actor: "科室分管领导", note: "科室分管领导指定科室负责人" },
+  { step: "拟写答复", actor: "科室负责人", note: "科室负责人拟写答复；需要时请学院副书记协同" },
+  { step: "领导审批", actor: "科室分管领导", note: "所有答复均须审批，不通过则打回修改" },
+  { step: "确认发送", actor: "科室负责人", note: "审批通过后科室负责人确认发送，信件办结并接受评价" }
 ];
 
 /* ---------------- localStorage 工具 ---------------- */
@@ -312,7 +312,7 @@ function saveRole(r) { localStorage.setItem(STORE_KEYS.role, r); }
 const DEMO_SECTION = "学生资助管理科";
 const DEMO_COLLEGE = "计算机学院";
 
-/* 科室领导、回复人当前所属科室 */
+/* 科室分管领导、科室负责人当前所属科室 */
 function getSection() {
   const s = localStorage.getItem(STORE_KEYS.section);
   if (s && MOCK.sections.some(x => x.name === s)) return s;
@@ -352,14 +352,14 @@ function sectionMembers(name, onlyEnabled) {
   return onlyEnabled ? list.filter(m => m.enabled !== false) : list;
 }
 
-/* 科室领导（科长）：成员中 leader=true 的在用成员；未标记时回退到与负责人同名的成员 */
+/* 科室分管领导：成员中 leader=true 的在用成员；未标记时回退到与负责人同名的成员 */
 function sectionLeader(name) {
   const list = sectionMembers(name, true);
   const head = (MOCK.sections.find(x => x.name === name) || {}).head;
   return list.find(m => m.leader) || list.find(m => m.name === head) || null;
 }
 
-/* 回复人候选：本科室除科室领导以外的在用成员 */
+/* 科室负责人候选：本科室除科室分管领导以外的在用成员 */
 function replierCandidates(name) {
   const leader = sectionLeader(name);
   return sectionMembers(name, true).filter(m => !leader || m.id !== leader.id);
@@ -384,7 +384,7 @@ function saveSectionMembers(section, members) {
   saveConfig();
 }
 
-/* 当前演示身份：回复人。所选科室无该成员时回退到首位候选 */
+/* 当前演示身份：科室负责人。所选科室无该成员时回退到首位候选 */
 function getMember() {
   const list = replierCandidates(getSection());
   const id = localStorage.getItem(STORE_KEYS.member);
@@ -392,7 +392,7 @@ function getMember() {
 }
 function saveMember(id) { localStorage.setItem(STORE_KEYS.member, id); }
 
-/* 兼容旧配置：缺 members 的科室按负责人补一条；无科室领导标记时按负责人补标。
+/* 兼容旧配置：缺 members 的科室按负责人补一条；无科室分管领导标记时按负责人补标。
  * 加载时丢掉科室、成员上已废弃的 affairs 字段。 */
 function ensureSectionMembers() {
   MOCK.sections.forEach(s => {
@@ -433,12 +433,12 @@ function getSectionLetters(section) {
   return getAllLetters().filter(l => l.dept === section);
 }
 
-/* 待分派信件（已送达综合办、尚未分给科室领导） */
+/* 待分派信件（已送达综合办、尚未分派负责科室） */
 function getPendingLetters() {
   return getAllLetters().filter(l => stageOf(l) === STAGE.pending);
 }
 
-/* 某回复人负责的信件 */
+/* 某科室负责人负责的信件 */
 function getMemberLetters(memberId) {
   if (!memberId) return [];
   return getAllLetters().filter(l => l.assignee && l.assignee.memberId === memberId);
@@ -459,14 +459,14 @@ function getPublicLetters() {
   return getAllLetters().filter(l => l.status === STATUS.done && l.publicScope === "all");
 }
 
-/* 回复人显示标签：「邱敏（资助干事）」 */
+/* 科室负责人显示标签：「邱敏（资助干事）」 */
 function assigneeLabel(l) {
   const a = l && l.assignee;
   if (!a || !a.name) return "";
   return a.name + (a.title ? `（${a.title}）` : "");
 }
 
-/* 科室领导显示标签：「陈静（科长）」 */
+/* 科室分管领导显示标签：「陈静（科长）」 */
 function leaderLabel(l) {
   const a = l && l.leader;
   if (!a || !a.name) return "";
@@ -502,22 +502,22 @@ function stageOf(l) {
   return l.assignee ? STAGE.replying : STAGE.needReplier;
 }
 
-/* 回复人当前要做的事（回复中 / 已打回 / 待确认发送） */
+/* 科室负责人当前要做的事（回复中 / 已打回 / 待确认发送） */
 function isReplierTurn(l) {
   return [STAGE.replying, STAGE.rejected, STAGE.confirm].includes(stageOf(l));
 }
 
-/* 当前办理人：待分派 → 综合办；待指定回复人、待审批 → 科室领导；其余办理中环节 → 回复人 */
+/* 当前办理人：待分派 → 综合办；待指定科室负责人、待审批 → 科室分管领导；其余办理中环节 → 科室负责人 */
 function currentHandler(l) {
   const st = stageOf(l);
   if (st === STAGE.pending) return { role: "admin", key: "admin", label: MOCK.intakeSection, name: MOCK.intakeSection };
   if (st === STAGE.needReplier || st === STAGE.approving) {
     if (!l.leader) return null;
-    return { role: "leader", key: "member:" + l.leader.memberId, label: `${l.dept}科室领导${l.leader.name}`, name: l.leader.name };
+    return { role: "leader", key: "member:" + l.leader.memberId, label: `${l.dept}科室分管领导${l.leader.name}`, name: l.leader.name };
   }
   if ([STAGE.replying, STAGE.collab, STAGE.rejected, STAGE.confirm].includes(st)) {
     if (!l.assignee) return null;
-    return { role: "replier", key: "member:" + l.assignee.memberId, label: `${l.dept}回复人${l.assignee.name}`, name: l.assignee.name };
+    return { role: "replier", key: "member:" + l.assignee.memberId, label: `${l.dept}科室负责人${l.assignee.name}`, name: l.assignee.name };
   }
   return null;
 }
@@ -529,13 +529,13 @@ function urgeTarget(l) { return handlerLabel(l); }
 /* 下一步提示（时间轴末尾的待办节点） */
 function nextStepText(l) {
   return {
-    [STAGE.pending]: "待综合办分给科室领导",
-    [STAGE.needReplier]: "待科室领导指定回复人",
-    [STAGE.replying]: "待回复人拟写答复并提交审批",
+    [STAGE.pending]: "待综合办分派负责科室",
+    [STAGE.needReplier]: "待科室分管领导指定科室负责人",
+    [STAGE.replying]: "待科室负责人拟写答复并提交审批",
     [STAGE.collab]: "待学院副书记写处理意见",
-    [STAGE.approving]: "待科室领导审批",
-    [STAGE.rejected]: "待回复人按审批意见修改",
-    [STAGE.confirm]: "待回复人确认发送"
+    [STAGE.approving]: "待科室分管领导审批",
+    [STAGE.rejected]: "待科室负责人按审批意见修改",
+    [STAGE.confirm]: "待科室负责人确认发送"
   }[stageOf(l)] || "";
 }
 
@@ -555,7 +555,7 @@ function stageColor(stage) {
   }[stage] || "#627079";
 }
 
-/* ---------------- 流程动作（综合办 → 科室领导 → 回复人 → 审批 → 确认发送） ---------------- */
+/* ---------------- 流程动作（综合办 → 科室分管领导 → 科室负责人 → 审批 → 确认发送） ---------------- */
 function genDispatchId() {
   return "DP" + Date.now().toString(36) + Math.floor(Math.random() * 900 + 100);
 }
@@ -572,11 +572,11 @@ function toStudent(l) { return { key: l.owner === "me" ? "student:me" : "student
 function toAdmin() { return { key: "admin", label: MOCK.intakeSection }; }
 function toLeader(l, who) {
   const a = who || (l && l.leader);
-  return a ? { key: "member:" + a.memberId, label: a.name, vars: { 科室领导: a.name } } : null;
+  return a ? { key: "member:" + a.memberId, label: a.name, vars: { 科室分管领导: a.name } } : null;
 }
 function toReplier(l, who) {
   const a = who || (l && l.assignee);
-  return a ? { key: "member:" + a.memberId, label: a.name, vars: { 回复人: a.name } } : null;
+  return a ? { key: "member:" + a.memberId, label: a.name, vars: { 科室负责人: a.name } } : null;
 }
 function toCollege(name) {
   const c = findCollege(name);
@@ -603,7 +603,7 @@ function submitLetter(l, opts) {
   return l;
 }
 
-/* 综合办分给科室领导；已分派的信件改派到其他科室（原分派记录保留） */
+/* 综合办分派负责科室；已分派的信件改派到其他科室（原分派记录保留） */
 function assignLeader(l, section, note, opts) {
   const o = opts || {};
   const leader = sectionLeader(section);
@@ -625,7 +625,7 @@ function assignLeader(l, section, note, opts) {
   l.dispatchedAt = at;
   l.status = STATUS.doing; l.stage = STAGE.needReplier;
   pushFlow(l, {
-    step: transfer ? "改派科室" : "分给科室领导", actor: MOCK.intakeSection, at,
+    step: transfer ? "改派科室" : "分派负责科室", actor: MOCK.intakeSection, at,
     note: `分至${section} · ${leaderLabel(l)}` + (transfer ? `，原科室 ${oldSection}` : "") + (note ? `；${note}` : ""),
     studentNote: `已分至${section}办理`
   });
@@ -638,7 +638,7 @@ function assignLeader(l, section, note, opts) {
   return rec;
 }
 
-/* 科室领导指定 / 改派回复人 */
+/* 科室分管领导指定 / 改派科室负责人 */
 function assignReplier(l, memberId, note, opts) {
   const o = opts || {};
   const m = findMember(l.dept, memberId);
@@ -646,54 +646,54 @@ function assignReplier(l, memberId, note, opts) {
   const at = o.at || nowStr();
   const old = l.assignee;
   const change = !!old && old.memberId !== m.id;
-  const rec = { at, type: change ? "改派回复人" : "指定回复人", memberId: m.id, name: m.name, title: m.title || "", fromName: change ? old.name : "", note: note || "", by: l.leader ? l.leader.name : "" };
+  const rec = { at, type: change ? "改派科室负责人" : "指定科室负责人", memberId: m.id, name: m.name, title: m.title || "", fromName: change ? old.name : "", note: note || "", by: l.leader ? l.leader.name : "" };
   if (!l.replierAssigns) l.replierAssigns = [];
   l.replierAssigns.push(rec);
   l.assignee = { section: l.dept, memberId: m.id, name: m.name, title: m.title || "" };
   if (stageOf(l) === STAGE.needReplier) l.stage = STAGE.replying;
   pushFlow(l, {
-    step: rec.type, actor: `${l.dept}科室领导`, at,
-    note: `由 ${assigneeLabel(l)} 回复` + (change ? `，原回复人 ${old.name}` : "") + (note ? `；${note}` : ""),
+    step: rec.type, actor: `${l.dept}科室分管领导`, at,
+    note: `由 ${assigneeLabel(l)} 回复` + (change ? `，原科室负责人 ${old.name}` : "") + (note ? `；${note}` : ""),
     studentNote: `已由 ${m.name} 老师负责回复`
   });
-  const vars = { 原回复人: change ? old.name : "" };
+  const vars = { 原科室负责人: change ? old.name : "" };
   if (change) notify(l, "M-07", [toReplier(l), toReplier(l, old)], vars, o);
   else notify(l, "M-06", [toReplier(l)], vars, o);
   return rec;
 }
 
-/* 回复人暂存答复 */
+/* 科室负责人暂存答复 */
 function saveReplyDraft(l, content, opts) {
   const o = opts || {};
   l.replyDraft = { content, at: o.at || nowStr(), by: assigneeLabel(l) };
   return l;
 }
 
-/* 回复人提交科室领导审批（含打回后的再次提交） */
+/* 科室负责人提交科室分管领导审批（含打回后的再次提交） */
 function submitApproval(l, content, opts) {
   const o = opts || {};
   const at = o.at || nowStr();
   saveReplyDraft(l, content, { at });
   const round = (l.approvals || []).length + 1;
   l.stage = STAGE.approving;
-  pushFlow(l, { step: round > 1 ? "修改后再次提交审批" : "提交审批", actor: `${l.dept}回复人`, at, note: `${assigneeLabel(l)} 提交答复，送 ${leaderLabel(l)} 审批（第 ${round} 次）`, internal: true });
+  pushFlow(l, { step: round > 1 ? "修改后再次提交审批" : "提交审批", actor: `${l.dept}科室负责人`, at, note: `${assigneeLabel(l)} 提交答复，送 ${leaderLabel(l)} 审批（第 ${round} 次）`, internal: true });
   notify(l, "M-08", [toLeader(l)], {}, o);
   return l;
 }
 
-/* 科室领导审批：通过 → 待回复人确认发送；不通过 → 打回回复人（须填写意见） */
+/* 科室分管领导审批：通过 → 待科室负责人确认发送；不通过 → 打回科室负责人（须填写意见） */
 function approveReply(l, pass, opinion, opts) {
   const o = opts || {};
   const at = o.at || nowStr();
   if (!l.approvals) l.approvals = [];
   l.approvals.push({ at, result: pass ? "pass" : "reject", opinion: opinion || "", by: leaderLabel(l), round: l.approvals.length + 1 });
   l.stage = pass ? STAGE.confirm : STAGE.rejected;
-  pushFlow(l, { step: pass ? "审批通过" : "审批打回", actor: `${l.dept}科室领导`, at, note: pass ? (opinion ? `同意：${opinion}` : "同意发送") : `打回修改：${opinion}`, internal: true });
+  pushFlow(l, { step: pass ? "审批通过" : "审批打回", actor: `${l.dept}科室分管领导`, at, note: pass ? (opinion ? `同意：${opinion}` : "同意发送") : `打回修改：${opinion}`, internal: true });
   notify(l, pass ? "M-09" : "M-10", [toReplier(l)], { 审批意见: opinion || "无" }, o);
   return l;
 }
 
-/* 回复人发起学院协同：直接发给来信学生所在学院的副书记 */
+/* 科室负责人发起学院协同：直接发给来信学生所在学院的副书记 */
 function startCollab(l, note, opts) {
   const o = opts || {};
   const c = findCollege(l.unit);
@@ -703,7 +703,7 @@ function startCollab(l, note, opts) {
   const rec = { id: "CB" + Date.now().toString(36) + Math.floor(Math.random() * 900 + 100), college: c.name, secretary: c.secretary, note: note || "", at, by: assigneeLabel(l), opinion: "", opinionAt: "" };
   l.collabs.push(rec);
   l.stage = STAGE.collab;
-  pushFlow(l, { step: "发起学院协同", actor: `${l.dept}回复人`, at, note: `请${c.name}副书记 ${c.secretary} 协同` + (note ? `；${note}` : ""), studentNote: `已请${c.name}协同办理` });
+  pushFlow(l, { step: "发起学院协同", actor: `${l.dept}科室负责人`, at, note: `请${c.name}副书记 ${c.secretary} 协同` + (note ? `；${note}` : ""), studentNote: `已请${c.name}协同办理` });
   notify(l, "M-11", [toCollege(c.name)], {}, o);
   return rec;
 }
@@ -713,7 +713,7 @@ function openCollab(l) {
   return (l.collabs || []).slice().reverse().find(c => !c.opinion) || null;
 }
 
-/* 副书记写处理意见并发回回复人（线下承办不作为系统审批环节） */
+/* 副书记写处理意见并发回科室负责人（线下承办不作为系统审批环节） */
 function collabOpinion(l, opinion, opts) {
   const o = opts || {};
   const c = openCollab(l);
@@ -721,12 +721,12 @@ function collabOpinion(l, opinion, opts) {
   const at = o.at || nowStr();
   c.opinion = opinion; c.opinionAt = at;
   l.stage = STAGE.replying;
-  pushFlow(l, { step: "学院处理意见", actor: `${c.college}副书记`, at, note: `${c.secretary} 写明处理意见并发回回复人：${opinion}`, studentNote: `${c.college}已反馈处理意见` });
+  pushFlow(l, { step: "学院处理意见", actor: `${c.college}副书记`, at, note: `${c.secretary} 写明处理意见并发回科室负责人：${opinion}`, studentNote: `${c.college}已反馈处理意见` });
   notify(l, "M-13", [toReplier(l)], { 处理意见: opinion }, o);
   return c;
 }
 
-/* 回复人确认发送：正式答复发给学生，信件办结，并选择公开范围 */
+/* 科室负责人确认发送：正式答复发给学生，信件办结，并选择公开范围 */
 function confirmSend(l, scope, opts) {
   const o = opts || {};
   const at = o.at || nowStr();
@@ -734,12 +734,12 @@ function confirmSend(l, scope, opts) {
   l.reply = { dept: l.dept, by: assigneeLabel(l), time: at, content: draft.content || "", approvedBy: leaderLabel(l) };
   l.publicScope = scope === "all" ? "all" : "college";
   l.status = STATUS.done; l.stage = STAGE.done; l.doneAt = at;
-  pushFlow(l, { step: "确认发送并办结", actor: `${l.dept}回复人`, at, note: `正式答复已发送给来信人；公开范围：${PUBLIC_SCOPE[l.publicScope]}`, studentNote: "正式答复已发送，信件办结" });
+  pushFlow(l, { step: "确认发送并办结", actor: `${l.dept}科室负责人`, at, note: `正式答复已发送给来信人；公开范围：${PUBLIC_SCOPE[l.publicScope]}`, studentNote: "正式答复已发送，信件办结" });
   notify(l, "M-02", [toStudent(l)], { 答复时间: at }, o);
   return l;
 }
 
-/* 学生申请二次办理：回到原回复人重新办理，仍须审批并确认发送 */
+/* 学生申请二次办理：回到原科室负责人重新办理，仍须审批并确认发送 */
 function requestReopen(l, opts) {
   const o = opts || {};
   const at = o.at || nowStr();
@@ -754,7 +754,7 @@ function requestReopen(l, opts) {
   l.reopened = true; l.reopenCount = (l.reopenCount || 0) + 1; l.reopenedAt = at;
   l.deadline = calcDeadline(new Date(at.replace(" ", "T")));
   l.urged = false;
-  pushFlow(l, { step: "申请二次办理", actor: "来信人", at, note: `来信人对办理结果不满意，信件回到${l.assignee ? "原回复人 " + l.assignee.name : "科室领导"}重新办理，答复仍须审批` });
+  pushFlow(l, { step: "申请二次办理", actor: "来信人", at, note: `来信人对办理结果不满意，信件回到${l.assignee ? "原科室负责人 " + l.assignee.name : "科室分管领导"}重新办理，答复仍须审批` });
   notify(l, "M-22", [toReplier(l), toLeader(l)], { 发起时间: at }, o);
   return l;
 }
@@ -770,7 +770,7 @@ function withdrawLetter(l, opts) {
   return l;
 }
 
-/* 学生评价：提醒回复人，抄送科室领导 */
+/* 学生评价：提醒科室负责人，抄送科室分管领导 */
 function rateLetter(l, rating, tags, comment, opts) {
   const o = opts || {};
   l.rating = rating; l.ratingTags = tags || []; l.ratingComment = comment || ""; l.ratedAt = formatDate(new Date());
@@ -786,7 +786,7 @@ function dispatchItemsHtml(letter, chipCls) {
   return list.map(d => `<div class="dp-item">
       <div class="dp-head">
         <span class="dp-type">${escapeHtml(d.type || "分派")}</span>
-        <span class="dp-to"><span class="${cls}">${escapeHtml(d.section)}</span><span class="${cls} info">科室领导 ${escapeHtml(d.name)}${d.title ? "（" + escapeHtml(d.title) + "）" : ""}</span></span>
+        <span class="dp-to"><span class="${cls}">${escapeHtml(d.section)}</span><span class="${cls} info">科室分管领导 ${escapeHtml(d.name)}${d.title ? "（" + escapeHtml(d.title) + "）" : ""}</span></span>
         <span class="dp-time">${escapeHtml(d.at || "")}</span>
       </div>
       ${d.fromSection ? `<div class="dp-from">原科室：${escapeHtml(d.fromSection)}${d.fromName ? " · " + escapeHtml(d.fromName) : ""}</div>` : ""}
@@ -841,7 +841,7 @@ function letterVars(l) {
     姓名: l.name || "来信人", 标题: l.title || "", 编号: l.id || "", 所在单位: l.unit || "-",
     事务分类: l.affair || "", 来信时间: l.createdAt ? formatDateTime(l.createdAt) : (l.date || ""),
     承办科室: l.dept || MOCK.intakeSection, 科室: l.dept || MOCK.intakeSection,
-    科室领导: l.leader ? l.leader.name : "科室领导", 回复人: l.assignee ? l.assignee.name : "回复人",
+    科室分管领导: l.leader ? l.leader.name : "科室分管领导", 科室负责人: l.assignee ? l.assignee.name : "科室负责人",
     承办人: l.assignee ? l.assignee.name : "", 副书记: col ? col.secretary : "副书记",
     当前办理人: handlerLabel(l), 办结时限: dl, 已过天数: String(daysSinceCreated(l)),
     剩余天数: String(Math.max(0, remain)), 超期天数: String(Math.max(0, -remain)),
@@ -1541,6 +1541,84 @@ function seedInFlow() {
   });
 }
 
+/* 各科室分管领导工作台的待指定 / 待审批。
+   待指定科室负责人只分到科室分管领导、尚未指定科室负责人；待审批由科室负责人提交后仍由科室分管领导审批。
+   学生资助管理科已在 seedInFlow 覆盖，这里不重复生成。 */
+function seedLeaderQueues() {
+  const mk = (daysAgo, hour) => {
+    const d = new Date();
+    d.setDate(d.getDate() - daysAgo);
+    d.setHours(hour, 25, 0, 0);
+    return d;
+  };
+  const base = [
+    { n: "611", dept: "学生公寓管理科", daysAgo: 1, hour: 9, title: "关于宿舍空调外机夜间噪音影响休息的问题反映", category: "问题类", affair: "宿舍管理", name: "何*", unit: "计算机学院", level: "重要",
+      content: "老师您好，我所在宿舍楼的空调外机正对窗户，夜间持续运转，噪音很大，已经影响入睡。希望公寓管理科核实情况，并协调调整安装位置或做隔音处理，谢谢。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "612", dept: "学生公寓管理科", daysAgo: 2, hour: 11, title: "关于申请调至同楼层空余床位的咨询", category: "咨询类", affair: "住宿调整", name: "马*", unit: "电信学院", level: "一般",
+      content: "本人与室友作息差异较大，了解到同楼层目前有空余床位。想咨询本学期能否申请调换，需要提交哪些材料，以及由谁审批。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "613", dept: "学生公寓管理科", daysAgo: 2, hour: 15, title: "关于延长宿舍楼洗衣房开放时间的建议", category: "建议类", affair: "宿舍管理", name: "林*", unit: "机械学院", level: "一般",
+      content: "宿舍洗衣房目前晚上九点就关闭，晚自习回来经常赶不上。建议工作日延长至十一点，方便同学洗衣。",
+      spec: { stage: STAGE.approving, replier: "M602", draft: "同学您好，已核实洗衣房开放时间。考虑到晚自习返回后的实际需要，工作日开放时间拟调整为 7:00 至 23:00，周末保持现有安排。具体执行时间将在楼栋公告栏和公寓群通知。" } },
+    { n: "614", dept: "学生公寓管理科", daysAgo: 3, hour: 10, title: "关于毕业离校宿舍退宿手续的咨询", category: "咨询类", affair: "住宿调整", name: "吴*", unit: "商学院", level: "一般",
+      content: "今年六月毕业，想了解退宿的时间安排、钥匙和门禁卡的归还地点，以及个人物品未及时搬离时会如何处理。",
+      spec: { stage: STAGE.approving, replier: "M602", draft: "同学您好，毕业生退宿安排在离校手续周内完成。请携带钥匙和门禁卡到楼栋值班室办理，房间物品须当日清空。逾期未搬离的物品由公寓统一登记保管，具体日程见离校通知。" } },
+
+    { n: "621", dept: "综合办公室", daysAgo: 1, hour: 14, title: "关于学工信箱公开答复如何查阅的咨询", category: "咨询类", affair: "其他事务", name: "郑*", unit: "法学院", level: "一般",
+      content: "老师您好，想了解已经办结并选择公开的来信，学生在哪里可以查阅正式答复，是否可以按学院筛选。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "622", dept: "综合办公室", daysAgo: 3, hour: 16, title: "关于来信办理进度增加短信提醒的建议", category: "建议类", affair: "其他事务", name: "钱*", unit: "外国语学院", level: "一般",
+      content: "建议学工信箱在信件分派、指定科室负责人和发出正式答复时，给来信人发送短信提醒，避免只能登录系统才能看到进度。",
+      spec: { stage: STAGE.approving, replier: "M103", draft: "同学您好，目前办理进度可在「我的信件」和系统消息中查看，分派、指定科室负责人和正式答复等节点都会发送站内消息。短信提醒涉及统一身份认证和短信网关，已列入后续优化，现阶段先保证站内每一步可查。" } },
+
+    { n: "631", dept: "思想政治教育科", daysAgo: 1, hour: 10, title: "关于增加红色教育实践名额的建议", category: "建议类", affair: "思想教育", name: "高*", unit: "材料学院", level: "一般",
+      content: "学院红色教育实践的名额比较少，不少同学报名后没能参加。建议适当增加名额，或分批次安排，让更多同学有机会参加。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "632", dept: "思想政治教育科", daysAgo: 2, hour: 15, title: "关于入党积极分子培训开班时间的咨询", category: "咨询类", affair: "党团组织", name: "丁*", unit: "计算机学院", level: "一般",
+      content: "老师您好，想咨询本学期入党积极分子培训的开班时间、上课地点和报名方式。错过学院通知的同学应当如何补报？",
+      spec: { stage: STAGE.approving, replier: "M202", draft: "同学您好，本学期入党积极分子培训拟定于第 6 教学周周末开班，地点在大学生活动中心报告厅。请通过学院团委报名；已错过学院通知的同学，可在开班前三个工作日内向学院团委补报。" } },
+
+    { n: "641", dept: "学生日常管理科", daysAgo: 2, hour: 9, title: "关于休学复学后学生证换发时间的咨询", category: "咨询类", affair: "学籍异动", name: "蔡*", unit: "自动化学院", level: "一般",
+      content: "我已办完复学手续，学生证上的信息还没有更新。想咨询换发学生证的办理时间和需要携带的材料。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "642", dept: "学生日常管理科", daysAgo: 1, hour: 16, title: "关于请假系统无法上传医院证明的问题反映", category: "问题类", affair: "请假考勤", name: "任*", unit: "生命科学学院", level: "重要",
+      content: "申请病假时上传医院证明一直失败，提示格式不支持。jpg 和 pdf 都试过了。希望尽快修复，否则无法按时完成请假。",
+      spec: { stage: STAGE.approving, replier: "M302", draft: "同学您好，经核实，请假系统对超过 10MB 的证明材料会上传失败。请先将图片压缩后重新提交。我们已请信息化部门放宽大小限制，预计本周内完成。在此期间，可将证明交学院辅导员登记，不作为缺勤处理。" } },
+
+    { n: "651", dept: "心理健康教育中心", daysAgo: 2, hour: 14, title: "关于心理咨询预约后改期规则的咨询", category: "咨询类", affair: "心理咨询", name: "方*", unit: "外国语学院", level: "一般",
+      content: "我已预约本周三的心理咨询，临时和课程冲突。想了解能否改期、最晚什么时候申请，以及改期会不会影响以后的预约。",
+      spec: { stage: STAGE.approving, replier: "M502", draft: "同学您好，已预约的咨询如需改期，请至少提前一个工作日在预约系统中操作，或电话联系心理中心前台。本学期每位同学可改期一次，不影响后续正常预约。您这次可改至本周五下午，具体时段请在系统中选择。" } },
+
+    { n: "661", dept: "就业创业指导中心", daysAgo: 1, hour: 11, title: "关于未就业毕业生档案转递去向的咨询", category: "咨询类", affair: "就业指导", name: "姚*", unit: "商学院", level: "重要",
+      content: "毕业时还没有签订三方协议，想咨询档案和户口是转回生源地还是可以暂留学校，以及办理的截止时间。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "662", dept: "就业创业指导中心", daysAgo: 3, hour: 15, title: "关于创业园区入驻需要哪些材料的咨询", category: "咨询类", affair: "创业服务", name: "秦*", unit: "机械学院", level: "一般",
+      content: "我们团队想申请入驻学校创业园区，想了解需要准备哪些材料、评审安排在什么时间，以及场地使用是否收费。",
+      spec: { stage: STAGE.approving, replier: "M702", draft: "同学您好，入驻创业园区需提交项目计划书、团队成员名单和指导教师意见。本学期评审安排在每月第一周，通过后免场地租金，水电按园区标准结算。材料请发送至就业创业指导中心邮箱，或于工作日到中心窗口提交。" } },
+
+    { n: "671", dept: "征兵与国防教育办公室", daysAgo: 1, hour: 8, title: "关于在校生应征体检复查安排的咨询", category: "咨询类", affair: "征兵入伍", name: "侯*", unit: "电信学院", level: "重要",
+      content: "初检有一项没有通过，通知可以复查。想咨询复查的时间、地点，以及复查前需要注意什么。",
+      spec: { stage: STAGE.needReplier } },
+    { n: "672", dept: "征兵与国防教育办公室", daysAgo: 4, hour: 10, title: "关于退役复学学费补偿何时发放的咨询", category: "咨询类", affair: "国防教育", name: "孟*", unit: "计算机学院", level: "一般",
+      content: "我已办完退役复学，学费补偿材料也交齐了。想确认补偿款什么时候发放，是打到银行卡，还是直接冲抵学费。",
+      spec: { stage: STAGE.approving, replier: "M802", draft: "同学您好，退役复学学费补偿在材料审核通过后，一般于复学学期的第二个月发放至您登记的银行卡，不直接冲抵学费。您的材料已审核通过，预计下月 15 日前到账，请留意短信通知。" } }
+  ];
+  return base.map(b => {
+    const d = mk(b.daysAgo, b.hour);
+    const id = "XG" + formatDate(d).replace(/-/g, "") + b.n;
+    return {
+      id, mailbox: MOCK.mailbox, owner: "other",
+      title: b.title, category: b.category, affair: b.affair,
+      name: b.name, idInfo: "保密", phone: "13*****" + b.n, email: "",
+      unit: b.unit, address: "", content: b.content, level: b.level,
+      status: STATUS.doing, dept: b.dept,
+      createdAt: d.toISOString(), date: formatDate(d),
+      reply: null, rating: null, attachments: [], _spec: b.spec
+    };
+  });
+}
+
 /* 待分派演示来信：日期相对「今天」生成，保证任何时候打开原型都有新鲜的待办 */
 function seedPending() {
   const mk = (daysAgo, hour) => {
@@ -2000,7 +2078,7 @@ function seedLetters() {
 
   _msgBuffer = [];
   const rot = {};
-  const built = seedPending().concat(seedInFlow()).concat(seed).concat(seedWithdrawn())
+  const built = seedPending().concat(seedInFlow()).concat(seedLeaderQueues()).concat(seed).concat(seedWithdrawn())
     .sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""))
     .map(r => seedFlow(r, rot));
   built.push(seedDraft());

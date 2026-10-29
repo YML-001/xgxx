@@ -359,7 +359,7 @@ tbody tr.clickable:hover { background: var(--primary-soft); }
 .table-actions .btn-danger.btn-sm:hover { color: #fab6b6; border-color: transparent; }
 .table-actions .btn[disabled] { opacity: .55; cursor: not-allowed; }
 
-/* 科室工作台 · 回复人办理分布：七列均分铺满卡片（仅 PC 这张表） */
+/* 科室工作台 · 科室负责人办理分布：七列均分铺满卡片（仅 PC 这张表） */
 .member-load-table { width: 100%; table-layout: fixed; }
 .member-load-table th,
 .member-load-table td { white-space: nowrap; }

@@ -27,7 +27,7 @@
         <div class="nav-section-title">办理</div>
         <button class="nav-item" onclick="location.href='admin-home.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><rect x="3.5" y="3.5" width="7" height="8.5" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.2"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.2"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.2"/></svg></span><span>办理工作台</span></button>
         <button class="nav-item" onclick="location.href='admin-dispatch.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="5.5" cy="12" r="2.5"/><circle cx="18.5" cy="6" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="m7.8 10.9 8.4-3.8M7.8 13.1l8.4 3.8"/></svg></span><span>待分派信件</span><span class="nav-badge">5</span></button>
-        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">14</span></button>
+        <button class="nav-item" onclick="location.href='admin-inbox.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 13.5h4l1.4 2.6h5.2L16 13.5h4"/><path d="M4.5 13.5 6.5 5h11l2 8.5v6.5h-15z"/></svg></span><span>信件收件箱</span><span class="nav-badge">29</span></button>
         <button class="nav-item" onclick="location.href='admin-supervise.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg></span><span>督办催办</span><span class="nav-badge">9</span></button>
         <div class="nav-section-title">运营</div>
         <button class="nav-item" onclick="location.href='admin-publish.html'"><span class="nav-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/></svg></span><span>公开情况</span></button>
@@ -58,7 +58,7 @@
         </div>
         <div class="topbar-actions">
           <div class="mailbox-switch" id="mailbox-switch" style="display:none"></div>
-          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室领导</button><button class="" onclick="location.href='replier-home.html'">科室回复人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
+          <div class="role-switch" id="role-switch"><button class="" onclick="location.href='student-home.html'">学生</button><button class="active" onclick="location.href='admin-home.html'">综合办</button><button class="" onclick="location.href='leader-home.html'">科室分管领导</button><button class="" onclick="location.href='replier-home.html'">科室负责人</button><button class="" onclick="location.href='college-home.html'">学院副书记</button></div>
           <button class="icon-btn msg-bell" id="msg-bell" aria-label="消息通知" title="消息通知（未读 16）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.1em;height:1.1em"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="msg-dot" id="msg-dot">16</span></button>
           <button class="btn btn-primary" id="btn-write-quick" style="display:none">＋ 我要写信</button>
         </div>
@@ -88,7 +88,7 @@
     <div class="stat-grid">
       <div class="stat-card" style="--stat-accent:#2A8DC7">
       <div class="label"><span class="stat-dot" style="background:#2A8DC7"></span>来信总量</div>
-      <div class="value" style="color:#2A8DC7">37</div>
+      <div class="value" style="color:#2A8DC7">52</div>
       <div class="sub">月度视角 · 全部年份</div></div>
       <div class="stat-card" style="--stat-accent:#F29100">
       <div class="label"><span class="stat-dot" style="background:#F29100"></span>待分派</div>
@@ -96,7 +96,7 @@
       <div class="sub">待综合办分派</div></div>
       <div class="stat-card" style="--stat-accent:#1BB975">
       <div class="label"><span class="stat-dot" style="background:#1BB975"></span>办结率</div>
-      <div class="value" style="color:#1BB975">46%</div>
+      <div class="value" style="color:#1BB975">33%</div>
       <div class="sub">已办结 / 总量</div></div>
       <div class="stat-card" style="--stat-accent:#F29100">
       <div class="label"><span class="stat-dot" style="background:#F29100"></span>好评率</div>
@@ -105,7 +105,7 @@
     </div>
 
     <div class="card">
-      <div class="card-header"><h3><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M3.5 16.5 9.5 10.5l3.5 3.5 7-7"/><path d="M15.5 7h4.5v4.5"/></svg> 来信量趋势（月度）</h3><span class="card-hint">共 16 个区间 · 37 封</span></div>
+      <div class="card-header"><h3><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><path d="M3.5 16.5 9.5 10.5l3.5 3.5 7-7"/><path d="M15.5 7h4.5v4.5"/></svg> 来信量趋势（月度）</h3><span class="card-hint">共 16 个区间 · 52 封</span></div>
       <div class="card-body"><div class="chart-slot" style="width:100%;height:280px"><span>图表区域</span><small>ECharts 运行时绘制</small></div></div>
     </div>
 
@@ -141,45 +141,45 @@
         <div class="card-body" style="padding:0">
           <table><thead><tr><th style="width:50px">序号</th><th>承办科室</th><th style="width:70px">承办量</th><th style="width:70px">已办结</th><th style="width:70px">办结率</th><th style="width:88px">满意度</th></tr></thead>
           <tbody>
-            <tr><td>1</td><td>学生资助管理科</td><td>13</td><td>6</td><td>46%</td><td>★ 4.0</td></tr><tr><td>2</td><td>学生日常管理科</td><td>4</td><td>2</td><td>50%</td><td>★ 4.0</td></tr><tr><td>3</td><td>心理健康教育中心</td><td>3</td><td>2</td><td>67%</td><td>★ 5.0</td></tr><tr><td>4</td><td>就业创业指导中心</td><td>3</td><td>2</td><td>67%</td><td>★ 5.0</td></tr><tr><td>5</td><td>学生公寓管理科</td><td>3</td><td>1</td><td>33%</td><td>★ 4.0</td></tr><tr><td>6</td><td>征兵与国防教育办公室</td><td>2</td><td>2</td><td>100%</td><td>★ 5.0</td></tr><tr><td>7</td><td>思想政治教育科</td><td>2</td><td>2</td><td>100%</td><td>★ 5.0</td></tr><tr><td>8</td><td>综合办公室</td><td>1</td><td>0</td><td>0%</td><td>-</td></tr>
+            <tr><td>1</td><td>学生资助管理科</td><td>13</td><td>6</td><td>46%</td><td>★ 4.0</td></tr><tr><td>2</td><td>学生公寓管理科</td><td>7</td><td>1</td><td>14%</td><td>★ 4.0</td></tr><tr><td>3</td><td>学生日常管理科</td><td>6</td><td>2</td><td>33%</td><td>★ 4.0</td></tr><tr><td>4</td><td>就业创业指导中心</td><td>5</td><td>2</td><td>40%</td><td>★ 5.0</td></tr><tr><td>5</td><td>思想政治教育科</td><td>4</td><td>2</td><td>50%</td><td>★ 5.0</td></tr><tr><td>6</td><td>征兵与国防教育办公室</td><td>4</td><td>2</td><td>50%</td><td>★ 5.0</td></tr><tr><td>7</td><td>心理健康教育中心</td><td>4</td><td>2</td><td>50%</td><td>★ 5.0</td></tr><tr><td>8</td><td>综合办公室</td><td>3</td><td>0</td><td>0%</td><td>-</td></tr>
           </tbody></table>
         </div>
       </div>
-      <div class="card"><div class="card-header"><h3><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="10" cy="8" r="3.4"/><path d="M4 19.5a6 6 0 0 1 10.4-4.1"/><path d="m15.5 17.8 1.9 1.9 3.4-3.9"/></svg> 回复人办理绩效</h3><span class="card-hint">Top 10</span></div>
+      <div class="card"><div class="card-header"><h3><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.14em"><circle cx="10" cy="8" r="3.4"/><path d="M4 19.5a6 6 0 0 1 10.4-4.1"/><path d="m15.5 17.8 1.9 1.9 3.4-3.9"/></svg> 科室负责人办理绩效</h3><span class="card-hint">Top 10</span></div>
         <div class="card-body" style="padding:0">
-          <table><thead><tr><th style="width:50px">序号</th><th>回复人</th><th>所属科室</th><th style="width:70px">负责量</th><th style="width:70px">已办结</th><th style="width:88px">满意度</th></tr></thead>
+          <table><thead><tr><th style="width:50px">序号</th><th>科室负责人</th><th>所属科室</th><th style="width:70px">负责量</th><th style="width:70px">已办结</th><th style="width:88px">满意度</th></tr></thead>
           <tbody>
             <tr><td>1</td>
                 <td><strong>邱敏</strong><span class="cell-sub">资助干事</span></td>
                 <td>学生资助管理科</td><td>11</td><td>5</td>
                 <td>★ 4.3</td></tr><tr><td>2</td>
                 <td><strong>蒋磊</strong><span class="cell-sub">公寓管理员</span></td>
-                <td>学生公寓管理科</td><td>3</td><td>1</td>
+                <td>学生公寓管理科</td><td>5</td><td>1</td>
                 <td>★ 4.0</td></tr><tr><td>3</td>
+                <td><strong>何静</strong><span class="cell-sub">学籍管理员</span></td>
+                <td>学生日常管理科</td><td>3</td><td>2</td>
+                <td>★ 4.0</td></tr><tr><td>4</td>
                 <td><strong>谢婷</strong><span class="cell-sub">就业指导师</span></td>
-                <td>就业创业指导中心</td><td>2</td><td>1</td>
-                <td>★ 5.0</td></tr><tr><td>4</td>
-                <td><strong>曹阳</strong><span class="cell-sub">征兵干事</span></td>
-                <td>征兵与国防教育办公室</td><td>2</td><td>2</td>
+                <td>就业创业指导中心</td><td>3</td><td>1</td>
                 <td>★ 5.0</td></tr><tr><td>5</td>
+                <td><strong>曹阳</strong><span class="cell-sub">征兵干事</span></td>
+                <td>征兵与国防教育办公室</td><td>3</td><td>2</td>
+                <td>★ 5.0</td></tr><tr><td>6</td>
+                <td><strong>陈昊</strong><span class="cell-sub">思政干事</span></td>
+                <td>思想政治教育科</td><td>2</td><td>1</td>
+                <td>★ 5.0</td></tr><tr><td>7</td>
+                <td><strong>沈悦</strong><span class="cell-sub">心理咨询师</span></td>
+                <td>心理健康教育中心</td><td>2</td><td>1</td>
+                <td>★ 5.0</td></tr><tr><td>8</td>
                 <td><strong>郭鹏</strong><span class="cell-sub">纪检干事</span></td>
                 <td>学生日常管理科</td><td>2</td><td>0</td>
-                <td>-</td></tr><tr><td>6</td>
-                <td><strong>何静</strong><span class="cell-sub">学籍管理员</span></td>
-                <td>学生日常管理科</td><td>2</td><td>2</td>
-                <td>★ 4.0</td></tr><tr><td>7</td>
+                <td>-</td></tr><tr><td>9</td>
+                <td><strong>刘洋</strong><span class="cell-sub">综合干事</span></td>
+                <td>综合办公室</td><td>1</td><td>0</td>
+                <td>-</td></tr><tr><td>10</td>
                 <td><strong>王敏</strong><span class="cell-sub">信箱管理员</span></td>
                 <td>综合办公室</td><td>1</td><td>0</td>
-                <td>-</td></tr><tr><td>8</td>
-                <td><strong>唐蕊</strong><span class="cell-sub">团委干事</span></td>
-                <td>思想政治教育科</td><td>1</td><td>1</td>
-                <td>★ 5.0</td></tr><tr><td>9</td>
-                <td><strong>罗晨</strong><span class="cell-sub">心理咨询师</span></td>
-                <td>心理健康教育中心</td><td>1</td><td>1</td>
-                <td>★ 5.0</td></tr><tr><td>10</td>
-                <td><strong>韩宇</strong><span class="cell-sub">创业帮扶专员</span></td>
-                <td>就业创业指导中心</td><td>1</td><td>1</td>
-                <td>★ 5.0</td></tr>
+                <td>-</td></tr>
           </tbody></table>
         </div>
       </div>

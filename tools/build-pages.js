@@ -115,11 +115,11 @@ function userCard(role) {
   if (role === "admin") return { avatar: MOCK.admin.avatar, name: MOCK.admin.name, sub: MOCK.admin.role };
   if (role === "leader") {
     const l = secLeader(DEMO_SECTION);
-    return l ? { avatar: l.name.charAt(0), name: l.name, sub: DEMO_SECTION + " · " + (l.title || "科室领导") } : { avatar: "-", name: "-", sub: DEMO_SECTION };
+    return l ? { avatar: l.name.charAt(0), name: l.name, sub: DEMO_SECTION + " · " + (l.title || "科室分管领导") } : { avatar: "-", name: "-", sub: DEMO_SECTION };
   }
   if (role === "replier") {
     const m = repCands(DEMO_SECTION)[0];
-    return m ? { avatar: m.name.charAt(0), name: m.name, sub: DEMO_SECTION + " · " + (m.title || "回复人") } : { avatar: "-", name: "-", sub: DEMO_SECTION };
+    return m ? { avatar: m.name.charAt(0), name: m.name, sub: DEMO_SECTION + " · " + (m.title || "科室负责人") } : { avatar: "-", name: "-", sub: DEMO_SECTION };
   }
   if (role === "college") {
     const c = colOf(DEMO_COLLEGE);
@@ -159,7 +159,7 @@ function contextSwitch(role) {
     + MOCK.sections.map(s => `<option ${s.name === DEMO_SECTION ? "selected" : ""}>${s.name}</option>`).join("") + `</select>`;
   if (role === "leader") {
     const l = secLeader(DEMO_SECTION);
-    return sec + `<span class="switch-label">科室领导</span><span class="switch-fixed">${l ? l.name + " · " + (l.title || "科长") : "未配置"}</span>`;
+    return sec + `<span class="switch-label">科室分管领导</span><span class="switch-fixed">${l ? l.name + " · " + (l.title || "科长") : "未配置"}</span>`;
   }
   const members = repCands(DEMO_SECTION);
   return sec + `<span class="switch-label">本人</span>`
@@ -167,7 +167,7 @@ function contextSwitch(role) {
         ? `<select class="ctx-select" title="切换本人身份（设计稿示意）">`
           + members.map((m, i) => `<option ${i === 0 ? "selected" : ""}>${m.name}${m.title ? " · " + m.title : ""}</option>`).join("")
           + `</select>`
-        : `<span class="switch-empty">该科室暂无回复人</span>`);
+        : `<span class="switch-empty">该科室暂无科室负责人</span>`);
 }
 function transformDesktopContent(html, role) {
   html = replaceCanvas(html);
@@ -383,7 +383,7 @@ const desktopJobs = [
   { role: "admin", route: "sla-mgr", method: "renderSlaMgr", label: "时限与模板" },
   { role: "admin", route: "faq-mgr", method: "renderFaqMgr", label: "常见问题配置" },
   { role: "leader", route: "leader-home", method: "renderLeaderHome", label: "科室工作台" },
-  { role: "leader", route: "leader-assign", method: "renderLeaderList", arg: "assign", label: "待指定回复人" },
+  { role: "leader", route: "leader-assign", method: "renderLeaderList", arg: "assign", label: "待指定科室负责人" },
   { role: "leader", route: "leader-approve", method: "renderLeaderList", arg: "approve", label: "待审批" },
   { role: "leader", route: "sec-inbox", method: "renderSectionInbox", label: "科室收件箱" },
   { role: "leader", route: "public", method: "renderPublic", label: "公开信件" },
@@ -418,7 +418,7 @@ const mobileJobs = [
   { role: "admin", route: "admin-stats", method: "pAnalytics", label: "统计分析", sub: true, backHref: "admin-more.html" },
   { role: "admin", route: "more", method: "pMore", label: "更多", tab: "more" },
   { role: "leader", route: "leader-home", method: "pLeaderHome", label: "科室工作台", tab: "leader-home" },
-  { role: "leader", route: "leader-assign", method: "pLeaderList", arg: "assign", label: "待指定回复人", tab: "leader-assign" },
+  { role: "leader", route: "leader-assign", method: "pLeaderList", arg: "assign", label: "待指定科室负责人", tab: "leader-assign" },
   { role: "leader", route: "leader-approve", method: "pLeaderList", arg: "approve", label: "待审批答复", tab: "leader-approve" },
   { role: "leader", route: "sec-inbox", method: "pSectionInbox", label: "科室收件箱", tab: "sec-inbox" },
   { role: "leader", route: "more", method: "pMore", label: "更多", tab: "more" },
@@ -495,7 +495,7 @@ mobileJobs.forEach(job => {
 /* ---------------- 生成独立详情页（列表行点击可到达） ---------------- */
 const myLetters = getMy().filter(l => l.status !== "草稿");
 const sampleMy = myLetters.find(l => l.status === "已办结") || myLetters[0];
-if (!repCands(DEMO_SECTION).length) throw new Error("演示科室缺少回复人配置：" + DEMO_SECTION);
+if (!repCands(DEMO_SECTION).length) throw new Error("演示科室缺少科室负责人配置：" + DEMO_SECTION);
 const publicLetters = getAll().filter(l => l.publicScope === "all" && l.status === "已办结");
 /* 公开详情优先选取其他同学的来信，避免与「我的信件」详情重复 */
 const samplePublic = publicLetters.find(l => l.owner === "other") || publicLetters[0] || getAll()[0];
@@ -577,23 +577,23 @@ const roleCards = [
     name: "综合办", icon: "dashboard", tag: "统一受理与分派", tagColor: "orange",
     grad: "linear-gradient(135deg,#f6a94a,#F29100)",
     ports: ["桌面端", "移动端"],
-    duty: "统一受理全部来信，选择承办科室后由系统带出科室领导；负责改派科室、督办催办与后台配置。",
-    perms: ["分给科室领导 / 改派科室", "督办 / 批量催办", "科室与人员 / 分类管理", "公开情况 / 时限与模板 / 统计"],
+    duty: "统一受理全部来信，选择负责科室后由系统带出科室分管领导；负责改派科室、督办催办与后台配置。",
+    perms: ["分派负责科室 / 改派科室", "督办 / 批量催办", "科室与人员 / 分类管理", "公开情况 / 时限与模板 / 统计"],
     home: "desktop/admin-home.html"
   },
   {
-    name: "科室领导（科长）", icon: "userCheck", tag: "指定与审批", tagColor: "blue",
+    name: "科室分管领导", icon: "userCheck", tag: "指定与审批", tagColor: "blue",
     grad: "linear-gradient(135deg,#5aa9e6,#3087CC)",
     ports: ["桌面端", "移动端"],
-    duty: "接收综合办分来的信件，指定本科室回复人；所有答复都须经其审批，通过后由回复人确认发送。",
-    perms: ["指定 / 改派回复人", "审批通过 / 打回修改", "查看本科室全部信件", "不直接修改或发送答复"],
+    duty: "接收综合办分来的信件，指定科室负责人；所有答复都须经其审批，通过后由科室负责人确认发送。",
+    perms: ["指定 / 改派科室负责人", "审批通过 / 打回修改", "查看本科室全部信件", "不直接修改或发送答复"],
     home: "desktop/leader-home.html"
   },
   {
-    name: "科室回复人", icon: "write", tag: "拟稿与发送", tagColor: "blue",
+    name: "科室负责人", icon: "write", tag: "拟稿与发送", tagColor: "blue",
     grad: "linear-gradient(135deg,#6fb8ea,#2A8DC7)",
     ports: ["桌面端", "移动端"],
-    duty: "拟写答复并提交科室领导审批；不能直接拟写时请学生所在学院副书记协同；审批通过后确认发送并选择公开范围。",
+    duty: "拟写答复并提交科室分管领导审批；不能直接拟写时请学生所在学院副书记协同；审批通过后确认发送并选择公开范围。",
     perms: ["拟写 / 暂存答复", "发起学院协同", "提交审批 / 按意见修改", "确认发送 · 选择公开范围"],
     home: "desktop/replier-home.html"
   },
@@ -601,7 +601,7 @@ const roleCards = [
     name: "学院副书记", icon: "users", tag: "学院协同", tagColor: "green",
     grad: "linear-gradient(135deg,#9b86d6,#7A5CC2)",
     ports: ["桌面端", "移动端"],
-    duty: "接收回复人直接发来的协同请求，指定人员线下承办后写处理意见发回；可查看本学院「仅该学院副书记可见」的信件。",
+    duty: "接收科室负责人直接发来的协同请求，指定人员线下承办后写处理意见发回；可查看本学院「仅该学院副书记可见」的信件。",
     perms: ["协同待办 / 写处理意见", "查看学院可见信件", "线下承办不作为审批环节"],
     home: "desktop/college-home.html"
   }
@@ -741,8 +741,8 @@ const indexHtml = `<!DOCTYPE html>
   <div class="hero">
     <div class="hero-icon">工</div>
     <h1>学工信箱 · 原型页面导航</h1>
-    <p class="sub">学生工作部「学工信箱」交互原型，覆盖学生来信、综合办分派、科室领导指定与审批、回复人拟稿与发送、学院副书记协同全流程。</p>
-    <p class="emph">学生提交 → 综合办分给科室领导 → 科室领导指定回复人 → 回复人拟稿（可请学院副书记协同）→ 科室领导审批 → 回复人确认发送并选择公开范围。</p>
+    <p class="sub">学生工作部「学工信箱」交互原型，覆盖学生来信、综合办分派、科室分管领导指定与审批、科室负责人拟稿与发送、学院副书记协同全流程。</p>
+    <p class="emph">学生提交 → 综合办分派负责科室 → 科室分管领导指定科室负责人 → 科室负责人拟稿（可请学院副书记协同）→ 科室分管领导审批 → 科室负责人确认发送并选择公开范围。</p>
     <div class="badges">
       <span class="badge a">${drawIcon("doc")} 静态设计稿</span>
       <span class="badge b">${drawIcon("tags")} 共享 style.css · mobile.css</span>
